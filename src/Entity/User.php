@@ -1,12 +1,19 @@
 <?php
+// api/src/Entity/User.php
 
 namespace App\Entity;
 
+use App\Entity\UserHasPersonality;
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\HttpFoundation\File\File;
+use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiProperty;
 
 /**
+ * @ApiResource
  * @ORM\Entity(repositoryClass=UserRepository::class)
  */
 class User implements UserInterface
@@ -49,6 +56,24 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=30)
      */
     private $idSubscription;
+
+    /**
+     * @var MediaObject|null
+     *
+     * @ORM\ManyToOne(targetEntity=MediaObject::class)
+     * @ORM\JoinColumn(nullable=true)
+     * @ApiProperty(iri="http://schema.org/image")
+     */
+    public $image;
+
+    /**
+     * @ORM\OneToMany(targetEntity="UserHasPersonality", mappedBy="user", orphanRemoval=true, cascade={"persist"})
+     */
+    private $personalities;
+
+    public function __construct() {
+        $this->personalities = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -179,6 +204,34 @@ class User implements UserInterface
     public function setIdSubscription($idSubscription) :self
     {
         $this->idSubscription = $idSubscription;
+        return $this;
+    }
+
+    public function getPersonalities()
+    {
+        return $this->personalities;
+    }
+
+    public function addPersonality(UserHasPersonality $userHasPersonality): self
+    {
+        if (!$this->personalities->contains($userHasPersonality)) {
+            $this->personalities[] = $userHasPersonality;
+            $userHasPersonality->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removePersonality(UserHasPersonality $userHasPersonality): self
+    {
+        if ($this->personalities->contains($userHasPersonality)) {
+            $this->personalities->removeElement($userHasPersonality);
+            // set the owning side to null (unless already changed)
+            if ($userHasPersonality->getUser() === $this) {
+                $userHasPersonality->setUser(null);
+            }
+        }
+
         return $this;
     }
 }
