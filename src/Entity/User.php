@@ -35,7 +35,7 @@ class User implements UserInterface
     private $password;
 
     /**
-     * @ORM\Column(type=date)
+     * @ORM\Column(type="date")
      */
     private $birthdate;
 
@@ -43,6 +43,12 @@ class User implements UserInterface
      * @ORM\Column(type="boolean")
      */
     private $gender;
+
+    /**
+     * @return int|null
+     * @ORM\Column(type="string", length=30)
+     */
+    private $idSubscription;
 
     public function getId(): ?int
     {
@@ -133,9 +139,11 @@ class User implements UserInterface
     /**
      * @param mixed $birthdate
      */
-    public function setBirthdate($birthdate): self
+    public function setBirthdate($birthdate) : self
     {
         $this->birthdate = $birthdate;
+
+        return $this;
     }
 
     /**
@@ -149,8 +157,28 @@ class User implements UserInterface
     /**
      * @param mixed $gender
      */
-    public function setGender($gender): void
+    public function setGender($gender): self
     {
         $this->gender = $gender;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIdSubscription()
+    {
+        return $this->idSubscription;
+    }
+
+    /**
+     * @param mixed $idSubscription
+     * @return User
+     */
+    public function setIdSubscription($idSubscription) :self
+    {
+        $this->idSubscription = $idSubscription;
+        return $this;
     }
 }
