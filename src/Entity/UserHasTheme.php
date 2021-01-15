@@ -3,23 +3,23 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
-use App\Repository\UserHasPersonalityRepository;
+use App\Repository\UserHasThemeRepository;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 
 /**
  * @ApiResource
- * @ORM\Entity(repositoryClass=UserHasPersonalityRepository::class)
+ * @ORM\Entity(repositoryClass=UserHasThemeRepository::class)
  * @ORM\Table(
  *     uniqueConstraints={
  *          @ORM\UniqueConstraint(
  *              name="unique",
- *              columns={"user_id", "personality_id"}
+ *              columns={"user_id", "theme_id"}
  *          )
  *    }
  * )
  */
-class UserHasPersonality
+class UserHasTheme
 {
     /**
      * @ORM\Id()
@@ -29,7 +29,7 @@ class UserHasPersonality
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="personalities", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="themes", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      *
      * @Serializer\Expose
@@ -37,10 +37,10 @@ class UserHasPersonality
     private $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Personality", inversedBy="users", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="Theme", inversedBy="users", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
-    private $personality;
+    private $theme;
 
     public function getId(): ?int
     {
@@ -59,14 +59,14 @@ class UserHasPersonality
         return $this;
     }
 
-    public function getPersonality(): ?Personality
+    public function getTheme(): ?Theme
     {
-        return $this->personality;
+        return $this->theme;
     }
 
-    public function setPersonality(?Personality $personality): self
+    public function setTheme(?Theme $theme): self
     {
-        $this->personality = $personality;
+        $this->theme = $theme;
 
         return $this;
     }

@@ -71,8 +71,20 @@ class User implements UserInterface
      */
     private $personalities;
 
+    /**
+     * @ORM\OneToMany(targetEntity="UserHasTheme", mappedBy="user", orphanRemoval=true, cascade={"persist"})
+     */
+    private $themes;
+
+    /**
+     * @ORM\OneToMany(targetEntity="UserHasLanguage", mappedBy="user", orphanRemoval=true, cascade={"persist"})
+     */
+    private $languages;
+
     public function __construct() {
         $this->personalities = new ArrayCollection();
+        $this->themes = new ArrayCollection();
+        $this->languages = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -229,6 +241,62 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($userHasPersonality->getUser() === $this) {
                 $userHasPersonality->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getThemes()
+    {
+        return $this->themes;
+    }
+
+    public function addTheme(UserHasTheme $userHasTheme): self
+    {
+        if (!$this->themes->contains($userHasTheme)) {
+            $this->themes[] = $userHasTheme;
+            $userHasTheme->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTheme(UserHasTheme $userHasTheme): self
+    {
+        if ($this->themes->contains($userHasTheme)) {
+            $this->themes->removeElement($userHasTheme);
+            // set the owning side to null (unless already changed)
+            if ($userHasTheme->getUser() === $this) {
+                $userHasTheme->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getLanguages()
+    {
+        return $this->languages;
+    }
+
+    public function addLanguage(UserHasLanguage $userHasLanguage): self
+    {
+        if (!$this->languages->contains($userHasLanguage)) {
+            $this->languages[] = $userHasLanguage;
+            $userHasLanguage->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLanguage(UserHasLanguage $userHasLanguage): self
+    {
+        if ($this->themes->contains($userHasLanguage)) {
+            $this->themes->removeElement($userHasLanguage);
+            // set the owning side to null (unless already changed)
+            if ($userHasLanguage->getUser() === $this) {
+                $userHasLanguage->setUser(null);
             }
         }
 
