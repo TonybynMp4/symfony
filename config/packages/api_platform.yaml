@@ -1,4 +1,7 @@
 api_platform:
+    resource: .
+    type: api_platform
+    prefix: /
     mapping:
         paths: ['%kernel.project_dir%/src/Entity']
     patch_formats:
