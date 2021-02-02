@@ -13,7 +13,17 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiProperty;
 
 /**
- * @ApiResource
+ * @ApiResource(
+ *     attributes={"security"="is_granted('ROLE_USER')"},
+ *     collectionOperations={
+ *         "get",
+ *         "post"={"security"="is_granted('ROLE_ADMIN')"}
+ *     },
+ *     itemOperations={
+ *         "get",
+ *         "put"={"security"="is_granted('ROLE_ADMIN') or object.owner == user"},
+ *     }
+ * )
  * @ORM\Entity(repositoryClass=UserRepository::class)
  */
 class User implements UserInterface
@@ -53,7 +63,7 @@ class User implements UserInterface
 
     /**
      * @return int|null
-     * @ORM\Column(type="string", length=30)
+     * @ORM\Column(type="string", length=30, nullable=true)
      */
     private $idSubscription;
 

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d4c983186a4804d0140f9979ca43ad3e",
+    "content-hash": "dfd9596fd2ce61274c9f80f939684cd7",
     "packages": [
         {
             "name": "api-platform/core",
@@ -234,6 +234,60 @@
                 }
             ],
             "time": "2020-11-11T10:22:58+00:00"
+        },
+        {
+            "name": "connectx/entity-angular-bundle",
+            "version": "1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ConnectxWeb/entity-angular-bundle.git",
+                "reference": "91cea7509061345cbaf662cc031546b0f53f4bb4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ConnectxWeb/entity-angular-bundle/zipball/91cea7509061345cbaf662cc031546b0f53f4bb4",
+                "reference": "91cea7509061345cbaf662cc031546b0f53f4bb4",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": []
+            },
+            "autoload": {
+                "psr-4": {
+                    "Connectx\\EntityAngularBundle\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Benjamin Leveque",
+                    "email": "ben@connectx.fr"
+                },
+                {
+                    "name": "Connectx",
+                    "homepage": "https://github.com/ConnectxWeb"
+                }
+            ],
+            "description": "Symfony bundle to convert entities into Angular TS files.",
+            "homepage": "https://github.com/ConnectxWeb/entity-angular-bundle",
+            "keywords": [
+                "angular",
+                "converter",
+                "entity"
+            ],
+            "support": {
+                "docs": "https://github.com/ConnectxWeb/entity-angular-bundle",
+                "issues": "https://github.com/ConnectxWeb/entity-angular-bundle/issues",
+                "source": "https://github.com/ConnectxWeb/entity-angular-bundle/tree/1.1"
+            },
+            "time": "2019-07-25T07:43:27+00:00"
         },
         {
             "name": "doctrine/annotations",
@@ -2903,16 +2957,16 @@
         },
         {
             "name": "symfony/asset",
-            "version": "v4.4.17",
+            "version": "v4.4.19",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/asset.git",
-                "reference": "627761b47f94affdd8405e65245a8e1bbb810399"
+                "reference": "f2204a526c34945b1614cde033692983b6102eb8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/asset/zipball/627761b47f94affdd8405e65245a8e1bbb810399",
-                "reference": "627761b47f94affdd8405e65245a8e1bbb810399",
+                "url": "https://api.github.com/repos/symfony/asset/zipball/f2204a526c34945b1614cde033692983b6102eb8",
+                "reference": "f2204a526c34945b1614cde033692983b6102eb8",
                 "shasum": ""
             },
             "require": {
@@ -2948,10 +3002,10 @@
                     "homepage": "https://symfony.com/contributors"
                 }
             ],
-            "description": "Symfony Asset Component",
+            "description": "Manages URL generation and versioning of web assets such as CSS stylesheets, JavaScript files and image files",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/asset/tree/v4.4.17"
+                "source": "https://github.com/symfony/asset/tree/v4.4.19"
             },
             "funding": [
                 {
@@ -2967,7 +3021,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-10-24T11:50:19+00:00"
+            "time": "2021-01-27T09:09:26+00:00"
         },
         {
             "name": "symfony/cache",

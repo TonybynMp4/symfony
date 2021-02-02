@@ -43,7 +43,7 @@ class UserHasLanguage
     private $language;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="smallint")
      */
     private $level;
 
