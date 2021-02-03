@@ -11,18 +11,15 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\HttpFoundation\File\File;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiProperty;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
+ * @UniqueEntity(fields={"email"})
  * @ApiResource(
- *     attributes={"security"="is_granted('ROLE_USER')"},
- *     collectionOperations={
- *         "get",
- *         "post"={"security"="is_granted('ROLE_ADMIN')"}
- *     },
- *     itemOperations={
- *         "get",
- *         "put"={"security"="is_granted('ROLE_ADMIN') or object.owner == user"},
- *     }
+ *     normalizationContext={"groups"={"user:read"}},
+ *     denormalizationContext={"groups"={"user:write"}},
  * )
  * @ORM\Entity(repositoryClass=UserRepository::class)
  */
@@ -36,9 +33,18 @@ class User implements UserInterface
     private $id;
 
     /**
+     * @Assert\NotBlank()
+     * @Assert\Email()
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Groups({"user:read", "user:write"})
      */
     private $email;
+
+    /**
+     * @ORM\Column(type="string", length=50)
+     * @Groups({"user:read", "user:write"})
+     */
+    private $name;
 
     /**
      * @ORM\Column(type="json")
@@ -48,22 +54,26 @@ class User implements UserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     * @Groups({"user:write"})
      */
     private $password;
 
     /**
      * @ORM\Column(type="date")
+     * @Groups({"user:read", "user:write"})
      */
     private $birthdate;
 
     /**
      * @ORM\Column(type="boolean")
+     * @Groups({"user:read", "user:write"})
      */
     private $gender;
 
     /**
      * @return int|null
      * @ORM\Column(type="string", length=30, nullable=true)
+     * @Groups({"user:read", "user:write"})
      */
     private $idSubscription;
 
@@ -73,11 +83,13 @@ class User implements UserInterface
      * @ORM\ManyToOne(targetEntity=MediaObject::class)
      * @ORM\JoinColumn(nullable=true)
      * @ApiProperty(iri="http://schema.org/image")
+     * @Groups({"user:read", "user:write"})
      */
     public $image;
 
     /**
      * @ORM\OneToMany(targetEntity="UserHasPersonality", mappedBy="user", orphanRemoval=true, cascade={"persist"})
+     * @Groups({"user:read", "user:write"})
      */
     private $personalities;
 
@@ -95,6 +107,7 @@ class User implements UserInterface
         $this->personalities = new ArrayCollection();
         $this->themes = new ArrayCollection();
         $this->languages = new ArrayCollection();
+        $this->roles[] = "ROLE_USER";
     }
 
     public function getId(): ?int
@@ -310,6 +323,42 @@ class User implements UserInterface
             }
         }
 
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param mixed $name
+     * @return User
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+        return $this;
+    }
+
+    /**
+     * @return MediaObject|null
+     */
+    public function getImage(): ?MediaObject
+    {
+        return $this->image;
+    }
+
+    /**
+     * @param MediaObject|null $image
+     * @return User
+     */
+    public function setImage(?MediaObject $image): User
+    {
+        $this->image = $image;
         return $this;
     }
 }

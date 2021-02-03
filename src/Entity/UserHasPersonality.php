@@ -6,9 +6,13 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\UserHasPersonalityRepository;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ApiResource
+ * @ApiResource(
+ *     normalizationContext={"groups"={"user:read", "personality:read"}},
+ *     denormalizationContext={"groups"={"user:write", "personality:write"}},
+ * )
  * @ORM\Entity(repositoryClass=UserHasPersonalityRepository::class)
  * @ORM\Table(
  *     uniqueConstraints={
@@ -31,6 +35,7 @@ class UserHasPersonality
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="personalities", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"personality:read", "personality:write"})
      *
      * @Serializer\Expose
      */
@@ -39,6 +44,7 @@ class UserHasPersonality
     /**
      * @ORM\ManyToOne(targetEntity="Personality", inversedBy="users", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"user:read", "user:write"})
      */
     private $personality;
 

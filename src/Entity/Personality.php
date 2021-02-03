@@ -7,9 +7,13 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ApiResource
+ * @ApiResource(
+ *     normalizationContext={"groups"={"personality:read"}},
+ *     denormalizationContext={"groups"={"personality:write"}},
+ * )
  * @ORM\Entity
  */
 class Personality
@@ -26,11 +30,13 @@ class Personality
      *
      * @ORM\Column(type="string", length=50)
      * @Assert\NotBlank
+     * @Groups({"personality:read", "personality:write"})
      */
     public $name;
 
     /**
      * @ORM\OneToMany(targetEntity="UserHasPersonality", mappedBy="personality", orphanRemoval=true)
+     * @Groups({"post"})
      */
     private $users;
 
