@@ -36,7 +36,6 @@ class Personality
 
     /**
      * @ORM\OneToMany(targetEntity="UserHasPersonality", mappedBy="personality", orphanRemoval=true)
-     * @Groups({"post"})
      */
     private $users;
 

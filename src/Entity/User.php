@@ -14,6 +14,7 @@ use ApiPlatform\Core\Annotation\ApiProperty;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * @UniqueEntity(fields={"email"})
@@ -59,6 +60,12 @@ class User implements UserInterface
     private $password;
 
     /**
+     * @Groups("user:write")
+     * @SerializedName("password")
+     */
+    private $plainPassword;
+
+    /**
      * @ORM\Column(type="date")
      * @Groups({"user:read", "user:write"})
      */
@@ -95,6 +102,7 @@ class User implements UserInterface
 
     /**
      * @ORM\OneToMany(targetEntity="UserHasTheme", mappedBy="user", orphanRemoval=true, cascade={"persist"})
+     * @Groups({"user:read", "user:write"})
      */
     private $themes;
 
@@ -185,7 +193,7 @@ class User implements UserInterface
     public function eraseCredentials()
     {
         // If you store any temporary, sensitive data on the user, clear it here
-        // $this->plainPassword = null;
+        $this->plainPassword = null;
     }
 
     /**
@@ -359,6 +367,24 @@ class User implements UserInterface
     public function setImage(?MediaObject $image): User
     {
         $this->image = $image;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPlainPassword()
+    {
+        return $this->plainPassword;
+    }
+
+    /**
+     * @param mixed $plainPassword
+     * @return User
+     */
+    public function setPlainPassword($plainPassword)
+    {
+        $this->plainPassword = $plainPassword;
         return $this;
     }
 }

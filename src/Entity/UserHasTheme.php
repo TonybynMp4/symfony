@@ -6,9 +6,13 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\UserHasThemeRepository;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ApiResource
+ * @ApiResource(
+ *     normalizationContext={"groups"={"user:read", "theme:read"}},
+ *     denormalizationContext={"groups"={"user:write", "theme:write"}},
+ * )
  * @ORM\Entity(repositoryClass=UserHasThemeRepository::class)
  * @ORM\Table(
  *     uniqueConstraints={
@@ -31,6 +35,7 @@ class UserHasTheme
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="themes", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"theme:read", "theme:write"})
      *
      * @Serializer\Expose
      */
@@ -39,6 +44,7 @@ class UserHasTheme
     /**
      * @ORM\ManyToOne(targetEntity="Theme", inversedBy="users", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"user:read", "user:write"})
      */
     private $theme;
 

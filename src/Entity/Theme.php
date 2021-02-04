@@ -8,9 +8,13 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 use ApiPlatform\Core\Annotation\ApiProperty;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ApiResource
+ * @ApiResource(
+ *     normalizationContext={"groups"={"theme:read"}},
+ *     denormalizationContext={"groups"={"theme:write"}},
+ * )
  * @ORM\Entity
  */
 class Theme
@@ -27,6 +31,7 @@ class Theme
      *
      * @ORM\Column(type="string", length=50)
      * @Assert\NotBlank
+     * @Groups({"theme:read", "theme:write"})
      */
     public $name;
 
@@ -41,6 +46,7 @@ class Theme
      * @ORM\ManyToOne(targetEntity=MediaObject::class)
      * @ORM\JoinColumn(nullable=true)
      * @ApiProperty(iri="http://schema.org/image")
+     * @Groups({"theme:read", "theme:write"})
      */
     public $image;
 
