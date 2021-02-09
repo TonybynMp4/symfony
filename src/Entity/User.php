@@ -95,31 +95,31 @@ class User implements UserInterface
     public $image;
 
     /**
-     * @ORM\OneToMany(targetEntity="UserHasPersonality", mappedBy="user", orphanRemoval=true, cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="UserHasPersonality", mappedBy="user")
      * @Groups({"user:read", "user:write"})
      */
     private $personalities;
 
     /**
-     * @ORM\OneToMany(targetEntity="UserHasTheme", mappedBy="user", orphanRemoval=true, cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="UserHasTheme", mappedBy="user")
      * @Groups({"user:read", "user:write"})
      */
     private $themes;
 
     /**
-     * @ORM\OneToMany(targetEntity="UserHasEvent", mappedBy="user", orphanRemoval=true, cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="UserHasEvent", mappedBy="user", orphanRemoval=true, cascade={"remove"})
      * @Groups({"user:read", "user:write"})
      */
     private $events;
 
     /**
-     * @ORM\OneToMany(targetEntity="UserHasFavoriteTheme", mappedBy="user", orphanRemoval=true, cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="UserHasFavoriteTheme", mappedBy="user", orphanRemoval=true, cascade={"remove"})
      * @Groups({"user:read", "user:write"})
      */
     private $favoriteThemes;
 
     /**
-     * @ORM\OneToMany(targetEntity="UserHasFavoriteSupport", mappedBy="user", orphanRemoval=true, cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="UserHasFavoriteSupport", mappedBy="user", orphanRemoval=true, cascade={"remove"})
      * @Groups({"user:read", "user:write"})
      */
     private $favoriteSupports;

@@ -116,8 +116,23 @@ class Event
      */
     private $nbMaxParticipants;
 
+    /**
+     *
+     * @ORM\Column(type="datetime")
+     * @Assert\NotBlank
+     * @Groups({"event:read", "event:write"})
+     */
+    private $CreatedAt;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Message", mappedBy="event", orphanRemoval=true, cascade={"remove"})
+     * @Groups({"event:read", "event:write"})
+     */
+    private $messages;
+
     public function __construct()
     {
+        $this->messages = new ArrayCollection();
         $this->users = new ArrayCollection();
     }
 
@@ -347,6 +362,34 @@ class Event
         return $this;
     }
 
+    public function getMessages()
+    {
+        return $this->messages;
+    }
+
+    public function addMessage(Message $message): self
+    {
+        if (!$this->messages->contains($message)) {
+            $this->messages[] = $message;
+            $message->setEvent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMessage(Message $message): self
+    {
+        if ($this->messages->contains($message)) {
+            $this->messages->removeElement($message);
+            // set the owning side to null (unless already changed)
+            if ($message->getEvent() === $this) {
+                $message->setEvent(null);
+            }
+        }
+
+        return $this;
+    }
+
     /**
      * @return mixed
      */
@@ -380,6 +423,24 @@ class Event
     public function setNbMaxParticipants($nbMaxParticipants)
     {
         $this->nbMaxParticipants = $nbMaxParticipants;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCreatedAt()
+    {
+        return $this->CreatedAt;
+    }
+
+    /**
+     * @param mixed $CreatedAt
+     * @return Event
+     */
+    public function setCreatedAt($CreatedAt)
+    {
+        $this->CreatedAt = $CreatedAt;
         return $this;
     }
 }

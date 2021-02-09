@@ -47,6 +47,12 @@ class Message
     private $userDelivery;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Event", inversedBy="messages")
+     * @Groups({"message:read", "message:write"})
+     */
+    private $event;
+
+    /**
      * @return mixed
      */
     public function getId()
@@ -115,6 +121,24 @@ class Message
     public function setUserDelivery($userDelivery)
     {
         $this->userDelivery = $userDelivery;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEvent()
+    {
+        return $this->event;
+    }
+
+    /**
+     * @param mixed $event
+     * @return Message
+     */
+    public function setEvent($event)
+    {
+        $this->event = $event;
         return $this;
     }
 }
