@@ -107,6 +107,12 @@ class User implements UserInterface
     private $themes;
 
     /**
+     * @ORM\OneToMany(targetEntity="UserHasEvent", mappedBy="user", orphanRemoval=true, cascade={"persist"})
+     * @Groups({"user:read", "user:write"})
+     */
+    private $events;
+
+    /**
      * @ORM\OneToMany(targetEntity="UserHasFavoriteTheme", mappedBy="user", orphanRemoval=true, cascade={"persist"})
      * @Groups({"user:read", "user:write"})
      */
@@ -130,6 +136,7 @@ class User implements UserInterface
         $this->favoriteThemes = new ArrayCollection();
         $this->favoriteSupports = new ArrayCollection();
         $this->supports = new ArrayCollection();
+        $this->events = new ArrayCollection();
         $this->roles[] = "ROLE_USER";
     }
 
@@ -315,6 +322,34 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($userHasTheme->getUser() === $this) {
                 $userHasTheme->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getEvents()
+    {
+        return $this->events;
+    }
+
+    public function addEvent(UserHasEvent $userHasEvent): self
+    {
+        if (!$this->events->contains($userHasEvent)) {
+            $this->events[] = $userHasEvent;
+            $userHasEvent->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEvent(UserHasEvent $userHasEvent): self
+    {
+        if ($this->events->contains($userHasEvent)) {
+            $this->events->removeElement($userHasEvent);
+            // set the owning side to null (unless already changed)
+            if ($userHasEvent->getUser() === $this) {
+                $userHasEvent->setUser(null);
             }
         }
 

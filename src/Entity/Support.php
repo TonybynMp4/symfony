@@ -1,5 +1,4 @@
 <?php
-// api/src/Entity/Language.php
 
 namespace App\Entity;
 
@@ -109,7 +108,7 @@ class Support
     private $user;
 
     /**
-     * @ORM\OneToMany(targetEntity="UserHasFavoriteSupport", mappedBy="theme", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="UserHasFavoriteSupport", mappedBy="support", orphanRemoval=true)
      */
     private $usersFavorites;
 

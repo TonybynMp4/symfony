@@ -1,5 +1,4 @@
 <?php
-// api/src/Entity/Theme.php
 
 namespace App\Entity;
 
@@ -43,11 +42,13 @@ class Theme
 
     /**
      * @ORM\OneToMany(targetEntity="UserHasTheme", mappedBy="theme", orphanRemoval=true)
+     * @Groups({"theme:read", "theme:write"})
      */
     private $users;
 
     /**
      * @ORM\OneToMany(targetEntity="UserHasFavoriteTheme", mappedBy="theme", orphanRemoval=true)
+     * @Groups({"theme:read", "theme:write"})
      */
     private $usersFavorites;
 
