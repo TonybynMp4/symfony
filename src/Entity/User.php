@@ -130,6 +130,12 @@ class User implements UserInterface
      */
     private $supports;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Message", mappedBy="user", orphanRemoval=true, cascade={"remove"})
+     * @Groups({"user:read", "user:write"})
+     */
+    private $messages;
+
     public function __construct() {
         $this->personalities = new ArrayCollection();
         $this->themes = new ArrayCollection();
@@ -137,6 +143,7 @@ class User implements UserInterface
         $this->favoriteSupports = new ArrayCollection();
         $this->supports = new ArrayCollection();
         $this->events = new ArrayCollection();
+        $this->messages = new ArrayCollection();
         $this->roles[] = "ROLE_USER";
     }
 
@@ -378,6 +385,34 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($support->getUser() === $this) {
                 $support->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getMessages()
+    {
+        return $this->supports;
+    }
+
+    public function addMessage(Message $message): self
+    {
+        if (!$this->messages->contains($message)) {
+            $this->messages[] = $message;
+            $message->setOwner($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMessage(Message $message): self
+    {
+        if ($this->messages->contains($message)) {
+            $this->messages->removeElement($message);
+            // set the owning side to null (unless already changed)
+            if ($message->getOwner() === $this) {
+                $message->setOwner(null);
             }
         }
 
