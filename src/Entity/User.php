@@ -107,14 +107,29 @@ class User implements UserInterface
     private $themes;
 
     /**
-     * @ORM\OneToMany(targetEntity="UserHasLanguage", mappedBy="user", orphanRemoval=true, cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="UserHasFavoriteTheme", mappedBy="user", orphanRemoval=true, cascade={"persist"})
+     * @Groups({"user:read", "user:write"})
      */
-    private $languages;
+    private $favoriteThemes;
+
+    /**
+     * @ORM\OneToMany(targetEntity="UserHasFavoriteSupport", mappedBy="user", orphanRemoval=true, cascade={"persist"})
+     * @Groups({"user:read", "user:write"})
+     */
+    private $favoriteSupports;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Support", mappedBy="user", orphanRemoval=true, cascade={"remove"})
+     * @Groups({"user:read", "user:write"})
+     */
+    private $supports;
 
     public function __construct() {
         $this->personalities = new ArrayCollection();
         $this->themes = new ArrayCollection();
-        $this->languages = new ArrayCollection();
+        $this->favoriteThemes = new ArrayCollection();
+        $this->favoriteSupports = new ArrayCollection();
+        $this->supports = new ArrayCollection();
         $this->roles[] = "ROLE_USER";
     }
 
@@ -306,28 +321,84 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getLanguages()
+    public function getSupports()
     {
-        return $this->languages;
+        return $this->supports;
     }
 
-    public function addLanguage(UserHasLanguage $userHasLanguage): self
+    public function addSupport(Support $support): self
     {
-        if (!$this->languages->contains($userHasLanguage)) {
-            $this->languages[] = $userHasLanguage;
-            $userHasLanguage->setUser($this);
+        if (!$this->supports->contains($support)) {
+            $this->supports[] = $support;
+            $support->setUser($this);
         }
 
         return $this;
     }
 
-    public function removeLanguage(UserHasLanguage $userHasLanguage): self
+    public function removeSupport(Support $support): self
     {
-        if ($this->themes->contains($userHasLanguage)) {
-            $this->themes->removeElement($userHasLanguage);
+        if ($this->supports->contains($support)) {
+            $this->supports->removeElement($support);
             // set the owning side to null (unless already changed)
-            if ($userHasLanguage->getUser() === $this) {
-                $userHasLanguage->setUser(null);
+            if ($support->getUser() === $this) {
+                $support->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getFavoriteThemes()
+    {
+        return $this->favoriteThemes;
+    }
+
+    public function addFavoriteTheme(UserHasFavoriteTheme $favoriteTheme): self
+    {
+        if (!$this->favoriteThemes->contains($favoriteTheme)) {
+            $this->favoriteThemes[] = $favoriteTheme;
+            $favoriteTheme->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFavoriteTheme(UserHasFavoriteTheme $favoriteTheme): self
+    {
+        if ($this->favoriteThemes->contains($favoriteTheme)) {
+            $this->favoriteThemes->removeElement($favoriteTheme);
+            // set the owning side to null (unless already changed)
+            if ($favoriteTheme->getUser() === $this) {
+                $favoriteTheme->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getFavoriteSupports()
+    {
+        return $this->favoriteSupports;
+    }
+
+    public function addFavoriteSupport(UserHasFavoriteSupport $favoriteSupport): self
+    {
+        if (!$this->favoriteSupports->contains($favoriteSupport)) {
+            $this->favoriteSupports[] = $favoriteSupport;
+            $favoriteSupport->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFavoriteSupport(UserHasFavoriteSupport $favoriteSupport): self
+    {
+        if ($this->favoriteSupports->contains($favoriteSupport)) {
+            $this->favoriteSupports->removeElement($favoriteSupport);
+            // set the owning side to null (unless already changed)
+            if ($favoriteSupport->getUser() === $this) {
+                $favoriteSupport->setUser(null);
             }
         }
 

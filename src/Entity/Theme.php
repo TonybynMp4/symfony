@@ -36,9 +36,20 @@ class Theme
     public $name;
 
     /**
+     * @ORM\OneToOne(targetEntity="Theme", mappedBy="id", orphanRemoval=true)
+     * @Groups({"theme:read", "theme:write"})
+     */
+    private $parent;
+
+    /**
      * @ORM\OneToMany(targetEntity="UserHasTheme", mappedBy="theme", orphanRemoval=true)
      */
     private $users;
+
+    /**
+     * @ORM\OneToMany(targetEntity="UserHasFavoriteTheme", mappedBy="theme", orphanRemoval=true)
+     */
+    private $usersFavorites;
 
     /**
      * @var MediaObject|null
@@ -52,6 +63,7 @@ class Theme
 
     public function __construct()
     {
+        $this->usersFavorites = new ArrayCollection();
         $this->users = new ArrayCollection();
     }
 
@@ -103,6 +115,70 @@ class Theme
             }
         }
 
+        return $this;
+    }
+
+    public function getUsersFavorites()
+    {
+        return $this->usersFavorites;
+    }
+
+    public function addUserFavorite(UserHasFavoriteTheme $userHasFavoriteTheme): self
+    {
+        if (!$this->usersFavorites->contains($userHasFavoriteTheme)) {
+            $this->usersFavorites[] = $userHasFavoriteTheme;
+            $userHasFavoriteTheme->setTheme($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserFavorite(UserHasFavoriteTheme $userHasFavoriteTheme): self
+    {
+        if ($this->usersFavorites->contains($userHasFavoriteTheme)) {
+            $this->usersFavorites->removeElement($userHasFavoriteTheme);
+            // set the owning side to null (unless already changed)
+            if ($userHasFavoriteTheme->getTheme() === $this) {
+                $userHasFavoriteTheme->setTheme(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getParent()
+    {
+        return $this->parent;
+    }
+
+    /**
+     * @param mixed $parent
+     * @return Theme
+     */
+    public function setParent($parent)
+    {
+        $this->parent = $parent;
+        return $this;
+    }
+
+    /**
+     * @return MediaObject|null
+     */
+    public function getImage(): ?MediaObject
+    {
+        return $this->image;
+    }
+
+    /**
+     * @param MediaObject|null $image
+     * @return Theme
+     */
+    public function setImage(?MediaObject $image): Theme
+    {
+        $this->image = $image;
         return $this;
     }
 }
