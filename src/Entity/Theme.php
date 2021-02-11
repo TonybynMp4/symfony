@@ -35,7 +35,7 @@ class Theme
     public $name;
 
     /**
-     * @ORM\OneToOne(targetEntity="Theme", mappedBy="id", orphanRemoval=true)
+     * @ORM\OneToOne(targetEntity="Theme", orphanRemoval=true)
      * @Groups({"theme:read", "theme:write"})
      */
     private $parent;

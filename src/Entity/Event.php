@@ -113,7 +113,7 @@ class Event
     private $users;
 
     /**
-     * @ORM\OneToOne(targetEntity="User", mappedBy="id", orphanRemoval=true)
+     * @ORM\OneToOne(targetEntity="User", orphanRemoval=true)
      * @Groups({"event:read", "event:write"})
      */
     private $owner;

@@ -131,13 +131,13 @@ class User implements UserInterface
     private $supports;
 
     /**
-     * @ORM\OneToMany(targetEntity="Message", mappedBy="user", orphanRemoval=true, cascade={"remove"})
+     * @ORM\OneToMany(targetEntity="Message", mappedBy="owner", orphanRemoval=true, cascade={"remove"})
      * @Groups({"user:read", "user:write"})
      */
     private $messages;
 
     /**
-     * @ORM\OneToMany(targetEntity="UserHaslistSupport", mappedBy="user", orphanRemoval=true, cascade={"remove"})
+     * @ORM\OneToMany(targetEntity="UserHasListSupport", mappedBy="user", orphanRemoval=true, cascade={"remove"})
      * @Groups({"user:read", "user:write"})
      */
     private $listSupports;
@@ -487,7 +487,7 @@ class User implements UserInterface
         return $this->listSupports;
     }
 
-    public function addListSupport(UserHaslistSupport $listSupport): self
+    public function addListSupport(UserHasListSupport $listSupport): self
     {
         if (!$this->listSupports->contains($listSupport)) {
             $this->listSupports[] = $listSupport;
@@ -497,7 +497,7 @@ class User implements UserInterface
         return $this;
     }
 
-    public function removeListSupport(UserHaslistSupport $listSupport): self
+    public function removeListSupport(UserHasListSupport $listSupport): self
     {
         if ($this->listSupports->contains($listSupport)) {
             $this->listSupports->removeElement($listSupport);

@@ -33,7 +33,7 @@ class UserHasFavoriteTheme
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="themes", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="favoriteThemes", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      * @Groups({"theme:read", "theme:write"})
      *
