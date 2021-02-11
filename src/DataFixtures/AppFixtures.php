@@ -30,6 +30,7 @@ class AppFixtures extends Fixture
 
         $your_random_word = substr($unique, 0, $desired_length);
         $user->setIdSubscription($your_random_word);
+        $user->setName("Peneau");
         $user->setGender(false);
         $user->setBirthdate(new \DateTime($birthday));
         $user->setRoles(array("ROLE_ADMIN"));
