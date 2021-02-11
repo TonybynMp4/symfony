@@ -50,6 +50,14 @@ class Event
 
     /**
      *
+     * @ORM\Column(type="smallint")
+     * @Assert\NotBlank
+     * @Groups({"event:read", "event:write"})
+     */
+    private $duration;
+
+    /**
+     *
      * @ORM\Column(type="string", length=100)
      * @Assert\NotBlank
      * @Groups({"event:read", "event:write"})
@@ -441,6 +449,24 @@ class Event
     public function setCreatedAt($CreatedAt)
     {
         $this->CreatedAt = $CreatedAt;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDuration()
+    {
+        return $this->duration;
+    }
+
+    /**
+     * @param mixed $duration
+     * @return Event
+     */
+    public function setDuration($duration)
+    {
+        $this->duration = $duration;
         return $this;
     }
 }

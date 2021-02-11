@@ -53,6 +53,25 @@ class Message
     private $event;
 
     /**
+     *
+     * @ORM\Column(type="datetime")
+     * @Assert\NotBlank
+     * @Groups({"message:read", "message:write"})
+     */
+    private $lastUpdated;
+
+    /**
+     * @ORM\Column(type="boolean")
+     * @Groups({"message:read", "message:write"})
+     */
+    private $read = false;
+
+    public function __construct()
+    {
+        $this->lastUpdated = new \DateTime();
+    }
+
+    /**
      * @return mixed
      */
     public function getId()
@@ -139,6 +158,42 @@ class Message
     public function setEvent($event)
     {
         $this->event = $event;
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getLastUpdated(): \DateTime
+    {
+        return $this->lastUpdated;
+    }
+
+    /**
+     * @param \DateTime $lastUpdated
+     * @return Message
+     */
+    public function setLastUpdated(\DateTime $lastUpdated): Message
+    {
+        $this->lastUpdated = $lastUpdated;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isRead(): bool
+    {
+        return $this->read;
+    }
+
+    /**
+     * @param bool $read
+     * @return Message
+     */
+    public function setRead(bool $read): Message
+    {
+        $this->read = $read;
         return $this;
     }
 }

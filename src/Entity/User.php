@@ -136,6 +136,12 @@ class User implements UserInterface
      */
     private $messages;
 
+    /**
+     * @ORM\OneToMany(targetEntity="UserHaslistSupport", mappedBy="user", orphanRemoval=true, cascade={"remove"})
+     * @Groups({"user:read", "user:write"})
+     */
+    private $listSupports;
+
     public function __construct() {
         $this->personalities = new ArrayCollection();
         $this->themes = new ArrayCollection();
@@ -144,6 +150,7 @@ class User implements UserInterface
         $this->supports = new ArrayCollection();
         $this->events = new ArrayCollection();
         $this->messages = new ArrayCollection();
+        $this->listSupports = new ArrayCollection();
         $this->roles[] = "ROLE_USER";
     }
 
@@ -469,6 +476,34 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($favoriteSupport->getUser() === $this) {
                 $favoriteSupport->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getListSupports()
+    {
+        return $this->listSupports;
+    }
+
+    public function addListSupport(UserHaslistSupport $listSupport): self
+    {
+        if (!$this->listSupports->contains($listSupport)) {
+            $this->listSupports[] = $listSupport;
+            $listSupport->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeListSupport(UserHaslistSupport $listSupport): self
+    {
+        if ($this->listSupports->contains($listSupport)) {
+            $this->listSupports->removeElement($listSupport);
+            // set the owning side to null (unless already changed)
+            if ($listSupport->getUser() === $this) {
+                $listSupport->setUser(null);
             }
         }
 

@@ -112,8 +112,14 @@ class Support
      */
     private $usersFavorites;
 
+    /**
+     * @ORM\OneToMany(targetEntity="UserHasListSupport", mappedBy="support", orphanRemoval=true)
+     */
+    private $userslists;
+
     public function __construct()
     {
+        $this->userslists = new ArrayCollection();
         $this->usersFavorites = new ArrayCollection();
     }
 
@@ -349,6 +355,34 @@ class Support
             // set the owning side to null (unless already changed)
             if ($userHasFavoriteSupport->getSupport() === $this) {
                 $userHasFavoriteSupport->setSupport(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getUsersLists()
+    {
+        return $this->userslists;
+    }
+
+    public function addUserList(UserHasListSupport $userHasListSupport): self
+    {
+        if (!$this->userslists->contains($userHasListSupport)) {
+            $this->userslists[] = $userHasListSupport;
+            $userHasListSupport->setSupport($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserList(UserHasListSupport $userHasListSupport): self
+    {
+        if ($this->userslists->contains($userHasListSupport)) {
+            $this->userslists->removeElement($userHasListSupport);
+            // set the owning side to null (unless already changed)
+            if ($userHasListSupport->getSupport() === $this) {
+                $userHasListSupport->setSupport(null);
             }
         }
 
