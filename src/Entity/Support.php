@@ -117,8 +117,17 @@ class Support
      */
     private $usersLists;
 
+    /**
+     *
+     * @ORM\Column(type="datetime")
+     * @Assert\NotBlank
+     * @Groups({"event:read", "event:write"})
+     */
+    private $createdAt;
+
     public function __construct()
     {
+        $this->createdAt = new \DateTime();
         $this->usersLists = new ArrayCollection();
         $this->usersFavorites = new ArrayCollection();
     }
@@ -386,6 +395,24 @@ class Support
             }
         }
 
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getCreatedAt(): \DateTime
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @param \DateTime $createdAt
+     * @return Support
+     */
+    public function setCreatedAt(\DateTime $createdAt): Support
+    {
+        $this->createdAt = $createdAt;
         return $this;
     }
 }

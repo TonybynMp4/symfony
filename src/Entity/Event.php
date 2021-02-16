@@ -130,7 +130,7 @@ class Event
      * @Assert\NotBlank
      * @Groups({"event:read", "event:write"})
      */
-    private $CreatedAt;
+    private $createdAt;
 
     /**
      * @ORM\OneToMany(targetEntity="Message", mappedBy="event", orphanRemoval=true, cascade={"remove"})
@@ -140,6 +140,7 @@ class Event
 
     public function __construct()
     {
+        $this->createdAt = new \DateTime();
         $this->messages = new ArrayCollection();
         $this->users = new ArrayCollection();
     }
@@ -439,16 +440,16 @@ class Event
      */
     public function getCreatedAt()
     {
-        return $this->CreatedAt;
+        return $this->createdAt;
     }
 
     /**
-     * @param mixed $CreatedAt
+     * @param mixed $createdAt
      * @return Event
      */
-    public function setCreatedAt($CreatedAt)
+    public function setCreatedAt($createdAt)
     {
-        $this->CreatedAt = $CreatedAt;
+        $this->createdAt = $createdAt;
         return $this;
     }
 
