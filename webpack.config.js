@@ -21,6 +21,11 @@ Encore
      * and one CSS file (e.g. app.css) if your JavaScript imports CSS.
      */
     .addEntry('app', './assets/app.js')
+    .addEntry('doc', './public/bundles/apiplatform/init-swagger-ui.js')
+    .addEntry('doc1', './public/bundles/apiplatform/swagger-ui/swagger-ui.css')
+    .addEntry('doc2', './public/bundles/apiplatform/swagger-ui/swagger-ui-bundle.js')
+    .addEntry('doc3', './public/bundles/apiplatform/swagger-ui/swagger-ui-standalone-preset.js')
+    .addEntry('doc4', './public/bundles/apiplatform/style.css')
 
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
     .enableStimulusBridge('./assets/controllers.json')
