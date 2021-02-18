@@ -21,6 +21,32 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
  * @ApiResource(
  *     normalizationContext={"groups"={"user:read"}},
  *     denormalizationContext={"groups"={"user:write"}},
+ *     itemOperations={
+ *          "get"={},
+ *          "put"={},
+ *          "delete"={},
+ *          "resetPassword"={
+ *              "method"="PATCH",
+ *              "path"="/users/{id}/resetPassword",
+ *              "controller"=App\Controller\Security\ResetPassword::class,
+ *              "swagger_context"={
+ *                  "parameters"={
+ *                      {
+ *                          "name" = "User",
+ *                          "in" = "body",
+ *                          "schema" = {
+ *                              "type" = "object",
+ *                              "properties" = {
+ *                                  "password" = {"type"="string"},
+ *                                  "email" = {"type"="string"},
+ *                              }
+ *                           },
+ *                          "required" = "true",
+ *                      }
+ *                  }
+ *              }
+ *          }
+ *     }
  * )
  * @ORM\Entity(repositoryClass=UserRepository::class)
  */
