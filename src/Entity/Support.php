@@ -26,14 +26,14 @@ class Support
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="Theme", orphanRemoval=true)
+     * @ORM\ManyToOne(targetEntity="Theme")
      * @ORM\JoinColumn(name="theme_id", referencedColumnName="id")
      * @Groups({"support:read", "support:write"})
      */
     private $theme;
 
     /**
-     * @ORM\OneToOne(targetEntity="Theme", orphanRemoval=true)
+     * @ORM\ManyToOne(targetEntity="Theme")
      * @ORM\JoinColumn(name="subtheme_id", referencedColumnName="id")
      * @Groups({"support:read", "support:write"})
      */
