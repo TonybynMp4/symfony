@@ -168,6 +168,11 @@ class User implements UserInterface
      */
     private $listSupports;
 
+    /**
+     * @ORM\OneToMany(targetEntity="UserHasLanguage", mappedBy="user", orphanRemoval=true, cascade={"persist"})
+     */
+    private $languages;
+
     public function __construct() {
         $this->personalities = new ArrayCollection();
         $this->themes = new ArrayCollection();
@@ -177,6 +182,7 @@ class User implements UserInterface
         $this->events = new ArrayCollection();
         $this->messages = new ArrayCollection();
         $this->listSupports = new ArrayCollection();
+        $this->languages = new ArrayCollection();
         $this->roles[] = "ROLE_USER";
     }
 
@@ -587,6 +593,34 @@ class User implements UserInterface
     public function setPlainPassword($plainPassword)
     {
         $this->plainPassword = $plainPassword;
+        return $this;
+    }
+
+    public function getLanguages()
+    {
+        return $this->languages;
+    }
+
+    public function addLanguage(UserHasLanguage $userHasLanguage): self
+    {
+        if (!$this->languages->contains($userHasLanguage)) {
+            $this->languages[] = $userHasLanguage;
+            $userHasLanguage->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLanguage(UserHasLanguage $userHasLanguage): self
+    {
+        if ($this->themes->contains($userHasLanguage)) {
+            $this->themes->removeElement($userHasLanguage);
+            // set the owning side to null (unless already changed)
+            if ($userHasLanguage->getUser() === $this) {
+                $userHasLanguage->setUser(null);
+            }
+        }
+
         return $this;
     }
 }
