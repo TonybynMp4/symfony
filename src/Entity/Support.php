@@ -27,14 +27,14 @@ class Support
 
     /**
      * @ORM\ManyToOne(targetEntity="Theme")
-     * @ORM\JoinColumn(name="theme_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="theme_id", referencedColumnName="id", nullable=false)
      * @Groups({"support:read", "support:write"})
      */
     private $theme;
 
     /**
      * @ORM\ManyToOne(targetEntity="Theme")
-     * @ORM\JoinColumn(name="subtheme_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="subtheme_id", referencedColumnName="id", nullable=false)
      * @Groups({"support:read", "support:write"})
      */
     private $subtheme;
@@ -103,7 +103,7 @@ class Support
 
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="supports")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
      */
     private $user;
 

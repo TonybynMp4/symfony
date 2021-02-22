@@ -2,6 +2,9 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Language;
+use App\Entity\Personality;
+use App\Entity\Theme;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -18,6 +21,37 @@ class AppFixtures extends Fixture
 
     public function load(ObjectManager $manager)
     {
+        $theme = new Theme();
+        $theme->setName("Voyage");
+
+        $theme1 = new Theme();
+        $theme1->setName("Loisirs");
+
+        $theme2 = new Theme();
+        $theme2->setName("Musique");
+        $theme2->setParent($theme1);
+
+        $theme3 =  new Theme();
+        $theme3->setName("Sport");
+        $theme3->setParent($theme1);
+
+        $personnality = new Personality();
+        $personnality->setName("energique");
+        $personnality1 = new Personality();
+        $personnality1->setName("cultivé");
+
+        $language = new Language();
+        $language->setName("Français");
+
+        $language1 = new Language();
+        $language1->setName("Anglais");
+
+        $language2 = new Language();
+        $language2->setName("Espagnol");
+
+        $language3 = new Language();
+        $language3->setName("Chinois");
+
         $user = new User();
         $user->setEmail('alexandre.peneau@gmail.com');
         $user->setPassword($this->passwordEncoder->encodePassword(
@@ -35,6 +69,19 @@ class AppFixtures extends Fixture
         $user->setBirthdate(new \DateTime($birthday));
         $user->setRoles(array("ROLE_ADMIN"));
         $manager->persist($user);
+
+        $manager->persist($theme);
+        $manager->persist($theme1);
+        $manager->persist($theme2);
+        $manager->persist($theme3);
+
+        $manager->persist($personnality);
+        $manager->persist($personnality1);
+
+        $manager->persist($language);
+        $manager->persist($language1);
+        $manager->persist($language2);
+        $manager->persist($language3);
 
         $manager->flush();
     }

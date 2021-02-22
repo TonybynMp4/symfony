@@ -27,7 +27,7 @@ class Event
 
     /**
      * @ORM\OneToOne(targetEntity="Theme", orphanRemoval=true)
-     * @ORM\JoinColumn(name="theme_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="theme_id", referencedColumnName="id", nullable=false)
      * @Groups({"event:read", "event:write"})
      */
     private $theme;
@@ -115,6 +115,7 @@ class Event
 
     /**
      * @ORM\OneToOne(targetEntity="User", orphanRemoval=true)
+     * @ORM\JoinColumn(nullable=false)
      * @Groups({"event:read", "event:write"})
      */
     private $owner;
