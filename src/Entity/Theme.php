@@ -13,8 +13,18 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * @ApiResource(
  *     normalizationContext={"groups"={"theme:read"}},
  *     denormalizationContext={"groups"={"theme:write"}},
+ *     collectionOperations={
+ *          "get"={},
+ *          "post"={},
+ *          "getSubThemes"={
+ *              "method"="GET",
+ *              "path"="/themes/subthemes/{parentId}",
+ *              "requirements"={"parentId"="\d+"},
+ *              "controller"=App\Controller\Subthemes::class
+ *          }
+ *     }
  * )
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\ThemeRepository")
  */
 class Theme
 {
@@ -41,13 +51,13 @@ class Theme
     private $parent;
 
     /**
-     * @ORM\OneToMany(targetEntity="UserHasTheme", mappedBy="theme", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="UserHasTheme", mappedBy="theme")
      * @Groups({"theme:read", "theme:write"})
      */
     private $users;
 
     /**
-     * @ORM\OneToMany(targetEntity="UserHasFavoriteTheme", mappedBy="theme", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="UserHasFavoriteTheme", mappedBy="theme")
      * @Groups({"theme:read", "theme:write"})
      */
     private $usersFavorites;
@@ -55,7 +65,7 @@ class Theme
     /**
      * @var MediaObject|null
      *
-     * @ORM\ManyToOne(targetEntity=MediaObject::class)
+     * @ORM\ManyToOne(targetEntity=MediaObject::class, cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=true)
      * @ApiProperty(iri="http://schema.org/image")
      * @Groups({"theme:read", "theme:write"})

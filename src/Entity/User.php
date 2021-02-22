@@ -113,7 +113,7 @@ class User implements UserInterface
     /**
      * @var MediaObject|null
      *
-     * @ORM\ManyToOne(targetEntity=MediaObject::class)
+     * @ORM\ManyToOne(targetEntity=MediaObject::class, cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=true)
      * @ApiProperty(iri="http://schema.org/image")
      * @Groups({"user:read", "user:write"})
@@ -133,45 +133,54 @@ class User implements UserInterface
     private $themes;
 
     /**
-     * @ORM\OneToMany(targetEntity="UserHasEvent", mappedBy="user", orphanRemoval=true, cascade={"remove"})
+     * @ORM\OneToMany(targetEntity="UserHasEvent", mappedBy="user", cascade={"remove"})
      * @Groups({"user:read", "user:write"})
      */
     private $events;
 
     /**
-     * @ORM\OneToMany(targetEntity="UserHasFavoriteTheme", mappedBy="user", orphanRemoval=true, cascade={"remove"})
+     * @ORM\OneToMany(targetEntity="UserHasFavoriteTheme", mappedBy="user", cascade={"remove"})
      * @Groups({"user:read", "user:write"})
      */
     private $favoriteThemes;
 
     /**
-     * @ORM\OneToMany(targetEntity="UserHasFavoriteSupport", mappedBy="user", orphanRemoval=true, cascade={"remove"})
+     * @ORM\OneToMany(targetEntity="UserHasFavoriteSupport", mappedBy="user", cascade={"remove"})
      * @Groups({"user:read", "user:write"})
      */
     private $favoriteSupports;
 
     /**
-     * @ORM\OneToMany(targetEntity="Support", mappedBy="user", orphanRemoval=true, cascade={"remove"})
+     * @ORM\OneToMany(targetEntity="Support", mappedBy="user", cascade={"remove"})
      * @Groups({"user:read", "user:write"})
      */
     private $supports;
 
     /**
-     * @ORM\OneToMany(targetEntity="Message", mappedBy="owner", orphanRemoval=true, cascade={"remove"})
+     * @ORM\OneToMany(targetEntity="Message", mappedBy="owner", cascade={"remove"})
      * @Groups({"user:read", "user:write"})
      */
     private $messages;
 
     /**
-     * @ORM\OneToMany(targetEntity="UserHasListSupport", mappedBy="user", orphanRemoval=true, cascade={"remove"})
-     * @Groups({"user:read", "user:write"})
-     */
-    private $listSupports;
-
-    /**
-     * @ORM\OneToMany(targetEntity="UserHasLanguage", mappedBy="user", orphanRemoval=true, cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="UserHasLanguage", mappedBy="user")
      */
     private $languages;
+
+    /**
+     *
+     * @ORM\Column(type="datetime")
+     * @Assert\NotBlank
+     * @Groups({"user:read", "user:write"})
+     */
+    private $createdAt;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Language")
+     * @ORM\JoinColumn(name="language_default_id", referencedColumnName="id")
+     * @Groups({"user:read", "user:write"})
+     */
+    private $languageDefault;
 
     public function __construct() {
         $this->personalities = new ArrayCollection();
@@ -181,8 +190,8 @@ class User implements UserInterface
         $this->supports = new ArrayCollection();
         $this->events = new ArrayCollection();
         $this->messages = new ArrayCollection();
-        $this->listSupports = new ArrayCollection();
         $this->languages = new ArrayCollection();
+        $this->createdAt = new \DateTime();
         $this->roles[] = "ROLE_USER";
     }
 
@@ -514,34 +523,6 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getListSupports()
-    {
-        return $this->listSupports;
-    }
-
-    public function addListSupport(UserHasListSupport $listSupport): self
-    {
-        if (!$this->listSupports->contains($listSupport)) {
-            $this->listSupports[] = $listSupport;
-            $listSupport->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeListSupport(UserHasListSupport $listSupport): self
-    {
-        if ($this->listSupports->contains($listSupport)) {
-            $this->listSupports->removeElement($listSupport);
-            // set the owning side to null (unless already changed)
-            if ($listSupport->getUser() === $this) {
-                $listSupport->setUser(null);
-            }
-        }
-
-        return $this;
-    }
-
     /**
      * @return mixed
      */
@@ -621,6 +602,42 @@ class User implements UserInterface
             }
         }
 
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getCreatedAt(): \DateTime
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @param \DateTime $createdAt
+     * @return User
+     */
+    public function setCreatedAt(\DateTime $createdAt): User
+    {
+        $this->createdAt = $createdAt;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLanguageDefault()
+    {
+        return $this->languageDefault;
+    }
+
+    /**
+     * @param mixed $languageDefault
+     * @return User
+     */
+    public function setLanguageDefault($languageDefault)
+    {
+        $this->languageDefault = $languageDefault;
         return $this;
     }
 }

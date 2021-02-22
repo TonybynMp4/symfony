@@ -35,7 +35,7 @@ class Personality
     public $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="UserHasPersonality", mappedBy="personality", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="UserHasPersonality", mappedBy="personality")
      */
     private $users;
 

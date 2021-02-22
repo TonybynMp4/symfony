@@ -65,7 +65,7 @@ class Event
     private $place;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="smallint")
      * @Groups({"event:read", "event:write"})
      */
     private $supportType;
@@ -83,7 +83,8 @@ class Event
     private $level;
 
     /**
-     * @ORM\Column(type="smallint")
+     * @ORM\OneToOne(targetEntity="Language")
+     * @ORM\JoinColumn(name="language_id", referencedColumnName="id")
      * @Groups({"event:read", "event:write"})
      */
     private $language;
@@ -91,7 +92,7 @@ class Event
     /**
      * @var MediaObject|null
      *
-     * @ORM\ManyToOne(targetEntity=MediaObject::class)
+     * @ORM\ManyToOne(targetEntity=MediaObject::class, cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=true)
      * @ApiProperty(iri="http://schema.org/image")
      * @Groups({"event:read", "event:write"})
@@ -100,14 +101,14 @@ class Event
 
     /**
      *
-     * @ORM\Column(type="text", length=2500)
+     * @ORM\Column(type="text", length=2500, nullable=true)
      * @Assert\NotBlank
      * @Groups({"event:read", "event:write"})
      */
     private $description;
 
     /**
-     * @ORM\OneToMany(targetEntity="UserHasEvent", mappedBy="event", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="UserHasEvent", mappedBy="event")
      * @Groups({"event:read", "event:write"})
      */
     private $users;
@@ -133,7 +134,7 @@ class Event
     private $createdAt;
 
     /**
-     * @ORM\OneToMany(targetEntity="Message", mappedBy="event", orphanRemoval=true, cascade={"remove"})
+     * @ORM\OneToMany(targetEntity="Message", mappedBy="event", cascade={"remove"})
      * @Groups({"event:read", "event:write"})
      */
     private $messages;

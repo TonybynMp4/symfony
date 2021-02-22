@@ -47,6 +47,9 @@ security:
     access_control:
         - { path: ^/api/docs, roles: IS_AUTHENTICATED_ANONYMOUSLY } # Allows accessing the Swagger UI
         - { path: ^/api/users, roles: IS_AUTHENTICATED_ANONYMOUSLY , methods: [POST] }
+        - { path: ^/api/personalities, roles: IS_AUTHENTICATED_ANONYMOUSLY , methods: [GET] }
+        - { path: ^/api/themes, roles: IS_AUTHENTICATED_ANONYMOUSLY , methods: [GET] }
+        - { path: ^/api/media_objects, roles: IS_AUTHENTICATED_ANONYMOUSLY , methods: [POST] }
         - { path: ^/authentication_token, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/token/refresh, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/, roles: IS_AUTHENTICATED_FULLY }

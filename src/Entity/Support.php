@@ -80,7 +80,7 @@ class Support
     /**
      * @var MediaObject|null
      *
-     * @ORM\ManyToOne(targetEntity=MediaObject::class)
+     * @ORM\ManyToOne(targetEntity=MediaObject::class, cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=true)
      * @ApiProperty(iri="http://schema.org/image")
      * @Groups({"support:read", "support:write"})
@@ -108,27 +108,27 @@ class Support
     private $user;
 
     /**
-     * @ORM\OneToMany(targetEntity="UserHasFavoriteSupport", mappedBy="support", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="UserHasFavoriteSupport", mappedBy="support")
      */
     private $usersFavorites;
-
-    /**
-     * @ORM\OneToMany(targetEntity="UserHasListSupport", mappedBy="support", orphanRemoval=true)
-     */
-    private $usersLists;
 
     /**
      *
      * @ORM\Column(type="datetime")
      * @Assert\NotBlank
-     * @Groups({"event:read", "event:write"})
+     * @Groups({"support:read", "support:write"})
      */
     private $createdAt;
+
+    /**
+     * @ORM\Column(type="smallint")
+     * @Groups({"support:read", "support:write"})
+     */
+    private $level;
 
     public function __construct()
     {
         $this->createdAt = new \DateTime();
-        $this->usersLists = new ArrayCollection();
         $this->usersFavorites = new ArrayCollection();
     }
 
@@ -370,34 +370,6 @@ class Support
         return $this;
     }
 
-    public function getUsersLists()
-    {
-        return $this->usersLists;
-    }
-
-    public function addUserList(UserHasListSupport $userHasListSupport): self
-    {
-        if (!$this->usersLists->contains($userHasListSupport)) {
-            $this->usersLists[] = $userHasListSupport;
-            $userHasListSupport->setSupport($this);
-        }
-
-        return $this;
-    }
-
-    public function removeUserList(UserHasListSupport $userHasListSupport): self
-    {
-        if ($this->usersLists->contains($userHasListSupport)) {
-            $this->usersLists->removeElement($userHasListSupport);
-            // set the owning side to null (unless already changed)
-            if ($userHasListSupport->getSupport() === $this) {
-                $userHasListSupport->setSupport(null);
-            }
-        }
-
-        return $this;
-    }
-
     /**
      * @return \DateTime
      */
@@ -413,6 +385,24 @@ class Support
     public function setCreatedAt(\DateTime $createdAt): Support
     {
         $this->createdAt = $createdAt;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLevel()
+    {
+        return $this->level;
+    }
+
+    /**
+     * @param mixed $level
+     * @return Support
+     */
+    public function setLevel($level)
+    {
+        $this->level = $level;
         return $this;
     }
 }

@@ -31,7 +31,7 @@ class Language
     public $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="UserHasLanguage", mappedBy="language", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="UserHasLanguage", mappedBy="language")
      */
     private $users;
 
