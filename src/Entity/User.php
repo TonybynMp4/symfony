@@ -121,19 +121,19 @@ class User implements UserInterface
     public $image;
 
     /**
-     * @ORM\OneToMany(targetEntity="UserHasPersonality", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="UserHasPersonality", mappedBy="user", cascade={"persist"})
      * @Groups({"user:read", "user:write"})
      */
     private $personalities;
 
     /**
-     * @ORM\OneToMany(targetEntity="UserHasTheme", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="UserHasTheme", mappedBy="user", cascade={"persist"})
      * @Groups({"user:read", "user:write"})
      */
     private $themes;
 
     /**
-     * @ORM\OneToMany(targetEntity="UserHasEvent", mappedBy="user", cascade={"remove"})
+     * @ORM\OneToMany(targetEntity="UserHasEvent", mappedBy="user", cascade={"persist", "remove"})
      * @Groups({"user:read", "user:write"})
      */
     private $events;

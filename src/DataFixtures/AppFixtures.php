@@ -53,10 +53,10 @@ class AppFixtures extends Fixture
         $language3->setName("Chinois");
 
         $user = new User();
-        $user->setEmail('alexandre.peneau@gmail.com');
+        $user->setEmail('blaise.pinheiro@gmail.com');
         $user->setPassword($this->passwordEncoder->encodePassword(
             $user,
-            'Ndombi75!'
+            'hVnN27SC}p.94-$x'
         ));
         $birthday = "03-11-1988";
         $desired_length = 30; //or whatever length you want
