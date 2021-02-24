@@ -40,7 +40,7 @@ class Theme
      *
      * @ORM\Column(type="string", length=50)
      * @Assert\NotBlank
-     * @Groups({"theme:read", "theme:write", "user:read"})
+     * @Groups({"theme:read", "theme:write", "user:read", "support:read"})
      */
     public $name;
 

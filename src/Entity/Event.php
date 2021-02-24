@@ -135,7 +135,7 @@ class Event
     private $createdAt;
 
     /**
-     * @ORM\OneToMany(targetEntity="Message", mappedBy="event", cascade={"remove"})
+     * @ORM\OneToMany(targetEntity="Message", mappedBy="event", cascade={"persist", "remove"})
      * @Groups({"event:read", "event:write"})
      */
     private $messages;
