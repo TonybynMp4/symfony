@@ -40,7 +40,7 @@ class Theme
      *
      * @ORM\Column(type="string", length=50)
      * @Assert\NotBlank
-     * @Groups({"theme:read", "theme:write"})
+     * @Groups({"theme:read", "theme:write", "user:read"})
      */
     public $name;
 
@@ -65,7 +65,7 @@ class Theme
     /**
      * @var MediaObject|null
      *
-     * @ORM\ManyToOne(targetEntity=MediaObject::class, cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=MediaObject::class, cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=true)
      * @ApiProperty(iri="http://schema.org/image")
      * @Groups({"theme:read", "theme:write"})

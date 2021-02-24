@@ -30,7 +30,7 @@ class Personality
      *
      * @ORM\Column(type="string", length=50)
      * @Assert\NotBlank
-     * @Groups({"personality:read", "personality:write"})
+     * @Groups({"personality:read", "personality:write", "user:read"})
      */
     public $name;
 

@@ -27,17 +27,10 @@ class Support
 
     /**
      * @ORM\ManyToOne(targetEntity="Theme")
-     * @ORM\JoinColumn(name="theme_id", referencedColumnName="id", nullable=false)
-     * @Groups({"support:read", "support:write"})
-     */
-    private $theme;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Theme")
      * @ORM\JoinColumn(name="subtheme_id", referencedColumnName="id", nullable=false)
      * @Groups({"support:read", "support:write"})
      */
-    private $subtheme;
+    private $subTheme;
 
     /**
      *
@@ -72,12 +65,6 @@ class Support
     private $description;
 
     /**
-     * @ORM\Column(type="boolean")
-     * @Groups({"support:read", "support:write"})
-     */
-    private $validate = false;
-
-    /**
      * @var MediaObject|null
      *
      * @ORM\ManyToOne(targetEntity=MediaObject::class, cascade={"persist", "remove"})
@@ -86,12 +73,6 @@ class Support
      * @Groups({"support:read", "support:write"})
      */
     public $image;
-
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     * @Groups({"support:read", "support:write"})
-     */
-    private $zoom;
 
     /**
      *
@@ -104,6 +85,7 @@ class Support
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="supports")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
+     * @Groups({"support:read", "support:write"})
      */
     private $user;
 
@@ -147,24 +129,6 @@ class Support
     public function setId($id)
     {
         $this->id = $id;
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getTheme()
-    {
-        return $this->theme;
-    }
-
-    /**
-     * @param mixed $theme
-     * @return Support
-     */
-    public function setTheme($theme)
-    {
-        $this->theme = $theme;
         return $this;
     }
 
@@ -241,24 +205,6 @@ class Support
     }
 
     /**
-     * @return bool
-     */
-    public function isValidate(): bool
-    {
-        return $this->validate;
-    }
-
-    /**
-     * @param bool $validate
-     * @return Support
-     */
-    public function setValidate(bool $validate): Support
-    {
-        $this->validate = $validate;
-        return $this;
-    }
-
-    /**
      * @return MediaObject|null
      */
     public function getImage(): ?MediaObject
@@ -279,24 +225,6 @@ class Support
     /**
      * @return mixed
      */
-    public function getZoom()
-    {
-        return $this->zoom;
-    }
-
-    /**
-     * @param mixed $zoom
-     * @return Support
-     */
-    public function setZoom($zoom)
-    {
-        $this->zoom = $zoom;
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
     public function getLegend()
     {
         return $this->legend;
@@ -309,24 +237,6 @@ class Support
     public function setLegend($legend)
     {
         $this->legend = $legend;
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getSubtheme()
-    {
-        return $this->subtheme;
-    }
-
-    /**
-     * @param mixed $subtheme
-     * @return Support
-     */
-    public function setSubtheme($subtheme)
-    {
-        $this->subtheme = $subtheme;
         return $this;
     }
 
@@ -403,6 +313,24 @@ class Support
     public function setLevel($level)
     {
         $this->level = $level;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSubTheme()
+    {
+        return $this->subTheme;
+    }
+
+    /**
+     * @param mixed $subTheme
+     * @return Support
+     */
+    public function setSubTheme($subTheme)
+    {
+        $this->subTheme = $subTheme;
         return $this;
     }
 }

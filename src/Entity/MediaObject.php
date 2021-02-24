@@ -82,6 +82,7 @@ class MediaObject
      * @var string|null
      *
      * @ORM\Column(nullable=true)
+     * @Groups({"theme:read", "user:read"})
      */
     public $filePath;
 
