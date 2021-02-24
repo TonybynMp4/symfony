@@ -27,7 +27,7 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
  *          "delete"={},
  *          "resetPassword"={
  *              "method"="PATCH",
- *              "path"="/users/{id}/resetPassword",
+ *              "path"="/users/resetPassword",
  *              "controller"=App\Controller\Security\ResetPassword::class,
  *              "swagger_context"={
  *                  "parameters"={
@@ -84,6 +84,13 @@ class User implements UserInterface
      * @Groups({"user:write"})
      */
     private $password;
+
+    /**
+     * @var string The hashed password
+     * @ORM\Column(type="string", nullable=true)
+     * @Groups({"user:write"})
+     */
+    private $newPassword;
 
     /**
      * @Groups("user:write")
@@ -163,7 +170,8 @@ class User implements UserInterface
     private $messages;
 
     /**
-     * @ORM\OneToMany(targetEntity="UserHasLanguage", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="UserHasLanguage", mappedBy="user", cascade={"persist"})
+     * @Groups({"user:read", "user:write"})
      */
     private $languages;
 
@@ -638,6 +646,24 @@ class User implements UserInterface
     public function setLanguageDefault($languageDefault)
     {
         $this->languageDefault = $languageDefault;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getNewPassword(): string
+    {
+        return $this->newPassword;
+    }
+
+    /**
+     * @param string $newPassword
+     * @return User
+     */
+    public function setNewPassword(string $newPassword): User
+    {
+        $this->newPassword = $newPassword;
         return $this;
     }
 }

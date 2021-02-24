@@ -4,7 +4,9 @@ namespace App\Controller\Security;
 
 use App\Entity\User;
 use App\Repository\UserRepository;
+use App\Service\MailService;
 use Doctrine\ORM\EntityManagerInterface;
+use Gesdinet\JWTRefreshTokenBundle\Entity\RefreshToken;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -16,8 +18,14 @@ class ResetPassword
 {
     protected $em;
 
-    public function __construct(EntityManagerInterface $em) {
+    /**
+     * @var MailService
+     */
+    private $mailService;
+
+    public function __construct(EntityManagerInterface $em, MailService $mailService) {
         $this->em = $em;
+        $this->mailService = $mailService;
     }
 
     /**
@@ -25,6 +33,7 @@ class ResetPassword
      * @param UserRepository $repository
      * @param Request $request
      * @param UserPasswordEncoderInterface $passwordEncoder
+     * @return string
      */
     public function __invoke(User $data, UserRepository $repository, Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
@@ -39,16 +48,25 @@ class ResetPassword
             throw new AccessDeniedHttpException("Il est impossible de modifier le mot de passe de l'administrateur");
         }
 
+        $host = $request->server->get('HTTP_HOST');
+        $host = "https://" . $host;
         $newEncodedPassword = $passwordEncoder->encodePassword($actualUser, $content->password);
-        $actualUser->setPassword($newEncodedPassword);
+        $actualUser->setNewPassword($newEncodedPassword);
+        $refreshToken = $this->em->getRepository(RefreshToken::class)->findOneBy(["username" => $actualUser->getEmail()]);
 
         try {
             $this->em->flush();
-            dump("changement de mot de passe effectué avec succès");
+            $this->mailService->sendEmail(
+                'contact@ndombi.fr',
+                $actualUser->getEmail(),
+                "Changement de mot de passe",
+                "email/resetPassword.html.twig",
+                ["newPassword" => $content->password, "host" => $host, "accessToken" => $refreshToken]
+            );
         } catch(Exception $e){
             throw new BadRequestHttpException($e->getMessage());
         }
 
-        die();
+        return "Vous allez recevoir un mail permettant de confirmer le changement de mot de passe.";
     }
 }
