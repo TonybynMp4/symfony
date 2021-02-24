@@ -3,7 +3,7 @@ import {Language} from './Language';
 
 export interface UserHasLanguage {
 	id: number;
-	level: any;
+	level: string;
 	user?: User;
 	language?: Language;
 }
