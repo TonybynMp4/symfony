@@ -86,6 +86,14 @@ class MediaObject
      */
     public $filePath;
 
+    /**
+     * @var text|null
+     *
+     * @ORM\Column(type="text", nullable=true)
+     * @Groups({"support:read", "support:write"})
+     */
+    public $description;
+
     public function getId(): ?int
     {
         return $this->id;
