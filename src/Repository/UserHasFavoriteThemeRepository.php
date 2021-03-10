@@ -1,0 +1,21 @@
+<?php
+
+namespace App\Repository;
+
+use App\Entity\UserHasFavoriteTheme;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
+
+/**
+ * @method UserHasFavoriteTheme|null find($id, $lockMode = null, $lockVersion = null)
+ * @method UserHasFavoriteTheme|null findOneBy(array $criteria, array $orderBy = null)
+ * @method UserHasFavoriteTheme[]    findAll()
+ * @method UserHasFavoriteTheme[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ */
+class UserHasFavoriteThemeRepository extends ServiceEntityRepository
+{
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, UserhasFavoriteTheme::class);
+    }
+}

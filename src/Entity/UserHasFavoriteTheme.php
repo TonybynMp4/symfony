@@ -13,7 +13,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *     normalizationContext={"groups"={"user:read", "theme:read"}},
  *     denormalizationContext={"groups"={"user:write", "theme:write"}},
  * )
- * @ORM\Entity(repositoryClass="App\Repository\UserHasFavoriteThemeRepository")
+ * @ORM\Entity(repositoryClass=UserHasFavoriteThemeRepository::class)
  * @ORM\Table(
  *     uniqueConstraints={
  *          @ORM\UniqueConstraint(
