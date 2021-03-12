@@ -13,8 +13,18 @@ use ApiPlatform\Core\Annotation\ApiProperty;
  * @ApiResource(
  *     normalizationContext={"groups"={"support:read"}},
  *     denormalizationContext={"groups"={"support:write"}},
+ *     collectionOperations={
+ *          "get"={},
+ *          "post"={},
+ *          "getSupportsByUser"={
+ *              "method"="GET",
+ *              "path"="/supports/user/{userId}",
+ *              "requirements"={"userId"="\d+"},
+ *              "controller"=App\Controller\SupportUser::class
+ *          }
+ *     }
  * )
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\SupportRepository")
  */
 class Support
 {

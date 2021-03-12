@@ -22,7 +22,11 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
  *     normalizationContext={"groups"={"user:read"}},
  *     denormalizationContext={"groups"={"user:write"}},
  *     itemOperations={
- *          "get"={},
+ *          "searchUsersByLetters"={
+ *              "method"="GET",
+ *              "path"="/users/search/{letters}",
+ *              "controller"=App\Controller\SearchUser::class
+ *          },
  *          "put"={},
  *          "delete"={},
  *          "resetPassword"={
@@ -68,7 +72,7 @@ class User implements UserInterface
     private $email;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=75)
      * @Groups({"user:read", "user:write", "support:read"})
      */
     private $name;

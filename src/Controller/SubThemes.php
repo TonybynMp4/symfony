@@ -6,7 +6,7 @@ use App\Entity\Theme;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-class Subthemes
+class SubThemes
 {
     protected $em;
 

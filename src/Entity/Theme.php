@@ -20,7 +20,12 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *              "method"="GET",
  *              "path"="/themes/subthemes/{parentId}",
  *              "requirements"={"parentId"="\d+"},
- *              "controller"=App\Controller\Subthemes::class
+ *              "controller"=App\Controller\SubThemes::class
+ *          },
+ *          "getParentThemes"={
+ *              "method"="GET",
+ *              "path"="/themes/parent",
+ *              "controller"=App\Controller\ParentThemes::class
  *          }
  *     }
  * )

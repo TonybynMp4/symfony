@@ -27,4 +27,12 @@ class ThemeRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function getParentThemes()
+    {
+        return $this->createQueryBuilder("t")
+            ->where("t.parent is NULL")
+            ->getQuery()
+            ->getResult();
+    }
 }
