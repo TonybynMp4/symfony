@@ -27,4 +27,13 @@ class SupportRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function searchSupportsByLetters($letters)
+    {
+        return $this->createQueryBuilder("s")
+            ->where("s.title LIKE :letters")
+            ->setParameter('letters','%'. $letters .'%')
+            ->getQuery()
+            ->getResult();
+    }
 }

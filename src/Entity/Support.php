@@ -21,7 +21,12 @@ use ApiPlatform\Core\Annotation\ApiProperty;
  *              "path"="/supports/user/{userId}",
  *              "requirements"={"userId"="\d+"},
  *              "controller"=App\Controller\SupportUser::class
- *          }
+ *          },
+ *          "searchSupportsByLetters"={
+ *              "method"="GET",
+ *              "path"="/supports/search/{letters}",
+ *              "controller"=App\Controller\SearchSupport::class
+ *          },
  *     }
  * )
  * @ORM\Entity(repositoryClass="App\Repository\SupportRepository")

@@ -22,11 +22,7 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
  *     normalizationContext={"groups"={"user:read"}},
  *     denormalizationContext={"groups"={"user:write"}},
  *     itemOperations={
- *          "searchUsersByLetters"={
- *              "method"="GET",
- *              "path"="/users/search/{letters}",
- *              "controller"=App\Controller\SearchUser::class
- *          },
+ *          "get"={},
  *          "put"={},
  *          "delete"={},
  *          "resetPassword"={
@@ -49,6 +45,14 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
  *                      }
  *                  }
  *              }
+ *          }
+ *     },
+ *     collectionOperations={
+ *          "get"={},
+ *          "searchUsersByLetters"={
+ *              "method"="GET",
+ *              "path"="/users/search/{letters}",
+ *              "controller"=App\Controller\SearchUser::class
  *          }
  *     }
  * )

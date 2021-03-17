@@ -13,8 +13,24 @@ use ApiPlatform\Core\Annotation\ApiProperty;
  * @ApiResource(
  *     normalizationContext={"groups"={"message:read"}},
  *     denormalizationContext={"groups"={"message:write"}},
+ *     collectionOperations={
+ *          "get"={},
+ *          "post"={},
+ *          "getTchatBetweenUser"={
+ *              "method"="GET",
+ *              "path"="/messages/tchat/{ownerId}/{userDeliveryId}",
+ *              "requirements"={"ownerId"="\d+", "userDeliveryId"="\d+"},
+ *              "controller"=App\Controller\TchatBetweenUser::class
+ *          },
+ *          "getTchatList"={
+ *              "method"="GET",
+ *              "path"="/messages/tchat/list/{ownerId}",
+ *              "requirements"={"ownerId"="\d+"},
+ *              "controller"=App\Controller\TchatList::class
+ *          }
+ *     }
  * )
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\MessageRepository")
  */
 class Message
 {
