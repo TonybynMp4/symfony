@@ -20,6 +20,7 @@ export interface User {
 	gender: boolean;
 	idSubscription?: string;
 	createdAt: Date;
+	level: any;
 	image?: MediaObject;
 	personalities?: Array<UserHasPersonality>;
 	themes?: Array<UserHasTheme>;

@@ -31,8 +31,19 @@ class ThemeRepository extends ServiceEntityRepository
     public function getParentThemes()
     {
         return $this->createQueryBuilder("t")
+            ->select("t.id", "t.name", "i.filePath")
+            ->leftJoin('t.image', 'i')
             ->where("t.parent is NULL")
             ->getQuery()
-            ->getResult();
+            ->getArrayResult();
+    }
+
+    public function getNbChildThemes($parentId)
+    {
+        return $this->createQueryBuilder("t")
+            ->where("t.parent = :parentId")
+            ->setParameter("parentId", $parentId)
+            ->getQuery()
+            ->getArrayResult();
     }
 }

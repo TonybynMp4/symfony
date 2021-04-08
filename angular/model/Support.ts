@@ -2,6 +2,7 @@ import {Theme} from './Theme';
 import {MediaObject} from './MediaObject';
 import {User} from './User';
 import {UserHasFavoriteSupport} from './UserHasFavoriteSupport';
+import {Language} from './Language';
 
 export interface Support {
 	id: number;
@@ -16,4 +17,5 @@ export interface Support {
 	image?: MediaObject;
 	user?: User;
 	usersFavorites?: Array<UserHasFavoriteSupport>;
+	language?: Language;
 }

@@ -17,6 +17,14 @@ class ParentThemes
 
     public function __invoke(Request $request)
     {
-        return $this->em->getRepository(Theme::class)->getParentThemes();
+        $themes = $this->em->getRepository(Theme::class)->getParentThemes();
+
+        foreach ($themes as $theme) {
+            $nbChildThemes = $this->em->getRepository(Theme::class)->getNbChildThemes($theme["id"]);
+            $theme["nbChildThemes"] = count($nbChildThemes);
+            $themesInfos[] = $theme;
+        }
+
+        return $themesInfos;
     }
 }
