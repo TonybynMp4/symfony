@@ -15,7 +15,7 @@ use ApiPlatform\Core\Annotation\ApiProperty;
  *     denormalizationContext={"groups"={"support:write"}},
  *     collectionOperations={
  *          "get"={},
- *          "post"={},
+ *          "post"={"security"="is_granted('ROLE_PRO')"},
  *          "getSupportsByUser"={
  *              "method"="GET",
  *              "path"="/supports/user/{userId}",
@@ -108,6 +108,13 @@ class Support
      * @ORM\OneToMany(targetEntity="UserHasFavoriteSupport", mappedBy="support")
      */
     private $usersFavorites;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Language")
+     * @ORM\JoinColumn(name="language_id", referencedColumnName="id")
+     * @Groups({"support:read", "support:write"})
+     */
+    private $language;
 
     /**
      *
@@ -292,6 +299,24 @@ class Support
             }
         }
 
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLanguage()
+    {
+        return $this->language;
+    }
+
+    /**
+     * @param mixed $language
+     * @return Support
+     */
+    public function setLanguage($language)
+    {
+        $this->language = $language;
         return $this;
     }
 

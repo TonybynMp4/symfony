@@ -13,8 +13,18 @@ use ApiPlatform\Core\Annotation\ApiProperty;
  * @ApiResource(
  *     normalizationContext={"groups"={"event:read"}},
  *     denormalizationContext={"groups"={"event:write"}},
+ *     collectionOperations={
+ *          "get"={},
+ *          "post"={"security"="is_granted('ROLE_PRO')"},
+ *          "getLastEvents"={
+ *              "method"="GET",
+ *              "path"="/events/list/{userId}",
+ *              "requirements"={"userId"="\d+"},
+ *              "controller"=App\Controller\EventList::class
+ *          }
+ *     }
  * )
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\EventRepository")
  */
 class Event
 {
@@ -83,7 +93,7 @@ class Event
     private $level;
 
     /**
-     * @ORM\OneToOne(targetEntity="Language")
+     * @ORM\ManyToOne(targetEntity="Language")
      * @ORM\JoinColumn(name="language_id", referencedColumnName="id")
      * @Groups({"event:read", "event:write"})
      */
@@ -108,7 +118,7 @@ class Event
     private $description;
 
     /**
-     * @ORM\OneToMany(targetEntity="UserHasEvent", mappedBy="event")
+     * @ORM\OneToMany(targetEntity="UserHasEvent", mappedBy="event", cascade={"persist", "remove"})
      * @Groups({"event:read", "event:write"})
      */
     private $users;
@@ -139,6 +149,18 @@ class Event
      * @Groups({"event:read", "event:write"})
      */
     private $messages;
+
+    /**
+     * @Groups({"event:read", "event:write"})
+     * @var boolean
+     */
+    private $repeat = false;
+
+    /**
+     * @Groups({"event:read", "event:write"})
+     * @var \DateTime
+     */
+    private $endRepeat;
 
     public function __construct()
     {
@@ -470,6 +492,42 @@ class Event
     public function setDuration($duration)
     {
         $this->duration = $duration;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isRepeat(): bool
+    {
+        return $this->repeat;
+    }
+
+    /**
+     * @param bool $repeat
+     * @return Event
+     */
+    public function setRepeat(bool $repeat): Event
+    {
+        $this->repeat = $repeat;
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getEndRepeat(): \DateTime
+    {
+        return $this->endRepeat;
+    }
+
+    /**
+     * @param \DateTime $endRepeat
+     * @return Event
+     */
+    public function setEndRepeat(\DateTime $endRepeat): Event
+    {
+        $this->endRepeat = $endRepeat;
         return $this;
     }
 }
