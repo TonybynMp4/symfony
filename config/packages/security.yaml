@@ -1,4 +1,8 @@
 security:
+    role_hierarchy:
+        ROLE_PRO: ROLE_USER
+        ROLE_ADMIN: [ ROLE_USER, ROLE_PRO ]
+
     encoders:
         App\Entity\User:
             algorithm: auto

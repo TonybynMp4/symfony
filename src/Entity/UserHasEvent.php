@@ -48,6 +48,12 @@ class UserHasEvent
      */
     private $event;
 
+    /**
+     * @ORM\Column(type="boolean")
+     * @Groups({"event:read", "event:write"})
+     */
+    private $accepted = false;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -74,6 +80,24 @@ class UserHasEvent
     {
         $this->event = $event;
 
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAccepted(): bool
+    {
+        return $this->accepted;
+    }
+
+    /**
+     * @param bool $accepted
+     * @return UserHasEvent
+     */
+    public function setAccepted(bool $accepted): UserHasEvent
+    {
+        $this->accepted = $accepted;
         return $this;
     }
 }

@@ -148,7 +148,7 @@ class User implements UserInterface
     private $themes;
 
     /**
-     * @ORM\OneToMany(targetEntity="UserHasEvent", mappedBy="user", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="UserHasEvent", mappedBy="user", cascade={"remove"})
      * @Groups({"user:read", "user:write"})
      */
     private $events;
@@ -198,6 +198,14 @@ class User implements UserInterface
      */
     private $languageDefault;
 
+    /**
+     *
+     * @ORM\Column(type="smallint")
+     * @Assert\NotBlank
+     * @Groups({"user:read", "user:write"})
+     */
+    private $level = 0;
+
     public function __construct() {
         $this->personalities = new ArrayCollection();
         $this->themes = new ArrayCollection();
@@ -209,6 +217,7 @@ class User implements UserInterface
         $this->languages = new ArrayCollection();
         $this->createdAt = new \DateTime();
         $this->roles[] = "ROLE_USER";
+        $this->roles[] = "ROLE_PRO";
     }
 
     public function getId(): ?int
@@ -672,6 +681,24 @@ class User implements UserInterface
     public function setNewPassword(string $newPassword): User
     {
         $this->newPassword = $newPassword;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getLevel(): int
+    {
+        return $this->level;
+    }
+
+    /**
+     * @param int $level
+     * @return User
+     */
+    public function setLevel(int $level): User
+    {
+        $this->level = $level;
         return $this;
     }
 }
