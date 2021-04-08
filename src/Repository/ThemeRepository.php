@@ -22,10 +22,12 @@ class ThemeRepository extends ServiceEntityRepository
     public function getSubthemes($parentId)
     {
         return $this->createQueryBuilder("t")
+            ->select("t.id", "t.name", "i.filePath")
+            ->leftJoin('t.image', 'i')
             ->where("t.parent = :parentId")
             ->setParameter("parentId", $parentId)
             ->getQuery()
-            ->getResult();
+            ->getArrayResult();
     }
 
     public function getParentThemes()

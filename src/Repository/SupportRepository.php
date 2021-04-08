@@ -19,10 +19,19 @@ class SupportRepository extends ServiceEntityRepository
         parent::__construct($registry, Support::class);
     }
 
+    public function getSupportsByThemeId($themeId)
+    {
+        return $this->createQueryBuilder("s")
+            ->where("s.subTheme = :themeId")
+            ->setParameter("themeId", $themeId)
+            ->getQuery()
+            ->getArrayResult();
+    }
+
     public function getSupportsByUserId($userId)
     {
-        return $this->createQueryBuilder("t")
-            ->where("t.user = :userId")
+        return $this->createQueryBuilder("s")
+            ->where("s.user = :userId")
             ->setParameter("userId", $userId)
             ->getQuery()
             ->getResult();
