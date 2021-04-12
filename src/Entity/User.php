@@ -113,6 +113,18 @@ class User implements UserInterface
     private $birthdate;
 
     /**
+     * @ORM\Column(type="date")
+     * @Groups({"user:read", "user:write"})
+     */
+    private $endSubscription;
+
+    /**
+     * @ORM\Column(type="boolean")
+     * @Groups({"user:read", "user:write"})
+     */
+    private $autoSubscription = true;
+
+    /**
      * @ORM\Column(type="boolean")
      * @Groups({"user:read", "user:write"})
      */
@@ -699,6 +711,42 @@ class User implements UserInterface
     public function setLevel(int $level): User
     {
         $this->level = $level;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEndSubscription()
+    {
+        return $this->endSubscription;
+    }
+
+    /**
+     * @param mixed $endSubscription
+     * @return User
+     */
+    public function setEndSubscription($endSubscription)
+    {
+        $this->endSubscription = $endSubscription;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAutoSubscription(): bool
+    {
+        return $this->autoSubscription;
+    }
+
+    /**
+     * @param bool $autoSubscription
+     * @return User
+     */
+    public function setAutoSubscription(bool $autoSubscription): User
+    {
+        $this->autoSubscription = $autoSubscription;
         return $this;
     }
 }

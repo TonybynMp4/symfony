@@ -22,6 +22,12 @@ use ApiPlatform\Core\Annotation\ApiProperty;
  *              "requirements"={"userId"="\d+"},
  *              "controller"=App\Controller\SupportUser::class
  *          },
+ *          "getSupportsByTheme"={
+ *              "method"="GET",
+ *              "path"="/supports/theme/{themeId}",
+ *              "requirements"={"themeId"="\d+"},
+ *              "controller"=App\Controller\SupportTheme::class
+ *          },
  *          "searchSupportsByLetters"={
  *              "method"="GET",
  *              "path"="/supports/search/{letters}",
@@ -73,11 +79,33 @@ class Support
 
     /**
      *
+     * @ORM\Column(type="string", length=250, nullable=true)
+     * @Groups({"support:read", "support:write"})
+     */
+    private $videoLink;
+
+    /**
+     *
+     * @ORM\Column(type="string", length=250, nullable=true)
+     * @Groups({"support:read", "support:write"})
+     */
+    private $videoLink2;
+
+    /**
+     *
      * @ORM\Column(type="text", length=2500)
      * @Assert\NotBlank
      * @Groups({"support:read", "support:write"})
      */
     private $description;
+
+    /**
+     *
+     * @ORM\Column(type="text", length=2500, nullable=true)
+     * @Assert\NotBlank
+     * @Groups({"support:read", "support:write"})
+     */
+    private $description2;
 
     /**
      * @var MediaObject|null
@@ -88,14 +116,6 @@ class Support
      * @Groups({"support:read", "support:write"})
      */
     public $image;
-
-    /**
-     *
-     * @ORM\Column(type="text", length=2500)
-     * @Assert\NotBlank
-     * @Groups({"support:read", "support:write"})
-     */
-    private $legend;
 
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="supports")
@@ -110,7 +130,7 @@ class Support
     private $usersFavorites;
 
     /**
-     * @ORM\OneToOne(targetEntity="Language")
+     * @ORM\ManyToOne(targetEntity="Language")
      * @ORM\JoinColumn(name="language_id", referencedColumnName="id")
      * @Groups({"support:read", "support:write"})
      */
@@ -244,24 +264,6 @@ class Support
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getLegend()
-    {
-        return $this->legend;
-    }
-
-    /**
-     * @param mixed $legend
-     * @return Support
-     */
-    public function setLegend($legend)
-    {
-        $this->legend = $legend;
-        return $this;
-    }
-
     public function getUser(): ?User
     {
         return $this->user;
@@ -371,6 +373,60 @@ class Support
     public function setSubTheme($subTheme)
     {
         $this->subTheme = $subTheme;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getVideoLink()
+    {
+        return $this->videoLink;
+    }
+
+    /**
+     * @param mixed $videoLink
+     * @return Support
+     */
+    public function setVideoLink($videoLink)
+    {
+        $this->videoLink = $videoLink;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getVideoLink2()
+    {
+        return $this->videoLink2;
+    }
+
+    /**
+     * @param mixed $videoLink2
+     * @return Support
+     */
+    public function setVideoLink2($videoLink2)
+    {
+        $this->videoLink2 = $videoLink2;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDescription2()
+    {
+        return $this->description2;
+    }
+
+    /**
+     * @param mixed $description2
+     * @return Support
+     */
+    public function setDescription2($description2)
+    {
+        $this->description2 = $description2;
         return $this;
     }
 }
