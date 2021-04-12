@@ -9,8 +9,10 @@ export interface Support {
 	title: string;
 	subtitle: string;
 	type: any;
+	videoLink?: string;
+	videoLink2?: string;
 	description: string;
-	legend: string;
+	description2?: string;
 	createdAt: Date;
 	level: any;
 	subTheme?: Theme;

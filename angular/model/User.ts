@@ -17,6 +17,8 @@ export interface User {
 	password: string;
 	newPassword?: string;
 	birthdate: any;
+	endSubscription: any;
+	autoSubscription: boolean;
 	gender: boolean;
 	idSubscription?: string;
 	createdAt: Date;
