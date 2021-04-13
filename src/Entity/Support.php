@@ -102,7 +102,6 @@ class Support
     /**
      *
      * @ORM\Column(type="text", length=2500, nullable=true)
-     * @Assert\NotBlank
      * @Groups({"support:read", "support:write"})
      */
     private $description2;
