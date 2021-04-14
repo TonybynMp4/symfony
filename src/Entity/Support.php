@@ -22,6 +22,12 @@ use ApiPlatform\Core\Annotation\ApiProperty;
  *              "requirements"={"userId"="\d+"},
  *              "controller"=App\Controller\SupportUser::class
  *          },
+ *          "getPromotedSupportsByUser"={
+ *              "method"="GET",
+ *              "path"="/supports/promoted/user/{userId}",
+ *              "requirements"={"userId"="\d+"},
+ *              "controller"=App\Controller\PromotedSupportUser::class
+ *          },
  *          "getSupportsByTheme"={
  *              "method"="GET",
  *              "path"="/supports/theme/{themeId}",
@@ -76,6 +82,12 @@ class Support
      * @Groups({"support:read", "support:write"})
      */
     private $type;
+
+    /**
+     * @ORM\Column(type="smallint", nullable=true)
+     * @Groups({"support:read", "support:write"})
+     */
+    private $type2;
 
     /**
      *
@@ -144,6 +156,14 @@ class Support
     private $createdAt;
 
     /**
+     *
+     * @ORM\Column(type="datetime")
+     * @Assert\NotBlank
+     * @Groups({"support:read", "support:write"})
+     */
+    private $lastUpdated;
+
+    /**
      * @ORM\Column(type="smallint")
      * @Groups({"support:read", "support:write"})
      */
@@ -152,6 +172,7 @@ class Support
     public function __construct()
     {
         $this->createdAt = new \DateTime();
+        $this->lastUpdated = new \DateTime();
         $this->usersFavorites = new ArrayCollection();
     }
 
@@ -426,6 +447,42 @@ class Support
     public function setDescription2($description2)
     {
         $this->description2 = $description2;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLastUpdated()
+    {
+        return $this->lastUpdated;
+    }
+
+    /**
+     * @param mixed $lastUpdated
+     * @return Support
+     */
+    public function setLastUpdated($lastUpdated)
+    {
+        $this->lastUpdated = $lastUpdated;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getType2()
+    {
+        return $this->type2;
+    }
+
+    /**
+     * @param mixed $type2
+     * @return Support
+     */
+    public function setType2($type2)
+    {
+        $this->type2 = $type2;
         return $this;
     }
 }

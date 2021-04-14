@@ -19,6 +19,6 @@ class SupportTheme
     {
         $themeId = $request->attributes->get("themeId");
 
-        return $this->em->getRepository(Support::class)->getSupportsByThemeId($themeId);
+        return $this->em->getRepository(Support::class)->getSupportsByThemeIdUser($themeId);
     }
 }

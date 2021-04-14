@@ -28,4 +28,16 @@ class UserHasFavoriteThemeRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function getSubThemesByUser($userId)
+    {
+        return $this->createQueryBuilder("uft")
+            ->select("t.id")
+            ->join("uft.theme", "t")
+            ->where("uft.user =:userId")
+            ->andWhere("t.parent IS NOT NULL")
+            ->setParameter("userId", $userId)
+            ->getQuery()
+            ->getResult();
+    }
 }

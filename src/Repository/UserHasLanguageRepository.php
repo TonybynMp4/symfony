@@ -18,4 +18,15 @@ class UserHasLanguageRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, UserHasLanguage::class);
     }
+
+    public function getUserLanguages($userId)
+    {
+        return $this->createQueryBuilder("uhl")
+            ->select("l.id")
+            ->leftJoin('uhl.language', 'l')
+            ->where("uhl.user = :userId")
+            ->setParameter("userId", $userId)
+            ->getQuery()
+            ->getResult();
+    }
 }

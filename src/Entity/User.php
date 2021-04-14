@@ -204,7 +204,7 @@ class User implements UserInterface
     private $createdAt;
 
     /**
-     * @ORM\OneToOne(targetEntity="Language")
+     * @ORM\ManyToOne(targetEntity="Language")
      * @ORM\JoinColumn(name="language_default_id", referencedColumnName="id")
      * @Groups({"user:read", "user:write"})
      */

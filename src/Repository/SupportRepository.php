@@ -19,6 +19,15 @@ class SupportRepository extends ServiceEntityRepository
         parent::__construct($registry, Support::class);
     }
 
+    public function getSupportsByThemeIdUser($themeId)
+    {
+        return $this->createQueryBuilder("s")
+            ->where("s.subTheme = :themeId")
+            ->setParameter("themeId", $themeId)
+            ->getQuery()
+            ->getResult();
+    }
+
     public function getSupportsByThemeId($themeId)
     {
         return $this->createQueryBuilder("s")
@@ -42,6 +51,18 @@ class SupportRepository extends ServiceEntityRepository
         return $this->createQueryBuilder("s")
             ->where("s.title LIKE :letters")
             ->setParameter('letters','%'. $letters .'%')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getPromotedSupports($LanguageIds, $themeIds)
+    {
+        return $this->createQueryBuilder("s")
+            ->where('s.language IN (:languageIds)')
+            ->andWhere('s.subTheme IN (:themeIds)')
+            ->orderBy('s.createdAt', 'ASC')
+            ->setParameter('languageIds', $LanguageIds)
+            ->setParameter('themeIds', $themeIds)
             ->getQuery()
             ->getResult();
     }
