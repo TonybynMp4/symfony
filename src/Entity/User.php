@@ -23,6 +23,7 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
  *     denormalizationContext={"groups"={"user:write"}},
  *     itemOperations={
  *          "get"={},
+ *          "post"={},
  *          "put"={},
  *          "delete"={},
  *          "resetPassword"={
