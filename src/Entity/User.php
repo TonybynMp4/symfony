@@ -50,6 +50,7 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
  *     },
  *     collectionOperations={
  *          "get"={},
+ *          "post"={},
  *          "searchUsersByLetters"={
  *              "method"="GET",
  *              "path"="/users/search/{letters}",
