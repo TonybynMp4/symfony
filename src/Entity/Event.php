@@ -157,7 +157,7 @@ class Event
     private $repeat = false;
 
     /**
-     * @Groups({"event:read", "event:write"})
+     * @Groups({"event:write"})
      * @var \DateTime
      */
     private $endRepeat;

@@ -10,10 +10,30 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ApiResource(
- *     normalizationContext={"groups"={"user:read", "event:read"}},
- *     denormalizationContext={"groups"={"user:write", "event:write"}},
+ *     normalizationContext={"groups"={"event:read"}},
+ *     denormalizationContext={"groups"={"event:write"}},
+ *     collectionOperations={
+ *          "get"={},
+ *          "post"={},
+ *          "getEventParticipation"={
+ *              "method"="GET",
+ *              "path"="/userHasEvent/coming/list/{userId}",
+ *              "requirements"={"userId"="\d+"},
+ *              "controller"=App\Controller\EventListComing::class
+ *          }
+ *     },
+ *     itemOperations={
+ *         "get"={},
+ *         "post"={},
+ *         "updateParticipation"={
+ *             "method"="PATCH",
+ *             "path"="/userHasEvent/participation/{userId}/{eventId}",
+ *             "requirements"={"userId"="\d+", "eventId"="\d+"},
+ *             "controller"=App\Controller\EventParticipation::class
+ *         }
+ *     }
  * )
- * @ORM\Entity(repositoryClass=UserHasEventRepository::class)
+ * @ORM\Entity(repositoryClass="App\Repository\UserHasEventRepository")
  * @ORM\Table(
  *     uniqueConstraints={
  *          @ORM\UniqueConstraint(
