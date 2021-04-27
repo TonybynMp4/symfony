@@ -22,11 +22,24 @@ class EventRepository extends ServiceEntityRepository
     public function getEventsList($themes)
     {
         return $this->createQueryBuilder("e")
-            ->where("e.type =:false")
+            ->where("e.type =:public")
             ->andWhere("e.theme IN(:themes)")
-            ->setParameter("false", false)
+            ->setParameter("public", false)
             ->setParameter('themes', array_values($themes))
             ->orderBy('e.createdAt', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getPrivateEventListInvited($userId)
+    {
+        return $this->createQueryBuilder("e")
+            ->leftJoin('e.users', 'uhe')
+            ->where("uhe.user = :userId")
+            ->andWhere("e.type = :true")
+            ->orderBy('e.createdAt', 'ASC')
+            ->setParameter("userId", $userId)
+            ->setParameter("true", true)
             ->getQuery()
             ->getResult();
     }

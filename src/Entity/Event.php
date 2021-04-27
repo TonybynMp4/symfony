@@ -16,11 +16,17 @@ use ApiPlatform\Core\Annotation\ApiProperty;
  *     collectionOperations={
  *          "get"={},
  *          "post"={"security"="is_granted('ROLE_PRO')"},
- *          "getLastEvents"={
+ *          "getLastPublicEvents"={
  *              "method"="GET",
- *              "path"="/events/list/{userId}",
+ *              "path"="/events/public/list/{userId}",
  *              "requirements"={"userId"="\d+"},
- *              "controller"=App\Controller\EventList::class
+ *              "controller"=App\Controller\EventPublicList::class
+ *          },
+ *          "getLastPrivateEvents"={
+ *              "method"="GET",
+ *              "path"="/events/private/list/{userId}",
+ *              "requirements"={"userId"="\d+"},
+ *              "controller"=App\Controller\EventPrivateList::class
  *          }
  *     }
  * )
@@ -161,6 +167,12 @@ class Event
      * @var \DateTime
      */
     private $endRepeat;
+
+    /**
+     * @Groups({"event:read"})
+     * @var integer
+     */
+    private $nbParticipation;
 
     public function __construct()
     {
@@ -528,6 +540,24 @@ class Event
     public function setEndRepeat(\DateTime $endRepeat): Event
     {
         $this->endRepeat = $endRepeat;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getNbParticipation()
+    {
+        return $this->nbParticipation;
+    }
+
+    /**
+     * @param int $nbParticipation
+     * @return Event
+     */
+    public function setNbParticipation(int $nbParticipation): Event
+    {
+        $this->nbParticipation = $nbParticipation;
         return $this;
     }
 }

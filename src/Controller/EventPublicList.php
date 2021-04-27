@@ -7,7 +7,7 @@ use App\Entity\UserHasFavoriteTheme;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-class EventList
+class EventPublicList
 {
     protected $em;
 

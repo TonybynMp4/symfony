@@ -15,7 +15,6 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *     collectionOperations={
  *          "get"={},
  *          "post"={},
- *          "patch"={},
  *          "getEventParticipation"={
  *              "method"="GET",
  *              "path"="/userHasEvent/coming/list/{userId}",
@@ -25,7 +24,6 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *     },
  *     itemOperations={
  *         "get"={},
- *         "post"={},
  *         "patch"={},
  *         "updateParticipation"={
  *             "method"="PATCH",

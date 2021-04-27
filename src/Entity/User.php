@@ -23,7 +23,6 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
  *     denormalizationContext={"groups"={"user:write"}},
  *     itemOperations={
  *          "get"={},
- *          "post"={},
  *          "put"={},
  *          "delete"={},
  *          "resetPassword"={
@@ -230,6 +229,7 @@ class User implements UserInterface
         $this->messages = new ArrayCollection();
         $this->languages = new ArrayCollection();
         $this->createdAt = new \DateTime();
+        $this->endSubscription = new \DateTime("+3 months");
         $this->roles[] = "ROLE_USER";
         $this->roles[] = "ROLE_PRO";
     }

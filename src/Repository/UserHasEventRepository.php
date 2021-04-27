@@ -19,6 +19,18 @@ class UserHasEventRepository extends ServiceEntityRepository
         parent::__construct($registry, UserHasEvent::class);
     }
 
+    public function countEventsParticipation($eventId)
+    {
+        return $this->createQueryBuilder("uhe")
+            ->select('COUNT(uhe)')
+            ->where("uhe.event = :eventId")
+            ->andWhere("uhe.accepted = :accepted")
+            ->setParameter("eventId", $eventId)
+            ->setParameter("accepted", true)
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
     public function getEventsListsComingByUser($userId)
     {
         $today = new \DateTime("now");
