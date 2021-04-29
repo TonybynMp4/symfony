@@ -87,7 +87,6 @@ class MediaObject
     public $filePath;
 
     /**
-     * @var text|null
      *
      * @ORM\Column(type="text", nullable=true)
      * @Groups({"support:read", "support:write"})
@@ -164,18 +163,18 @@ class MediaObject
     }
 
     /**
-     * @return text|null
+     * @return mixed
      */
-    public function getDescription(): ?text
+    public function getDescription()
     {
         return $this->description;
     }
 
     /**
-     * @param text|null $description
+     * @param mixed $description
      * @return MediaObject
      */
-    public function setDescription(?text $description): MediaObject
+    public function setDescription($description)
     {
         $this->description = $description;
         return $this;

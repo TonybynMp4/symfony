@@ -162,7 +162,7 @@ class User implements UserInterface
     private $events;
 
     /**
-     * @ORM\OneToMany(targetEntity="UserHasFavoriteTheme", mappedBy="user", cascade={"remove"})
+     * @ORM\OneToMany(targetEntity="UserHasFavoriteTheme", mappedBy="user", cascade={"persist", "remove"})
      * @Groups({"user:read", "user:write"})
      */
     private $favoriteThemes;
