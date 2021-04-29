@@ -3,7 +3,7 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
-use App\Repository\UserHasThemeRepository;
+use App\Repository\UserHasEventRepository;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -20,11 +20,17 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *              "path"="/userHasEvent/coming/list/{userId}",
  *              "requirements"={"userId"="\d+"},
  *              "controller"=App\Controller\EventListComing::class
- *          }
+ *          },
+ *          "getEventsByUserId"={
+ *              "method"="GET",
+ *              "path"="/userHasEvent/all/{userId}",
+ *              "requirements"={"userId"="\d+"},
+ *              "controller"=App\Controller\EventUser::class
+ *          },
+ *          
  *     },
  *     itemOperations={
  *         "get"={},
- *         "patch"={},
  *         "updateParticipation"={
  *             "method"="PATCH",
  *             "path"="/userHasEvent/participation/{userId}/{eventId}",

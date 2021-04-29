@@ -1,6 +1,5 @@
 import {MediaObject} from './MediaObject';
 import {UserHasPersonality} from './UserHasPersonality';
-import {UserHasTheme} from './UserHasTheme';
 import {UserHasEvent} from './UserHasEvent';
 import {UserHasFavoriteTheme} from './UserHasFavoriteTheme';
 import {UserHasFavoriteSupport} from './UserHasFavoriteSupport';
@@ -25,7 +24,6 @@ export interface User {
 	level: any;
 	image?: MediaObject;
 	personalities?: Array<UserHasPersonality>;
-	themes?: Array<UserHasTheme>;
 	events?: Array<UserHasEvent>;
 	favoriteThemes?: Array<UserHasFavoriteTheme>;
 	favoriteSupports?: Array<UserHasFavoriteSupport>;

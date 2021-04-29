@@ -119,14 +119,10 @@ class Support
     private $description2;
 
     /**
-     * @var MediaObject|null
-     *
-     * @ORM\ManyToOne(targetEntity=MediaObject::class, cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=true)
-     * @ApiProperty(iri="http://schema.org/image")
+     * @ORM\OneToMany(targetEntity="SupportHasMediaObject", mappedBy="support", cascade={"persist", "remove"})
      * @Groups({"support:read", "support:write"})
      */
-    public $image;
+    private $medias;
 
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="supports")
@@ -174,6 +170,7 @@ class Support
         $this->createdAt = new \DateTime();
         $this->lastUpdated = new \DateTime();
         $this->usersFavorites = new ArrayCollection();
+        $this->medias = new ArrayCollection();
     }
 
     /**
@@ -266,24 +263,6 @@ class Support
         return $this;
     }
 
-    /**
-     * @return MediaObject|null
-     */
-    public function getImage(): ?MediaObject
-    {
-        return $this->image;
-    }
-
-    /**
-     * @param MediaObject|null $image
-     * @return Support
-     */
-    public function setImage(?MediaObject $image): Support
-    {
-        $this->image = $image;
-        return $this;
-    }
-
     public function getUser(): ?User
     {
         return $this->user;
@@ -318,6 +297,34 @@ class Support
             // set the owning side to null (unless already changed)
             if ($userHasFavoriteSupport->getSupport() === $this) {
                 $userHasFavoriteSupport->setSupport(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getMedias()
+    {
+        return $this->medias;
+    }
+
+    public function addMediaObject(SupportHasMediaObject $supportHasMediaObject): self
+    {
+        if (!$this->medias->contains($supportHasMediaObject)) {
+            $this->medias[] = $supportHasMediaObject;
+            $supportHasMediaObject->setMediaObject($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMediaObject(SupportHasMediaObject $supportHasMediaObject): self
+    {
+        if ($this->medias->contains($supportHasMediaObject)) {
+            $this->medias->removeElement($supportHasMediaObject);
+            // set the owning side to null (unless already changed)
+            if ($supportHasMediaObject->getMediaObject() === $this) {
+                $supportHasMediaObject->setMediaObject(null);
             }
         }
 

@@ -31,6 +31,6 @@ final class EventItemDataProvider implements ItemDataProviderInterface, Restrict
 
         $event->setNbParticipation($nbParticipation);
 
-        return $event?? null;
+        return $event ?? null;
     }
 }

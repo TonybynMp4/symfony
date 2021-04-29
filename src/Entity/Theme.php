@@ -56,12 +56,6 @@ class Theme
     private $parent;
 
     /**
-     * @ORM\OneToMany(targetEntity="UserHasTheme", mappedBy="theme")
-     * @Groups({"theme:read", "theme:write"})
-     */
-    private $users;
-
-    /**
      * @ORM\OneToMany(targetEntity="UserHasFavoriteTheme", mappedBy="theme")
      * @Groups({"theme:read", "theme:write"})
      */
@@ -80,7 +74,6 @@ class Theme
     public function __construct()
     {
         $this->usersFavorites = new ArrayCollection();
-        $this->users = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -103,34 +96,6 @@ class Theme
     public function setName(string $name): Theme
     {
         $this->name = $name;
-        return $this;
-    }
-
-    public function getUsers()
-    {
-        return $this->users;
-    }
-
-    public function addUser(UserHasTheme $userHasTheme): self
-    {
-        if (!$this->users->contains($userHasTheme)) {
-            $this->users[] = $userHasTheme;
-            $userHasTheme->setTheme($this);
-        }
-
-        return $this;
-    }
-
-    public function removeUser(UserHasTheme $userHasTheme): self
-    {
-        if ($this->users->contains($userHasTheme)) {
-            $this->users->removeElement($userHasTheme);
-            // set the owning side to null (unless already changed)
-            if ($userHasTheme->getTheme() === $this) {
-                $userHasTheme->setTheme(null);
-            }
-        }
-
         return $this;
     }
 

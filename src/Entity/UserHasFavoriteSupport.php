@@ -10,8 +10,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ApiResource(
- *     normalizationContext={"groups"={"user:read", "theme:read"}},
- *     denormalizationContext={"groups"={"user:write", "theme:write"}},
+ *     normalizationContext={"groups"={"user:read", "support:read"}},
+ *     denormalizationContext={"groups"={"user:write", "support:write"}},
  * )
  * @ORM\Entity(repositoryClass="App\Repository\UserHasFavoriteSupportRepository")
  * @ORM\Table(

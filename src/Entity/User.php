@@ -44,7 +44,8 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
  *                          "required" = "true",
  *                      }
  *                  }
- *              }
+ *              },
+ *              "read"=false
  *          }
  *     },
  *     collectionOperations={
@@ -155,12 +156,6 @@ class User implements UserInterface
     private $personalities;
 
     /**
-     * @ORM\OneToMany(targetEntity="UserHasTheme", mappedBy="user", cascade={"persist"})
-     * @Groups({"user:read", "user:write"})
-     */
-    private $themes;
-
-    /**
      * @ORM\OneToMany(targetEntity="UserHasEvent", mappedBy="user", cascade={"remove"})
      * @Groups({"user:read", "user:write"})
      */
@@ -221,7 +216,6 @@ class User implements UserInterface
 
     public function __construct() {
         $this->personalities = new ArrayCollection();
-        $this->themes = new ArrayCollection();
         $this->favoriteThemes = new ArrayCollection();
         $this->favoriteSupports = new ArrayCollection();
         $this->supports = new ArrayCollection();
@@ -388,34 +382,6 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($userHasPersonality->getUser() === $this) {
                 $userHasPersonality->setUser(null);
-            }
-        }
-
-        return $this;
-    }
-
-    public function getThemes()
-    {
-        return $this->themes;
-    }
-
-    public function addTheme(UserHasTheme $userHasTheme): self
-    {
-        if (!$this->themes->contains($userHasTheme)) {
-            $this->themes[] = $userHasTheme;
-            $userHasTheme->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeTheme(UserHasTheme $userHasTheme): self
-    {
-        if ($this->themes->contains($userHasTheme)) {
-            $this->themes->removeElement($userHasTheme);
-            // set the owning side to null (unless already changed)
-            if ($userHasTheme->getUser() === $this) {
-                $userHasTheme->setUser(null);
             }
         }
 

@@ -6,6 +6,7 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Controller\CreateMediaObjectAction;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -23,7 +24,6 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *         "post"={
  *             "controller"=CreateMediaObjectAction::class,
  *             "deserialize"=false,
- *             "security"="is_granted('ROLE_USER')",
  *             "validation_groups"={"Default", "media_object_create"},
  *             "openapi_context"={
  *                 "requestBody"={
@@ -94,8 +94,118 @@ class MediaObject
      */
     public $description;
 
+    /**
+     * @ORM\OneToMany(targetEntity="SupportHasMediaObject", mappedBy="support")
+     */
+    private $supports;
+
+    public function __construct()
+    {
+        $this->supports = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getContentUrl(): ?string
+    {
+        return $this->contentUrl;
+    }
+
+    /**
+     * @param string|null $contentUrl
+     * @return MediaObject
+     */
+    public function setContentUrl(?string $contentUrl): MediaObject
+    {
+        $this->contentUrl = $contentUrl;
+        return $this;
+    }
+
+    /**
+     * @return File|null
+     */
+    public function getFile(): ?File
+    {
+        return $this->file;
+    }
+
+    /**
+     * @param File|null $file
+     * @return MediaObject
+     */
+    public function setFile(?File $file): MediaObject
+    {
+        $this->file = $file;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getFilePath(): ?string
+    {
+        return $this->filePath;
+    }
+
+    /**
+     * @param string|null $filePath
+     * @return MediaObject
+     */
+    public function setFilePath(?string $filePath): MediaObject
+    {
+        $this->filePath = $filePath;
+        return $this;
+    }
+
+    /**
+     * @return text|null
+     */
+    public function getDescription(): ?text
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param text|null $description
+     * @return MediaObject
+     */
+    public function setDescription(?text $description): MediaObject
+    {
+        $this->description = $description;
+        return $this;
+    }
+
+    public function getSupports()
+    {
+        return $this->supports;
+    }
+
+    public function addSupport(SupportHasMediaObject $supportHasMediaObject): self
+    {
+        if (!$this->supports->contains($supportHasMediaObject)) {
+            $this->supports[] = $supportHasMediaObject;
+            $supportHasMediaObject->setSupport($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(SupportHasMediaObject $supportHasMediaObject): self
+    {
+        if ($this->supports->contains($supportHasMediaObject)) {
+            $this->supports->removeElement($supportHasMediaObject);
+            // set the owning side to null (unless already changed)
+            if ($supportHasMediaObject->getSupport() === $this) {
+                $supportHasMediaObject->setSupport(null);
+            }
+        }
+
+        return $this;
     }
 }

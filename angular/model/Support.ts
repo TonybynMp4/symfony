@@ -1,5 +1,5 @@
 import {Theme} from './Theme';
-import {MediaObject} from './MediaObject';
+import {SupportHasMediaObject} from './SupportHasMediaObject';
 import {User} from './User';
 import {UserHasFavoriteSupport} from './UserHasFavoriteSupport';
 import {Language} from './Language';
@@ -18,7 +18,7 @@ export interface Support {
 	lastUpdated: Date;
 	level: any;
 	subTheme?: Theme;
-	image?: MediaObject;
+	medias?: Array<SupportHasMediaObject>;
 	user?: User;
 	usersFavorites?: Array<UserHasFavoriteSupport>;
 	language?: Language;
