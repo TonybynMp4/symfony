@@ -5,3 +5,5 @@ export interface Personality {
 	name: string;
 	users?: Array<UserHasPersonality>;
 }
+
+/* erreur */
