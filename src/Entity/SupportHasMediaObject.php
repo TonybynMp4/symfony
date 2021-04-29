@@ -38,7 +38,7 @@ class SupportHasMediaObject
     private $support;
 
     /**
-     * @ORM\ManyToOne(targetEntity="MediaObject", inversedBy="events", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity="MediaObject", inversedBy="supports", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      * @Groups({"support:read", "support:write"})
      */

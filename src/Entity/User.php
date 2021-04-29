@@ -145,7 +145,7 @@ class User implements UserInterface
      * @ORM\ManyToOne(targetEntity=MediaObject::class, cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=true)
      * @ApiProperty(iri="http://schema.org/image")
-     * @Groups({"user:read", "user:write"})
+     * @Groups({"user:read", "user:write", "support:read"})
      */
     public $image;
 
@@ -213,6 +213,11 @@ class User implements UserInterface
      * @Groups({"user:read", "user:write"})
      */
     private $level = 0;
+
+    /**
+     * @Groups({"support:read"})
+     */
+    private $nbSupportsPublished;
 
     public function __construct() {
         $this->personalities = new ArrayCollection();
@@ -599,8 +604,8 @@ class User implements UserInterface
 
     public function removeLanguage(UserHasLanguage $userHasLanguage): self
     {
-        if ($this->themes->contains($userHasLanguage)) {
-            $this->themes->removeElement($userHasLanguage);
+        if ($this->languages->contains($userHasLanguage)) {
+            $this->languages->removeElement($userHasLanguage);
             // set the owning side to null (unless already changed)
             if ($userHasLanguage->getUser() === $this) {
                 $userHasLanguage->setUser(null);
@@ -716,5 +721,13 @@ class User implements UserInterface
     {
         $this->autoSubscription = $autoSubscription;
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNbSupportsPublished()
+    {
+        return count($this->supports);
     }
 }

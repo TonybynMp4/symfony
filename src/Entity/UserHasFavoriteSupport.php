@@ -10,8 +10,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ApiResource(
- *     normalizationContext={"groups"={"user:read", "support:read"}},
- *     denormalizationContext={"groups"={"user:write", "support:write"}},
+ *     normalizationContext={"groups"={"userHasFavoriteSupport:read"}},
+ *     denormalizationContext={"groups"={"userHasFavoriteSupport:write"}},
  * )
  * @ORM\Entity(repositoryClass="App\Repository\UserHasFavoriteSupportRepository")
  * @ORM\Table(
@@ -35,7 +35,7 @@ class UserHasFavoriteSupport
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="favoriteSupports", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"support:read", "support:write"})
+     * @Groups({"support:read", "support:write", "userHasFavoriteSupport:write", "userHasFavoriteSupport:read"})
      *
      * @Serializer\Expose
      */
@@ -44,7 +44,7 @@ class UserHasFavoriteSupport
     /**
      * @ORM\ManyToOne(targetEntity="Support", inversedBy="usersFavorites", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"user:read", "user:write"})
+     * @Groups({"user:read", "user:write", "userHasFavoriteSupport:write", "userHasFavoriteSupport:read"})
      */
     private $support;
 
