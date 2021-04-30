@@ -1,8 +1,8 @@
-import {SupportHasMediaObject} from './SupportHasMediaObject';
+import {SupportHasMedia} from './SupportHasMedia';
 
 export interface MediaObject {
 	id: number;
 	filePath?: string;
 	description?: string;
-	supports?: Array<SupportHasMediaObject>;
+	supports?: Array<SupportHasMedia>;
 }

@@ -1,8 +1,8 @@
 import {Support} from './Support';
 import {MediaObject} from './MediaObject';
 
-export interface SupportHasMediaObject {
+export interface SupportHasMedia {
 	id: number;
 	support?: Support;
-	mediaObject?: MediaObject;
+	media?: MediaObject;
 }

@@ -1,8 +1,8 @@
 import {Theme} from './Theme';
-import {SupportHasMediaObject} from './SupportHasMediaObject';
 import {User} from './User';
 import {UserHasFavoriteSupport} from './UserHasFavoriteSupport';
 import {Language} from './Language';
+import {SupportHasMedia} from './SupportHasMedia';
 
 export interface Support {
 	id: number;
@@ -18,8 +18,8 @@ export interface Support {
 	lastUpdated: Date;
 	level: any;
 	subTheme?: Theme;
-	medias?: Array<SupportHasMediaObject>;
 	user?: User;
 	usersFavorites?: Array<UserHasFavoriteSupport>;
 	language?: Language;
+	medias?: Array<SupportHasMedia>;
 }
