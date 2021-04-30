@@ -17,9 +17,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @ORM\Entity
  * @ApiResource(
  *     iri="http://schema.org/MediaObject",
- *     normalizationContext={
- *         "groups"={"media_object_read"}
- *     },
+ *     normalizationContext={"groups"={"media_object_read"}},
  *     collectionOperations={
  *         "post"={
  *             "controller"=CreateMediaObjectAction::class,
@@ -82,19 +80,19 @@ class MediaObject
      * @var string|null
      *
      * @ORM\Column(nullable=true)
-     * @Groups({"theme:read", "user:read", "support:read", "event:read"})
+     * @Groups({"theme:read", "user:read", "support:read", "event:read", "media_object_read"})
      */
     public $filePath;
 
     /**
      *
      * @ORM\Column(type="text", nullable=true)
-     * @Groups({"support:read", "support:write"})
+     * @Groups({"support:read", "media_object_read"})
      */
     public $description;
 
     /**
-     * @ORM\OneToMany(targetEntity="SupportHasMediaObject", mappedBy="support")
+     * @ORM\OneToMany(targetEntity="SupportHasMedia", mappedBy="media")
      */
     private $supports;
 
@@ -185,23 +183,23 @@ class MediaObject
         return $this->supports;
     }
 
-    public function addSupport(SupportHasMediaObject $supportHasMediaObject): self
+    public function addSupport(SupportHasMedia $supportHasMedia): self
     {
-        if (!$this->supports->contains($supportHasMediaObject)) {
-            $this->supports[] = $supportHasMediaObject;
-            $supportHasMediaObject->setSupport($this);
+        if (!$this->supports->contains($supportHasMedia)) {
+            $this->supports[] = $supportHasMedia;
+            $supportHasMedia->setMedia($this);
         }
 
         return $this;
     }
 
-    public function removeUser(SupportHasMediaObject $supportHasMediaObject): self
+    public function removeSupport(SupportHasMedia $supportHasMedia): self
     {
-        if ($this->supports->contains($supportHasMediaObject)) {
-            $this->supports->removeElement($supportHasMediaObject);
+        if ($this->supports->contains($supportHasMedia)) {
+            $this->supports->removeElement($supportHasMedia);
             // set the owning side to null (unless already changed)
-            if ($supportHasMediaObject->getSupport() === $this) {
-                $supportHasMediaObject->setSupport(null);
+            if ($supportHasMedia->getMedia() === $this) {
+                $supportHasMedia->setMedia(null);
             }
         }
 

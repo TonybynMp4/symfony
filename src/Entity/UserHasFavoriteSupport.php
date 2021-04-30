@@ -12,6 +12,16 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * @ApiResource(
  *     normalizationContext={"groups"={"userHasFavoriteSupport:read"}},
  *     denormalizationContext={"groups"={"userHasFavoriteSupport:write"}},
+ *     collectionOperations={
+ *          "get"={},
+ *          "post"={},
+ *          "getFavoriteSupportsByUserId"={
+ *              "method"="GET",
+ *              "path"="/user_has_favorite_supports/user/{userId}",
+ *              "requirements"={"userId"="\d+"},
+ *              "controller"=App\Controller\FavoriteSupportUser::class
+ *          },
+ *     }
  * )
  * @ORM\Entity(repositoryClass="App\Repository\UserHasFavoriteSupportRepository")
  * @ORM\Table(

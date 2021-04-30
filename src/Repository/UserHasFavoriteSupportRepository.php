@@ -18,4 +18,13 @@ class UserHasFavoriteSupportRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, UserHasFavoriteSupport::class);
     }
+
+    public function getFavoriteSupportsByUserId($userId)
+    {
+        return $this->createQueryBuilder("uhf")
+            ->where("uhf.user = :userId")
+            ->setParameter("userId", $userId)
+            ->getQuery()
+            ->getResult();
+    }
 }

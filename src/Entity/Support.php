@@ -55,7 +55,7 @@ class Support
     /**
      * @ORM\ManyToOne(targetEntity="Theme")
      * @ORM\JoinColumn(name="subtheme_id", referencedColumnName="id", nullable=false)
-     * @Groups({"support:read", "support:write"})
+     * @Groups({"support:read", "support:write", "userHasFavoriteSupport:read"})
      */
     private $subTheme;
 
@@ -63,7 +63,7 @@ class Support
      *
      * @ORM\Column(type="string", length=100)
      * @Assert\NotBlank
-     * @Groups({"support:read", "support:write"})
+     * @Groups({"support:read", "support:write", "userHasFavoriteSupport:read"})
      */
     private $title;
 
@@ -71,7 +71,7 @@ class Support
      *
      * @ORM\Column(type="string", length=100)
      * @Assert\NotBlank
-     * @Groups({"support:read", "support:write"})
+     * @Groups({"support:read", "support:write", "userHasFavoriteSupport:read"})
      */
     private $subtitle;
 
@@ -79,27 +79,27 @@ class Support
      * @ORM\Column(type="smallint")
      * @Assert\NotBlank
      * @Assert\NotNull
-     * @Groups({"support:read", "support:write"})
+     * @Groups({"support:read", "support:write", "userHasFavoriteSupport:read"})
      */
     private $type;
 
     /**
      * @ORM\Column(type="smallint", nullable=true)
-     * @Groups({"support:read", "support:write"})
+     * @Groups({"support:read", "support:write", "userHasFavoriteSupport:read"})
      */
     private $type2;
 
     /**
      *
      * @ORM\Column(type="string", length=250, nullable=true)
-     * @Groups({"support:read", "support:write"})
+     * @Groups({"support:read", "support:write", "userHasFavoriteSupport:read"})
      */
     private $videoLink;
 
     /**
      *
      * @ORM\Column(type="string", length=250, nullable=true)
-     * @Groups({"support:read", "support:write"})
+     * @Groups({"support:read", "support:write", "userHasFavoriteSupport:read"})
      */
     private $videoLink2;
 
@@ -107,27 +107,21 @@ class Support
      *
      * @ORM\Column(type="text", length=2500)
      * @Assert\NotBlank
-     * @Groups({"support:read", "support:write"})
+     * @Groups({"support:read", "support:write", "userHasFavoriteSupport:read"})
      */
     private $description;
 
     /**
      *
      * @ORM\Column(type="text", length=2500, nullable=true)
-     * @Groups({"support:read", "support:write"})
+     * @Groups({"support:read", "support:write", "userHasFavoriteSupport:read"})
      */
     private $description2;
 
     /**
-     * @ORM\OneToMany(targetEntity="SupportHasMediaObject", mappedBy="support", cascade={"persist", "remove"})
-     * @Groups({"support:read", "support:write"})
-     */
-    private $medias;
-
-    /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="supports")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
-     * @Groups({"support:read", "support:write"})
+     * @Groups({"support:read", "support:write", "userHasFavoriteSupport:read"})
      */
     private $user;
 
@@ -139,7 +133,7 @@ class Support
     /**
      * @ORM\ManyToOne(targetEntity="Language")
      * @ORM\JoinColumn(name="language_id", referencedColumnName="id")
-     * @Groups({"support:read", "support:write"})
+     * @Groups({"support:read", "support:write", "userHasFavoriteSupport:read"})
      */
     private $language;
 
@@ -147,7 +141,7 @@ class Support
      *
      * @ORM\Column(type="datetime")
      * @Assert\NotBlank
-     * @Groups({"support:read", "support:write"})
+     * @Groups({"support:read", "support:write", "userHasFavoriteSupport:read"})
      */
     private $createdAt;
 
@@ -155,15 +149,21 @@ class Support
      *
      * @ORM\Column(type="datetime")
      * @Assert\NotBlank
-     * @Groups({"support:read", "support:write"})
+     * @Groups({"support:read", "support:write", "userHasFavoriteSupport:read"})
      */
     private $lastUpdated;
 
     /**
      * @ORM\Column(type="smallint")
-     * @Groups({"support:read", "support:write"})
+     * @Groups({"support:read", "support:write", "userHasFavoriteSupport:read"})
      */
     private $level;
+
+    /**
+     * @ORM\OneToMany(targetEntity="SupportHasMedia", mappedBy="support", cascade={"persist", "remove"})
+     * @Groups({"support:read", "support:write", "userHasFavoriteSupport:read"})
+     */
+    private $medias;
 
     public function __construct()
     {
@@ -297,34 +297,6 @@ class Support
             // set the owning side to null (unless already changed)
             if ($userHasFavoriteSupport->getSupport() === $this) {
                 $userHasFavoriteSupport->setSupport(null);
-            }
-        }
-
-        return $this;
-    }
-
-    public function getMedias()
-    {
-        return $this->medias;
-    }
-
-    public function addMediaObject(SupportHasMediaObject $supportHasMediaObject): self
-    {
-        if (!$this->medias->contains($supportHasMediaObject)) {
-            $this->medias[] = $supportHasMediaObject;
-            $supportHasMediaObject->setMediaObject($this);
-        }
-
-        return $this;
-    }
-
-    public function removeMediaObject(SupportHasMediaObject $supportHasMediaObject): self
-    {
-        if ($this->medias->contains($supportHasMediaObject)) {
-            $this->medias->removeElement($supportHasMediaObject);
-            // set the owning side to null (unless already changed)
-            if ($supportHasMediaObject->getMediaObject() === $this) {
-                $supportHasMediaObject->setMediaObject(null);
             }
         }
 
@@ -490,6 +462,34 @@ class Support
     public function setType2($type2)
     {
         $this->type2 = $type2;
+        return $this;
+    }
+
+    public function getMedias()
+    {
+        return $this->medias;
+    }
+
+    public function addMedia(SupportHasMedia $supportHasMedia): self
+    {
+        if (!$this->medias->contains($supportHasMedia)) {
+            $this->medias[] = $supportHasMedia;
+            $supportHasMedia->setSupport($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMedia(SupportHasMedia $supportHasMedia): self
+    {
+        if ($this->medias->contains($supportHasMedia)) {
+            $this->medias->removeElement($supportHasMedia);
+            // set the owning side to null (unless already changed)
+            if ($supportHasMedia->getSupport() === $this) {
+                $supportHasMedia->setSupport(null);
+            }
+        }
+
         return $this;
     }
 }
