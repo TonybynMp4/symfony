@@ -42,6 +42,7 @@ class UserHasEventRepository extends ServiceEntityRepository
             ->orderBy('e.createdAt', 'ASC')
             ->setParameter("today", $today)
             ->setParameter("userId", $userId)
+            ->setMaxResults(30)
             ->getQuery()
             ->getResult();
     }

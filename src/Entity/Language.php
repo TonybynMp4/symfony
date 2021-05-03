@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 use ApiPlatform\Core\Annotation\ApiProperty;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ApiResource
@@ -27,6 +28,7 @@ class Language
      *
      * @ORM\Column(type="string", length=50)
      * @Assert\NotBlank
+     * @Groups({"event:read"})
      */
     public $name;
 

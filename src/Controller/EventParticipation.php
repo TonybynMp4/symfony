@@ -22,9 +22,10 @@ class EventParticipation
         $userId = $request->attributes->get("userId");
         $eventId = $request->attributes->get("eventId");
 
-        $nbUserHasEvent = count($this->em->getRepository(UserHasEvent::class)->findBy(["event" => $eventId]));
+        $nbUserHasEvent = count($this->em->getRepository(UserHasEvent::class)->findBy(["event" => $eventId, "accepted" => true]));
 
         $event = $this->em->getRepository(Event::class)->findOneBy(["id" => $eventId]);
+
         if ($nbUserHasEvent < $event->getNbMaxParticipants()) {
             $userHasEvent = $this->em->getRepository(UserHasEvent::class)->findOneBy(["user" => $userId, "event" => $eventId]);
             $userHasEvent->setAccepted(true);

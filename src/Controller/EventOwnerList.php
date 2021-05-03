@@ -3,11 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Event;
-use App\Entity\UserHasFavoriteTheme;
+use App\Entity\UserHasEvent;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-class EventPublicList
+class EventOwnerList
 {
     protected $em;
 
@@ -19,9 +19,8 @@ class EventPublicList
     public function __invoke(Request $request)
     {
         $userId = $request->attributes->get("userId");
+        $type = $request->attributes->get("type");
 
-        $themes = $this->em->getRepository(UserHasFavoriteTheme::class)->getThemesByUser($userId);
-
-        return $this->em->getRepository(Event::class)->getEventsList($themes);
+        return $this->em->getRepository(Event::class)->findBy(["owner" => $userId, "type" => $type]);
     }
 }

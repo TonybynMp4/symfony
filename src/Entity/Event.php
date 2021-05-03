@@ -16,17 +16,17 @@ use ApiPlatform\Core\Annotation\ApiProperty;
  *     collectionOperations={
  *          "get"={},
  *          "post"={"security"="is_granted('ROLE_PRO')"},
- *          "getLastPublicEvents"={
+ *          "getLastPublicOrPrivateEvents"={
  *              "method"="GET",
- *              "path"="/events/public/list/{userId}",
- *              "requirements"={"userId"="\d+"},
- *              "controller"=App\Controller\EventPublicList::class
+ *              "path"="/events/{type}/list/{userId}",
+ *              "requirements"={"userId"="\d+", "type"="public|private"},
+ *              "controller"=App\Controller\EventList::class
  *          },
- *          "getLastPrivateEvents"={
+ *          "getOwnerPublicOrPrivateEvents"={
  *              "method"="GET",
- *              "path"="/events/private/list/{userId}",
- *              "requirements"={"userId"="\d+"},
- *              "controller"=App\Controller\EventPrivateList::class
+ *              "path"="/events/owner/{type}/{userId}",
+ *              "requirements"={"userId"="\d+", "type"="public|private"},
+ *              "controller"=App\Controller\EventOwnerList::class
  *          }
  *     }
  * )
