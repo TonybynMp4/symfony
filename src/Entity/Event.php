@@ -19,7 +19,7 @@ use ApiPlatform\Core\Annotation\ApiProperty;
  *          "getLastPublicOrPrivateEvents"={
  *              "method"="GET",
  *              "path"="/events/{type}/list/{userId}",
- *              "requirements"={"userId"="\d+", "type"="public|private"},
+ *              "requirements"={"userId"="\d+", "type"="pub|priv"},
  *              "controller"=App\Controller\EventList::class
  *          },
  *          "getOwnerPublicOrPrivateEvents"={
