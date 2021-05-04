@@ -25,7 +25,7 @@ use ApiPlatform\Core\Annotation\ApiProperty;
  *          "getOwnerPublicOrPrivateEvents"={
  *              "method"="GET",
  *              "path"="/events/owner/{type}/{userId}",
- *              "requirements"={"userId"="\d+", "type"="public|private"},
+ *              "requirements"={"userId"="\d+", "type"="pub|priv"},
  *              "controller"=App\Controller\EventOwnerList::class
  *          }
  *     }

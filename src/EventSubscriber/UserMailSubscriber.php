@@ -37,9 +37,8 @@ final class UserMailSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $from = "contact@ndombi.fr";
-        //$to = $user->getEmail();
-        $to = "alexandre.peneau@gmail.com";
+        $from = "blaise.pinheiro@gmail.com";
+        $to = $user->getEmail();
         $subject = "creation compte utilisateur";
         $template = "email/confirmSubscription.html.twig";
         $arrayValue = ["user" => $user->getEmail()];

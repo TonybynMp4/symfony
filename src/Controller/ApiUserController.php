@@ -9,8 +9,10 @@ use Gesdinet\JWTRefreshTokenBundle\Entity\RefreshToken;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class ApiUserController
+class ApiUserController extends AbstractController
 {
     private $em;
 
@@ -26,10 +28,10 @@ class ApiUserController
     }
 
     /**
-     * @Route("/reset/confirm/password/{token}", name="confirm_password")
+     * @Route("reset/confirm/password/{token}", name="confirm_password")
      * @param string $token
      */
-    public function confirmResetPassword(string $token)
+    public function confirmResetPassword(string $token) :RedirectResponse
     {
         $refreshToken = $this->em->getRepository(RefreshToken::class)->findOneBy(["refreshToken" => $token]);
 
@@ -38,7 +40,7 @@ class ApiUserController
         }
 
         $user = $this->em->getRepository(User::class)->findOneBy(["email" => $refreshToken->getUsername()]);
-        $user->setPassword($user->getNewPassword);
+        $user->setPassword($user->getNewPassword());
 
         try {
             $this->em->flush();

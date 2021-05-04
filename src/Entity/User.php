@@ -29,6 +29,7 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
  *              "method"="PATCH",
  *              "path"="/users/resetPassword",
  *              "controller"=App\Controller\Security\ResetPassword::class,
+ *              "validate"=false,
  *              "swagger_context"={
  *                  "parameters"={
  *                      {
@@ -45,6 +46,12 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
  *                      }
  *                  }
  *              },
+ *              "read"=false
+ *          },
+ *          "getUserByEmail"={
+ *              "method"="GET",
+ *              "path"="/users/getByEmail/{email}",
+ *              "controller"=App\Controller\FindUser::class,
  *              "read"=false
  *          }
  *     },
@@ -70,8 +77,18 @@ class User implements UserInterface
     private $id;
 
     /**
-     * @Assert\NotBlank()
-     * @Assert\Email()
+     * @Assert\Email(
+     *     message = "L'email donné : '{{ value }}' n'est pas un format valide pour un mail."
+     * )
+     * @Assert\NotNull(
+     *     message = "Le champs mail ne peut être nul."
+     * )
+     * @Assert\Length(
+     *     min=5,
+     *     max=180,
+     *     minMessage = "L'email doit comporter un minimum de 5 caractères",
+     *     maxMessage = "L'email doit comporter un maximum de 180 caractères"
+     * )
      * @ORM\Column(type="string", length=180, unique=true)
      * @Groups({"user:read", "user:write"})
      */
@@ -79,6 +96,9 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=75)
+     * @Assert\NotNull(
+     *     message = "Le champs name ne peut être nul."
+     * )
      * @Groups({"user:read", "user:write", "support:read", "event:read"})
      */
     private $name;
@@ -91,6 +111,15 @@ class User implements UserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     * @Assert\NotNull(
+     *     message = "Le champs mot de passe ne peut être nul."
+     * )
+     * @Assert\Length(
+     *     min=8,
+     *     max=20,
+     *     minMessage = "Le mot de passe doit comporter un minimum de 8 caractères",
+     *     maxMessage = "Le mot de passe doit comporter un maximum de 20 caractères"
+     * )
      * @Groups({"user:write"})
      */
     private $password;
@@ -98,6 +127,12 @@ class User implements UserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string", nullable=true)
+     * @Assert\Length(
+     *     min=8,
+     *     max=20,
+     *     minMessage = "Le mot de passe doit comporter un minimum de 8 caractères",
+     *     maxMessage = "Le mot de passe doit comporter un maximum de 20 caractères"
+     * )
      * @Groups({"user:write"})
      */
     private $newPassword;
@@ -194,7 +229,7 @@ class User implements UserInterface
     /**
      *
      * @ORM\Column(type="datetime")
-     * @Assert\NotBlank
+     * @Assert\NotNull
      * @Groups({"user:read", "user:write"})
      */
     private $createdAt;
@@ -209,7 +244,7 @@ class User implements UserInterface
     /**
      *
      * @ORM\Column(type="smallint")
-     * @Assert\NotBlank
+     * @Assert\NotNull
      * @Groups({"user:read", "user:write"})
      */
     private $level = 0;
