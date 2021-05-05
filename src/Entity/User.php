@@ -52,7 +52,8 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
  *              "method"="GET",
  *              "path"="/users/getByEmail/{email}",
  *              "controller"=App\Controller\FindUser::class,
- *              "read"=false
+ *              "read"=false,
+ *              "groups"={"userByEmail:read"}
  *          }
  *     },
  *     collectionOperations={
@@ -80,15 +81,6 @@ class User implements UserInterface
      * @Assert\Email(
      *     message = "L'email donné : '{{ value }}' n'est pas un format valide pour un mail."
      * )
-     * @Assert\NotNull(
-     *     message = "Le champs mail ne peut être nul."
-     * )
-     * @Assert\Length(
-     *     min=5,
-     *     max=180,
-     *     minMessage = "L'email doit comporter un minimum de 5 caractères",
-     *     maxMessage = "L'email doit comporter un maximum de 180 caractères"
-     * )
      * @ORM\Column(type="string", length=180, unique=true)
      * @Groups({"user:read", "user:write"})
      */
@@ -111,15 +103,6 @@ class User implements UserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
-     * @Assert\NotNull(
-     *     message = "Le champs mot de passe ne peut être nul."
-     * )
-     * @Assert\Length(
-     *     min=8,
-     *     max=20,
-     *     minMessage = "Le mot de passe doit comporter un minimum de 8 caractères",
-     *     maxMessage = "Le mot de passe doit comporter un maximum de 20 caractères"
-     * )
      * @Groups({"user:write"})
      */
     private $password;
