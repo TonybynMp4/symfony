@@ -10,8 +10,19 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ApiResource(
- *     normalizationContext={"groups"={"user:read", "theme:read"}},
- *     denormalizationContext={"groups"={"user:write", "theme:write"}},
+ *     normalizationContext={"groups"={"userHasFavoriteTheme:read"}},
+ *     denormalizationContext={"groups"={"userHasFavoriteTheme:write"}},
+ *     itemOperations={
+ *         "get"={},
+ *         "updateFavoriteTheme"={
+ *              "method"="PATCH",
+ *              "path"="/user_has_favorite_themes/update/{userId}/{themeId}",
+ *              "requirements"={"userId"="\d+", "themeId"="\d+"},
+ *              "controller"=App\Controller\FavoriteThemeUpdate::class,
+ *              "read"=false,
+ *              "validate"=false
+ *          }
+ *     }
  * )
  * @ORM\Entity(repositoryClass="App\Repository\UserHasFavoriteThemeRepository")
  * @ORM\Table(
@@ -35,7 +46,7 @@ class UserHasFavoriteTheme
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="favoriteThemes", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"theme:read", "theme:write"})
+     * @Groups({"theme:read", "theme:write", "userHasFavoriteTheme:write", "userHasFavoriteTheme:read"})
      *
      * @Serializer\Expose
      */
@@ -44,7 +55,7 @@ class UserHasFavoriteTheme
     /**
      * @ORM\ManyToOne(targetEntity="Theme", inversedBy="usersFavorites", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"user:read", "user:write"})
+     * @Groups({"user:read", "user:write", "userHasFavoriteTheme:write", "userHasFavoriteTheme:read"})
      */
     private $theme;
 

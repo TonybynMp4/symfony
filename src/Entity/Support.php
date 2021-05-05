@@ -126,7 +126,7 @@ class Support
     private $user;
 
     /**
-     * @ORM\OneToMany(targetEntity="UserHasFavoriteSupport", mappedBy="support")
+     * @ORM\OneToMany(targetEntity="UserHasFavoriteSupport", mappedBy="support", cascade={"remove"})
      */
     private $usersFavorites;
 

@@ -57,11 +57,6 @@ class EventDataPersister implements ContextAwareDataPersisterInterface
         $this->_entityManager->persist($data);
 
         if (($context['collection_operation_name'] ?? null) === 'post') {
-            $userhasEvent = new UserHasEvent();
-            $userhasEvent->setUser($data->getOwner());
-            $userhasEvent->setEvent($data->getId());
-            $userhasEvent->setAccepted(true);
-            $this->_entityManager->persist($userhasEvent);
             if ($data->isRepeat() == true) {
                 $actualDate = $data->getTimeToStart();
                 $actualDate->add(new \DateInterval("P7D"));

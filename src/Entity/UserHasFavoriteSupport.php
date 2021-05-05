@@ -20,7 +20,18 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *              "path"="/user_has_favorite_supports/user/{userId}",
  *              "requirements"={"userId"="\d+"},
  *              "controller"=App\Controller\FavoriteSupportUser::class
- *          },
+ *          }
+ *     },
+ *     itemOperations={
+ *         "get"={},
+ *         "updateFavoriteTheme"={
+ *              "method"="PATCH",
+ *              "path"="/user_has_favorite_supports/update/{userId}/{supportId}",
+ *              "requirements"={"userId"="\d+", "supportId"="\d+"},
+ *              "controller"=App\Controller\FavoriteSupportUpdate::class,
+ *              "read"=false,
+ *              "validate"=false
+ *          }
  *     }
  * )
  * @ORM\Entity(repositoryClass="App\Repository\UserHasFavoriteSupportRepository")

@@ -44,14 +44,14 @@ class Theme
      * @var string $name
      *
      * @ORM\Column(type="string", length=50)
-     * @Assert\NotBlank
-     * @Groups({"theme:read", "theme:write", "user:read", "support:read", "event:read"})
+     * @Assert\NotNull
+     * @Groups({"theme:read", "theme:write", "user:read", "support:read", "event:read", "userHasFavoriteTheme:read"})
      */
     public $name;
 
     /**
      * @ORM\ManyToOne(targetEntity="Theme")
-     * @Groups({"theme:read", "theme:write"})
+     * @Groups({"theme:read", "theme:write", "userHasFavoriteTheme:read"})
      */
     private $parent;
 

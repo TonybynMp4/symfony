@@ -3,10 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Event;
+use App\Entity\User;
 use App\Entity\UserHasEvent;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class EventParticipation
 {
@@ -28,9 +30,23 @@ class EventParticipation
 
         if ($nbUserHasEvent < $event->getNbMaxParticipants()) {
             $userHasEvent = $this->em->getRepository(UserHasEvent::class)->findOneBy(["user" => $userId, "event" => $eventId]);
-            $userHasEvent->setAccepted(true);
-            $this->em->flush();
-            return new Response("OK", Response::HTTP_NO_CONTENT);
+            if (!$userHasEvent) {
+                $user = $this->em->getRepository(User::class)->findOneBy(["id" => $userId]);
+                $userhasEvent = new UserHasEvent();
+                $userhasEvent->setUser($user);
+                $userhasEvent->setEvent($event);
+                $userhasEvent->setAccepted(true);
+                $this->em->persist($userhasEvent);
+            } else {
+                $userHasEvent->setAccepted(true);
+            }
+
+            try{
+                $this->em->flush();
+                return new Response("OK", Response::HTTP_NO_CONTENT);
+            } catch(\Exception $e){
+                throw new BadRequestHttpException($e);
+            }
         } else {
             return new Response("Nous sommes désolé cet évènement est déjà complet", Response::HTTP_CONFLICT);
         }
