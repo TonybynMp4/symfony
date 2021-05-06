@@ -52,8 +52,6 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->addSelect("count(s.id) as nbSupportsPublished")
             ->leftJoin('u.image', 'i')
             ->leftJoin('u.supports', 's')
-            //->leftJoin('u.favoriteSupports', 'fvs')
-            //->leftJoin('fvs.support', 'sfromfav')
             ->where("u.email = :email")
             ->setParameter('email',$email)
             ->getQuery()

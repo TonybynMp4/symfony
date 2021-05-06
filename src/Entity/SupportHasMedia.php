@@ -44,7 +44,7 @@ class SupportHasMedia
     /**
      * @ORM\ManyToOne(targetEntity="MediaObject", inversedBy="supports", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"support:read", "support:write"})
+     * @Groups({"support:read", "support:write", "userHasFavoriteSupport:read"})
      */
     private $media;
 

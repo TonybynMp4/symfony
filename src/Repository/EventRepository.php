@@ -27,6 +27,7 @@ class EventRepository extends ServiceEntityRepository
             ->setParameter("public", false)
             ->setParameter('themes', array_values($themes))
             ->orderBy('e.createdAt', 'ASC')
+            ->setMaxResults(30)
             ->getQuery()
             ->getResult();
     }

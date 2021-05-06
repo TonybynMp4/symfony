@@ -19,6 +19,17 @@ class UserHasFavoriteThemeRepository extends ServiceEntityRepository
         parent::__construct($registry, UserhasFavoriteTheme::class);
     }
 
+    public function getIdThemesByUser($userId)
+    {
+        return $this->createQueryBuilder("uft")
+            ->select("t.id")
+            ->leftJoin("uft.theme", "t")
+            ->where("uft.user =:userId")
+            ->setParameter("userId", $userId)
+            ->getQuery()
+            ->getArrayResult();
+    }
+
     public function getThemesByUser($userId)
     {
         return $this->createQueryBuilder("uft")

@@ -55,7 +55,7 @@ class Support
     /**
      * @ORM\ManyToOne(targetEntity="Theme")
      * @ORM\JoinColumn(name="subtheme_id", referencedColumnName="id", nullable=false)
-     * @Groups({"support:read", "support:write", "userHasFavoriteSupport:read"})
+     * @Groups({"support:read", "support:write"})
      */
     private $subTheme;
 
@@ -71,7 +71,7 @@ class Support
      *
      * @ORM\Column(type="string", length=100)
      * @Assert\NotBlank
-     * @Groups({"support:read", "support:write", "userHasFavoriteSupport:read"})
+     * @Groups({"support:read", "support:write"})
      */
     private $subtitle;
 
@@ -79,27 +79,27 @@ class Support
      * @ORM\Column(type="smallint")
      * @Assert\NotBlank
      * @Assert\NotNull
-     * @Groups({"support:read", "support:write", "userHasFavoriteSupport:read"})
+     * @Groups({"support:read", "support:write"})
      */
     private $type;
 
     /**
      * @ORM\Column(type="smallint", nullable=true)
-     * @Groups({"support:read", "support:write", "userHasFavoriteSupport:read"})
+     * @Groups({"support:read", "support:write"})
      */
     private $type2;
 
     /**
      *
      * @ORM\Column(type="string", length=250, nullable=true)
-     * @Groups({"support:read", "support:write", "userHasFavoriteSupport:read"})
+     * @Groups({"support:read", "support:write"})
      */
     private $videoLink;
 
     /**
      *
      * @ORM\Column(type="string", length=250, nullable=true)
-     * @Groups({"support:read", "support:write", "userHasFavoriteSupport:read"})
+     * @Groups({"support:read", "support:write"})
      */
     private $videoLink2;
 
@@ -107,21 +107,21 @@ class Support
      *
      * @ORM\Column(type="text", length=2500)
      * @Assert\NotBlank
-     * @Groups({"support:read", "support:write", "userHasFavoriteSupport:read"})
+     * @Groups({"support:read", "support:write"})
      */
     private $description;
 
     /**
      *
      * @ORM\Column(type="text", length=2500, nullable=true)
-     * @Groups({"support:read", "support:write", "userHasFavoriteSupport:read"})
+     * @Groups({"support:read", "support:write"})
      */
     private $description2;
 
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="supports")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
-     * @Groups({"support:read", "support:write", "userHasFavoriteSupport:read"})
+     * @Groups({"support:read", "support:write"})
      */
     private $user;
 
@@ -133,7 +133,7 @@ class Support
     /**
      * @ORM\ManyToOne(targetEntity="Language")
      * @ORM\JoinColumn(name="language_id", referencedColumnName="id")
-     * @Groups({"support:read", "support:write", "userHasFavoriteSupport:read"})
+     * @Groups({"support:read", "support:write"})
      */
     private $language;
 
@@ -149,7 +149,7 @@ class Support
      *
      * @ORM\Column(type="datetime")
      * @Assert\NotBlank
-     * @Groups({"support:read", "support:write", "userHasFavoriteSupport:read"})
+     * @Groups({"support:read", "support:write"})
      */
     private $lastUpdated;
 

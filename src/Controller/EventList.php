@@ -22,11 +22,11 @@ class EventList
         $userId = $request->attributes->get("userId");
         $type = $request->attributes->get("type");
 
-        if ($type == "public") {
-            $themes = $this->em->getRepository(UserHasFavoriteTheme::class)->getThemesByUser($userId);
+        if ($type == "pub") {
+            $themes = $this->em->getRepository(UserHasFavoriteTheme::class)->getIdThemesByUser($userId);
 
             return $this->em->getRepository(Event::class)->getEventsList($themes);
-        } elseif ($type == "private") {
+        } elseif ($type == "priv") {
             $events = $this->em->getRepository(Event::class)->getPrivateEventListInvited($userId);
 
             foreach ($events as $event) {
