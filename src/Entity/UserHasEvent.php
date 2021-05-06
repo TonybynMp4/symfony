@@ -10,8 +10,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ApiResource(
- *     normalizationContext={"groups"={"event:read"}},
- *     denormalizationContext={"groups"={"event:write"}},
+ *     normalizationContext={"groups"={"UserHasEvent:read"}},
+ *     denormalizationContext={"groups"={"UserHasEvent:write"}},
  *     collectionOperations={
  *          "get"={},
  *          "post"={},
@@ -71,7 +71,7 @@ class UserHasEvent
     /**
      * @ORM\ManyToOne(targetEntity="Event", inversedBy="users", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"user:read", "user:write"})
+     * @Groups({"user:read", "user:write", "UserHasEvent:read"})
      */
     private $event;
 

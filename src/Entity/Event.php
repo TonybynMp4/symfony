@@ -44,7 +44,7 @@ class Event
     /**
      * @ORM\ManyToOne(targetEntity="Theme")
      * @ORM\JoinColumn(name="theme_id", referencedColumnName="id", nullable=false)
-     * @Groups({"event:read", "event:write"})
+     * @Groups({"event:read", "event:write", "UserHasEvent:read"})
      */
     private $theme;
 
@@ -52,7 +52,7 @@ class Event
      *
      * @ORM\Column(type="string", length=100)
      * @Assert\NotBlank
-     * @Groups({"event:read", "event:write"})
+     * @Groups({"event:read", "event:write", "UserHasEvent:read"})
      */
     private $title;
 
@@ -60,7 +60,7 @@ class Event
      *
      * @ORM\Column(type="datetime")
      * @Assert\NotBlank
-     * @Groups({"event:read", "event:write"})
+     * @Groups({"event:read", "event:write", "UserHasEvent:read"})
      */
     private $timeToStart;
 
@@ -68,7 +68,7 @@ class Event
      *
      * @ORM\Column(type="smallint")
      * @Assert\NotBlank
-     * @Groups({"event:read", "event:write"})
+     * @Groups({"event:read", "event:write", "UserHasEvent:read"})
      */
     private $duration;
 
@@ -76,32 +76,32 @@ class Event
      *
      * @ORM\Column(type="string", length=100)
      * @Assert\NotBlank
-     * @Groups({"event:read", "event:write"})
+     * @Groups({"event:read", "event:write", "UserHasEvent:read"})
      */
     private $place;
 
     /**
      * @ORM\Column(type="smallint")
-     * @Groups({"event:read", "event:write"})
+     * @Groups({"event:read", "event:write", "UserHasEvent:read"})
      */
     private $supportType;
 
     /**
      * @ORM\Column(type="boolean")
-     * @Groups({"event:read", "event:write"})
+     * @Groups({"event:read", "event:write", "UserHasEvent:read"})
      */
     private $type;
 
     /**
      * @ORM\Column(type="smallint")
-     * @Groups({"event:read", "event:write"})
+     * @Groups({"event:read", "event:write", "UserHasEvent:read"})
      */
     private $level;
 
     /**
      * @ORM\ManyToOne(targetEntity="Language")
      * @ORM\JoinColumn(name="language_id", referencedColumnName="id")
-     * @Groups({"event:read", "event:write"})
+     * @Groups({"event:read", "event:write", "UserHasEvent:read"})
      */
     private $language;
 
@@ -111,7 +111,7 @@ class Event
      * @ORM\ManyToOne(targetEntity=MediaObject::class, cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=true)
      * @ApiProperty(iri="http://schema.org/image")
-     * @Groups({"event:read", "event:write"})
+     * @Groups({"event:read", "event:write", "UserHasEvent:read"})
      */
     public $image;
 
@@ -119,7 +119,7 @@ class Event
      *
      * @ORM\Column(type="text", length=2500, nullable=true)
      * @Assert\NotBlank
-     * @Groups({"event:read", "event:write"})
+     * @Groups({"event:read", "event:write", "UserHasEvent:read"})
      */
     private $description;
 
@@ -132,13 +132,13 @@ class Event
     /**
      * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"event:read", "event:write"})
+     * @Groups({"event:read", "event:write", "UserHasEvent:read"})
      */
     private $owner;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
-     * @Groups({"event:read", "event:write"})
+     * @Groups({"event:read", "event:write", "UserHasEvent:read"})
      */
     private $nbMaxParticipants;
 
@@ -146,7 +146,7 @@ class Event
      *
      * @ORM\Column(type="datetime")
      * @Assert\NotBlank
-     * @Groups({"event:read", "event:write"})
+     * @Groups({"event:read", "event:write", "UserHasEvent:read"})
      */
     private $createdAt;
 
@@ -169,7 +169,7 @@ class Event
     private $endRepeat;
 
     /**
-     * @Groups({"event:read"})
+     * @Groups({"event:read", "UserHasEvent:read"})
      * @var integer
      */
     private $nbParticipation;
