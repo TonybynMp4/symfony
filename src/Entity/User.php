@@ -225,14 +225,6 @@ class User implements UserInterface
     private $languageDefault;
 
     /**
-     *
-     * @ORM\Column(type="smallint")
-     * @Assert\NotNull
-     * @Groups({"user:read", "user:write"})
-     */
-    private $level = 0;
-
-    /**
      * @Groups({"support:read"})
      */
     private $nbSupportsPublished;
@@ -684,24 +676,6 @@ class User implements UserInterface
     public function setNewPassword(string $newPassword): User
     {
         $this->newPassword = $newPassword;
-        return $this;
-    }
-
-    /**
-     * @return int
-     */
-    public function getLevel(): int
-    {
-        return $this->level;
-    }
-
-    /**
-     * @param int $level
-     * @return User
-     */
-    public function setLevel(int $level): User
-    {
-        $this->level = $level;
         return $this;
     }
 
