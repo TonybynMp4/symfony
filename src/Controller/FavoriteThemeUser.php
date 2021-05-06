@@ -2,12 +2,11 @@
 
 namespace App\Controller;
 
-use App\Entity\UserHasEvent;
+use App\Entity\UserHasFavoriteTheme;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
-class EventUser
+class FavoriteThemeUser
 {
     protected $em;
 
@@ -20,6 +19,6 @@ class EventUser
     {
         $userId = $request->attributes->get("userId");
 
-        return $this->em->getRepository(UserHasEvent::class)->findBy(["user" => $userId]);
+        return $this->em->getRepository(UserHasFavoriteTheme::class)->findBy(["user" => $userId]);
     }
 }

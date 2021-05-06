@@ -12,6 +12,17 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * @ApiResource(
  *     normalizationContext={"groups"={"userHasFavoriteTheme:read"}},
  *     denormalizationContext={"groups"={"userHasFavoriteTheme:write"}},
+ *     collectionOperations={
+ *          "get"={},
+ *          "post"={},
+ *          "getFavoriteThemeByUserId"={
+ *              "method"="GET",
+ *              "path"="/user_has_favorite_themes/all/{userId}",
+ *              "requirements"={"userId"="\d+"},
+ *              "controller"=App\Controller\FavoriteThemeUser::class
+ *          },
+ *
+ *     },
  *     itemOperations={
  *         "get"={},
  *         "updateFavoriteTheme"={

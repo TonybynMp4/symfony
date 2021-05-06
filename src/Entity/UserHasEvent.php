@@ -17,13 +17,13 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *          "post"={},
  *          "getEventParticipation"={
  *              "method"="GET",
- *              "path"="/user_has_event/coming/list/{userId}",
+ *              "path"="/user_has_events/coming/list/{userId}",
  *              "requirements"={"userId"="\d+"},
  *              "controller"=App\Controller\EventListComing::class
  *          },
  *          "getEventsByUserId"={
  *              "method"="GET",
- *              "path"="/user_has_event/all/{userId}",
+ *              "path"="/user_has_events/all/{userId}",
  *              "requirements"={"userId"="\d+"},
  *              "controller"=App\Controller\EventUser::class
  *          },
@@ -33,7 +33,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *         "get"={},
  *         "updateParticipation"={
  *              "method"="PATCH",
- *              "path"="/user_has_event/participation/{userId}/{eventId}",
+ *              "path"="/user_has_events/participation/{userId}/{eventId}",
  *              "requirements"={"userId"="\d+", "eventId"="\d+"},
  *              "controller"=App\Controller\EventParticipation::class,
  *              "read"=false
