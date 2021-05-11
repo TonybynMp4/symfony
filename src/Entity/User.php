@@ -91,7 +91,7 @@ class User implements UserInterface
      * @Assert\NotNull(
      *     message = "Le champs name ne peut être nul."
      * )
-     * @Groups({"user:read", "user:write", "support:read", "event:read", "userHasFavoriteSupport:read"})
+     * @Groups({"user:read", "user:write", "support:read", "event:read", "userHasFavoriteSupport:read", "message:read"})
      */
     private $name;
 

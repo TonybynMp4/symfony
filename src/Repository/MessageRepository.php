@@ -22,8 +22,8 @@ class MessageRepository extends ServiceEntityRepository
     public function getTchatBetweenUsers($ownerId, $userDeliveryId)
     {
         return $this->createQueryBuilder("m")
-            ->where("m.owner = :ownerId")
-            ->andWhere("m.userDelivery = :userDeliveryId")
+            ->where("m.owner = :ownerId OR m.userDelivery = :userDeliveryId")
+            ->orWhere("m.userDelivery = :ownerId OR m.owner = :userDeliveryId")
             ->setParameter("ownerId", $ownerId)
             ->setParameter("userDeliveryId", $userDeliveryId)
             ->orderBy('m.lastUpdated', 'ASC')
@@ -34,11 +34,25 @@ class MessageRepository extends ServiceEntityRepository
     public function getTchatList($ownerId)
     {
         return $this->createQueryBuilder("m")
-            ->where("m.userDelivery = :userDeliveryId")
-            ->setParameter("userDeliveryId", $ownerId)
-            ->groupBy('m.owner')
+            ->where("m.owner = :ownerId OR m.userDelivery = :ownerId")
+            ->leftJoin('m.owner', 'o')
+            ->leftJoin('m.userDelivery', 'u')
+            ->setParameter("ownerId", $ownerId)
+            ->groupBy('m.conversation')
             ->orderBy('m.lastUpdated', 'ASC')
             ->getQuery()
             ->getResult();
+    }
+
+    public function countNbUnreadByConversation($conversationId)
+    {
+        return $this->createQueryBuilder("m")
+            ->select("count(m.view) as NbUnread")
+            ->where("m.view = :view")
+            ->andWhere("m.conversation = :conversationId")
+            ->setParameter('conversationId',$conversationId)
+            ->setParameter('view',false)
+            ->getQuery()
+            ->getSingleScalarResult();
     }
 }

@@ -23,8 +23,14 @@ security:
         dev:
             pattern: ^/_(profiler|wdt)
             security: false
+
+        api_user_reset_password:
+            pattern: ^/api/user/resetPassword
+            stateless: true
+            anonymous: true
+
         api:
-            pattern: ^/api/
+            pattern: ^/api
             stateless: true
             anonymous: true
             provider: app_user_provider
@@ -58,5 +64,6 @@ security:
         - { path: ^/api/media_objects, roles: IS_AUTHENTICATED_ANONYMOUSLY , methods: [POST] }
         - { path: ^/authentication_token, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/token/refresh, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }

@@ -19,6 +19,13 @@ class TchatList
     {
         $ownerId = $request->attributes->get("ownerId");
 
-        return $this->em->getRepository(Message::class)->getTchatList($ownerId);
+        $conversation = $this->em->getRepository(Message::class)->getTchatList($ownerId);
+
+        foreach ($conversation as $conv) {
+            $nbUnread = $this->em->getRepository(Message::class)->countNbUnreadByConversation($conv->getConversation());
+            $conv->setNbUnread($nbUnread);
+        }
+
+        return $conversation;
     }
 }

@@ -50,7 +50,6 @@ class Message
     private $content;
 
     /**
-     * Many features have one product. This is the owning side.
      * @ORM\ManyToOne(targetEntity="User", inversedBy="messages")
      * @Groups({"message:read", "message:write"})
      */
@@ -80,7 +79,20 @@ class Message
      * @ORM\Column(type="boolean")
      * @Groups({"message:read", "message:write"})
      */
-    private $read = false;
+    private $view = false;
+
+    /**
+     *
+     * @ORM\Column(type="string", length=250)
+     * @Groups({"message:read"})
+     */
+    private $conversation;
+
+    /**
+     * @var integer
+     * @Groups({"message:read"})
+     */
+    private $nbUnread;
 
     public function __construct()
     {
@@ -198,18 +210,54 @@ class Message
     /**
      * @return bool
      */
-    public function isRead(): bool
+    public function isView(): bool
     {
-        return $this->read;
+        return $this->view;
     }
 
     /**
-     * @param bool $read
+     * @param bool $view
      * @return Message
      */
-    public function setRead(bool $read): Message
+    public function setView(bool $view): Message
     {
-        $this->read = $read;
+        $this->view = $view;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getConversation()
+    {
+        return $this->conversation;
+    }
+
+    /**
+     * @param mixed $conversation
+     * @return Message
+     */
+    public function setConversation($conversation)
+    {
+        $this->conversation = $conversation;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getNbUnread(): int
+    {
+        return $this->nbUnread;
+    }
+
+    /**
+     * @param int $nbUnread
+     * @return Message
+     */
+    public function setNbUnread(int $nbUnread): Message
+    {
+        $this->nbUnread = $nbUnread;
         return $this;
     }
 }
