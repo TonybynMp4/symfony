@@ -225,7 +225,7 @@ class User implements UserInterface
     private $languageDefault;
 
     /**
-     * @Groups({"support:read"})
+     * @Groups({"support:read", "message:read"})
      */
     private $nbSupportsPublished;
 
