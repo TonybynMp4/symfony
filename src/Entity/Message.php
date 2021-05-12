@@ -92,7 +92,7 @@ class Message
      * @var integer
      * @Groups({"message:read"})
      */
-    private $nbUnread;
+    private $nbUnread = 0;
 
     public function __construct()
     {
