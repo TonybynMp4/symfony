@@ -24,6 +24,12 @@ security:
             pattern: ^/_(profiler|wdt)
             security: false
 
+        registration:
+            pattern: ^/api/users
+            anonymous: true
+            stateless: true
+            methods: [ POST ]
+
         api_user_reset_password:
             pattern: ^/api/user/resetPassword
             stateless: true

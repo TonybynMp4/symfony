@@ -23,7 +23,9 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
  *     denormalizationContext={"groups"={"user:write"}},
  *     itemOperations={
  *          "get"={},
- *          "put"={},
+ *          "put"={
+ *          "route_name"="api_users_put"
+ *          },
  *          "delete"={},
  *          "resetPassword"={
  *              "method"="PATCH",
@@ -58,7 +60,9 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
  *     },
  *     collectionOperations={
  *          "get"={},
- *          "post"={},
+ *          "post"={
+ *          "route_name"="api_users_post"
+ *          },
  *          "searchUsersByLetters"={
  *              "method"="GET",
  *              "path"="/users/search/{letters}",
