@@ -51,7 +51,7 @@ class ResetPassword
         $host = $request->server->get('HTTP_HOST');
         $host = "https://" . $host;
         $newEncodedPassword = $passwordEncoder->encodePassword($actualUser, $content->password);
-        $actualUser->setNewPassword($newEncodedPassword);
+        $actualUser->setTemporaryPassword($newEncodedPassword);
         $refreshToken = $this->em->getRepository(RefreshToken::class)->findOneBy(["username" => $actualUser->getEmail()]);
 
         try {

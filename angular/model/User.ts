@@ -14,14 +14,13 @@ export interface User {
 	name: string;
 	roles: any;
 	password: string;
-	newPassword?: string;
+	temporaryPassword?: string;
 	birthdate: any;
 	endSubscription: any;
 	autoSubscription: boolean;
 	gender: boolean;
 	idSubscription?: string;
 	createdAt: Date;
-	level: any;
 	image?: MediaObject;
 	personalities?: Array<UserHasPersonality>;
 	events?: Array<UserHasEvent>;

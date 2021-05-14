@@ -74,6 +74,7 @@ class User implements UserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"user:read"})
      */
     private $id;
 
@@ -103,7 +104,6 @@ class User implements UserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
-     * @Groups({"user:write"})
      */
     private $password;
 
@@ -118,11 +118,11 @@ class User implements UserInterface
      * )
      * @Groups({"user:write"})
      */
-    private $newPassword;
+    private $temporaryPassword;
 
     /**
-     * @Groups("user:write")
      * @SerializedName("password")
+     * @Groups("user:write")
      */
     private $plainPassword;
 
@@ -168,7 +168,7 @@ class User implements UserInterface
     public $image;
 
     /**
-     * @ORM\OneToMany(targetEntity="UserHasPersonality", mappedBy="user", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="UserHasPersonality", mappedBy="user", cascade={"persist", "remove"})
      * @Groups({"user:read", "user:write"})
      */
     private $personalities;
@@ -204,7 +204,7 @@ class User implements UserInterface
     private $messages;
 
     /**
-     * @ORM\OneToMany(targetEntity="UserHasLanguage", mappedBy="user", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="UserHasLanguage", mappedBy="user", cascade={"persist", "remove"})
      * @Groups({"user:read", "user:write"})
      */
     private $languages;
@@ -664,18 +664,18 @@ class User implements UserInterface
     /**
      * @return string
      */
-    public function getNewPassword(): string
+    public function getTemporaryPassword(): string
     {
-        return $this->newPassword;
+        return $this->temporaryPassword;
     }
 
     /**
-     * @param string $newPassword
+     * @param string $temporaryPassword
      * @return User
      */
-    public function setNewPassword(string $newPassword): User
+    public function setTemporaryPassword(string $temporaryPassword): User
     {
-        $this->newPassword = $newPassword;
+        $this->temporaryPassword = $temporaryPassword;
         return $this;
     }
 

@@ -40,7 +40,7 @@ class ApiUserController extends AbstractController
         }
 
         $user = $this->em->getRepository(User::class)->findOneBy(["email" => $refreshToken->getUsername()]);
-        $user->setPassword($user->getNewPassword());
+        $user->setPassword($user->getTemporaryPassword());
 
         try {
             $this->em->flush();
