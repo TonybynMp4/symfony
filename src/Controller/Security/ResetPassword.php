@@ -67,6 +67,6 @@ class ResetPassword
             throw new BadRequestHttpException($e->getMessage());
         }
 
-        return "Vous allez recevoir un mail permettant de confirmer le changement de mot de passe.";
+        return $actualUser;
     }
 }

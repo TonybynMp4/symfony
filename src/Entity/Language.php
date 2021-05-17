@@ -11,7 +11,10 @@ use ApiPlatform\Core\Annotation\ApiProperty;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ApiResource
+ * @ApiResource(
+ *     normalizationContext={"groups"={"language:read"}},
+ *     denormalizationContext={"groups"={"language:write"}}
+ * )
  * @ORM\Entity
  */
 class Language
@@ -20,6 +23,7 @@ class Language
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Groups({"language:read", "language:write"})
      */
     private $id;
 
@@ -28,12 +32,13 @@ class Language
      *
      * @ORM\Column(type="string", length=50)
      * @Assert\NotBlank
-     * @Groups({"event:read"})
+     * @Groups({"event:read", "language:read", "language:write"})
      */
     public $name;
 
     /**
      * @ORM\OneToMany(targetEntity="UserHasLanguage", mappedBy="language")
+     * @Groups({"language:write"})
      */
     private $users;
 
