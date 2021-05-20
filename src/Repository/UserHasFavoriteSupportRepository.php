@@ -22,6 +22,10 @@ class UserHasFavoriteSupportRepository extends ServiceEntityRepository
     public function getFavoriteSupportsByUserId($userId)
     {
         return $this->createQueryBuilder("uhf")
+            ->select("s.title", "s.createdAt", "s.level", "m.filePath", "m.description")
+            ->leftJoin("uhf.support", "s")
+            ->leftJoin('s.medias', 'shm')
+            ->leftJoin("shm.media", 'm')
             ->where("uhf.user = :userId")
             ->setParameter("userId", $userId)
             ->getQuery()

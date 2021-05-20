@@ -45,13 +45,13 @@ class Theme
      *
      * @ORM\Column(type="string", length=50)
      * @Assert\NotNull
-     * @Groups({"theme:read", "theme:write", "user:read", "support:read", "event:read", "userHasFavoriteTheme:read"})
+     * @Groups({"theme:read", "theme:write", "user:read", "support:read", "event:read", "userHasFavoriteTheme:read", "FavoriteThemeUser"})
      */
     public $name;
 
     /**
      * @ORM\ManyToOne(targetEntity="Theme")
-     * @Groups({"theme:read", "theme:write", "userHasFavoriteTheme:read"})
+     * @Groups({"theme:read", "theme:write", "userHasFavoriteTheme:read", "FavoriteThemeUser"})
      */
     private $parent;
 
@@ -67,7 +67,7 @@ class Theme
      * @ORM\OneToOne(targetEntity=MediaObject::class, cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=true)
      * @ApiProperty(iri="http://schema.org/image")
-     * @Groups({"theme:read", "theme:write"})
+     * @Groups({"theme:read", "theme:write", "FavoriteThemeUser"})
      */
     public $image;
 

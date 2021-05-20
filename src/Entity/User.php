@@ -96,7 +96,7 @@ class User implements UserInterface
      * @Assert\NotNull(
      *     message = "Le champs name ne peut être nul."
      * )
-     * @Groups({"user:read", "user:write", "support:read", "event:read", "userHasFavoriteSupport:read", "message:read"})
+     * @Groups({"user:read", "user:write", "support:read", "event:read", "userHasFavoriteSupport:read", "message:read", "FavoriteThemeUser"})
      */
     private $name;
 
@@ -164,10 +164,10 @@ class User implements UserInterface
     /**
      * @var MediaObject|null
      *
-     * @ORM\ManyToOne(targetEntity=MediaObject::class, cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=MediaObject::class, cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=true)
      * @ApiProperty(iri="http://schema.org/image")
-     * @Groups({"user:read", "user:write", "support:read"})
+     * @Groups({"user:read", "user:write", "support:read", "message:read"})
      */
     public $image;
 
@@ -229,7 +229,7 @@ class User implements UserInterface
     private $languageDefault;
 
     /**
-     * @Groups({"support:read", "message:read"})
+     * @Groups({"support:read", "message:read", "FavoriteThemeUser", "message:read"})
      */
     private $nbSupportsPublished;
 

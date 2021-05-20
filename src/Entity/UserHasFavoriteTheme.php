@@ -19,7 +19,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *              "method"="GET",
  *              "path"="/user_has_favorite_themes/all/{userId}",
  *              "requirements"={"userId"="\d+"},
- *              "controller"=App\Controller\FavoriteThemeUser::class
+ *              "controller"=App\Controller\FavoriteThemeUser::class,
+ *              "normalization_context"={"groups"={"FavoriteThemeUser"}}
  *          },
  *
  *     },
@@ -57,7 +58,7 @@ class UserHasFavoriteTheme
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="favoriteThemes", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"theme:read", "theme:write", "userHasFavoriteTheme:write", "userHasFavoriteTheme:read"})
+     * @Groups({"theme:read", "theme:write", "userHasFavoriteTheme:write", "userHasFavoriteTheme:read", "FavoriteThemeUser"})
      *
      * @Serializer\Expose
      */
@@ -66,7 +67,7 @@ class UserHasFavoriteTheme
     /**
      * @ORM\ManyToOne(targetEntity="Theme", inversedBy="usersFavorites", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"user:read", "user:write", "userHasFavoriteTheme:write", "userHasFavoriteTheme:read"})
+     * @Groups({"user:read", "user:write", "userHasFavoriteTheme:write", "userHasFavoriteTheme:read", "FavoriteThemeUser"})
      */
     private $theme;
 
