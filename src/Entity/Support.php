@@ -64,7 +64,7 @@ class Support
      *
      * @ORM\Column(type="string", length=100)
      * @Assert\NotBlank
-     * @Groups({"support:read", "support:write", "userHasFavoriteSupport:read", SearchSupport})
+     * @Groups({"support:read", "support:write", "userHasFavoriteSupport:read", "SearchSupport"})
      */
     private $title;
 
@@ -72,7 +72,7 @@ class Support
      *
      * @ORM\Column(type="string", length=100)
      * @Assert\NotBlank
-     * @Groups({"support:read", "support:write", SearchSupport})
+     * @Groups({"support:read", "support:write", "SearchSupport"})
      */
     private $subtitle;
 
@@ -80,13 +80,13 @@ class Support
      * @ORM\Column(type="smallint")
      * @Assert\NotBlank
      * @Assert\NotNull
-     * @Groups({"support:read", "support:write", SearchSupport})
+     * @Groups({"support:read", "support:write", "SearchSupport"})
      */
     private $type;
 
     /**
      * @ORM\Column(type="smallint", nullable=true)
-     * @Groups({"support:read", "support:write", SearchSupport})
+     * @Groups({"support:read", "support:write", "SearchSupport"})
      */
     private $type2;
 
@@ -162,7 +162,7 @@ class Support
 
     /**
      * @ORM\OneToMany(targetEntity="SupportHasMedia", mappedBy="support", cascade={"persist", "remove"})
-     * @Groups({"support:read", "support:write", "userHasFavoriteSupport:read", SearchSupport})
+     * @Groups({"support:read", "support:write", "userHasFavoriteSupport:read", "SearchSupport"})
      */
     private $medias;
 
