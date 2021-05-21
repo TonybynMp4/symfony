@@ -25,7 +25,7 @@ class EventList
         if ($type == "pub") {
             $themes = $this->em->getRepository(UserHasFavoriteTheme::class)->getIdThemesByUser($userId);
 
-            return $this->em->getRepository(Event::class)->getEventsList($themes);
+            return $this->em->getRepository(Event::class)->getEventsList($themes, $userId);
         } elseif ($type == "priv") {
             $events = $this->em->getRepository(Event::class)->getPrivateEventListInvited($userId);
 

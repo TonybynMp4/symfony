@@ -19,11 +19,13 @@ class EventRepository extends ServiceEntityRepository
         parent::__construct($registry, Event::class);
     }
 
-    public function getEventsList($themes)
+    public function getEventsList($themes, $userId)
     {
         return $this->createQueryBuilder("e")
-            ->where("e.type =:public")
+            ->leftJoin('e.users', 'uhe')
+            ->where("e.type = :public")
             ->andWhere("e.theme IN(:themes)")
+            ->andWhere("uhe.user != :userId")
             ->setParameter("public", false)
             ->setParameter('themes', array_values($themes))
             ->orderBy('e.createdAt', 'ASC')
@@ -38,6 +40,7 @@ class EventRepository extends ServiceEntityRepository
             ->leftJoin('e.users', 'uhe')
             ->where("uhe.user = :userId")
             ->andWhere("e.type = :true")
+            ->andWhere("uhe.accepted = :false")
             ->orderBy('e.createdAt', 'ASC')
             ->setParameter("userId", $userId)
             ->setParameter("true", true)

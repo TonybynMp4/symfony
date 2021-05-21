@@ -31,19 +31,46 @@ class UserHasEventRepository extends ServiceEntityRepository
             ->getSingleScalarResult();
     }
 
-    public function getEventsListsComingByUser($userId)
+    public function getEventsByType($type, $today, $userId)
     {
-        $today = new \DateTime("now");
-
         return $this->createQueryBuilder("uhe")
             ->leftJoin('uhe.event', 'e')
             ->where("uhe.user = :userId")
             ->andWhere("e.timeToStart >= :today")
+            ->andWhere("e.type = :pub")
             ->orderBy('e.createdAt', 'ASC')
             ->setParameter("today", $today)
             ->setParameter("userId", $userId)
+            ->setParameter("pub", false)
             ->setMaxResults(30)
             ->getQuery()
             ->getResult();
+    }
+
+    public function getEventsListsComingByUser($userId, $type)
+    {
+        $today = new \DateTime("now");
+
+        switch ($type) {
+            case "all":
+                $res = $this->createQueryBuilder("uhe")
+                    ->leftJoin('uhe.event', 'e')
+                    ->where("uhe.user = :userId")
+                    ->andWhere("e.timeToStart >= :today")
+                    ->orderBy('e.createdAt', 'ASC')
+                    ->setParameter("today", $today)
+                    ->setParameter("userId", $userId)
+                    ->setMaxResults(30)
+                    ->getQuery()
+                    ->getResult();
+                break;
+            case "pub":
+                $res = $this->getEventsByType(false, $today, $userId);
+                break;
+            case "priv":
+                $res = $this->getEventsByType(true, $today, $userId);
+                break;
+        }
+        return $res;
     }
 }

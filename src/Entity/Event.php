@@ -25,7 +25,7 @@ use ApiPlatform\Core\Annotation\ApiProperty;
  *          "getOwnerPublicOrPrivateEvents"={
  *              "method"="GET",
  *              "path"="/events/owner/{type}/{userId}",
- *              "requirements"={"userId"="\d+", "type"="pub|priv"},
+ *              "requirements"={"userId"="\d+", "type"="pub|priv|all"},
  *              "controller"=App\Controller\EventOwnerList::class
  *          }
  *     }
@@ -60,7 +60,7 @@ class Event
      *
      * @ORM\Column(type="datetime")
      * @Assert\NotBlank
-     * @Groups({"event:read", "event:write", "UserHasEvent:read"})
+     * @Groups({"event:read", "event:write", "UserHasEvent:read", "EventListComing"})
      */
     private $timeToStart;
 
@@ -76,7 +76,7 @@ class Event
      *
      * @ORM\Column(type="string", length=100)
      * @Assert\NotBlank
-     * @Groups({"event:read", "event:write", "UserHasEvent:read"})
+     * @Groups({"event:read", "event:write", "UserHasEvent:read", "EventListComing"})
      */
     private $place;
 
@@ -101,7 +101,7 @@ class Event
     /**
      * @ORM\ManyToOne(targetEntity="Language")
      * @ORM\JoinColumn(name="language_id", referencedColumnName="id")
-     * @Groups({"event:read", "event:write", "UserHasEvent:read"})
+     * @Groups({"event:read", "event:write", "UserHasEvent:read", "EventListComing"})
      */
     private $language;
 

@@ -17,8 +17,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *          "post"={},
  *          "getEventParticipation"={
  *              "method"="GET",
- *              "path"="/user_has_events/coming/list/{userId}",
- *              "requirements"={"userId"="\d+"},
+ *              "path"="/user_has_events/coming/list/{userId}/{type}",
+ *              "requirements"={"userId"="\d+", "type"="pub|priv|all"},
  *              "controller"=App\Controller\EventListComing::class,
  *              "normalization_context"={"groups"={"EventListComing"}}
  *          },

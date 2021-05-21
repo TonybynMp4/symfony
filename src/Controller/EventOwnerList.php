@@ -22,14 +22,19 @@ class EventOwnerList
         $type = $request->attributes->get("type");
 
         switch ($type) {
+            case "all":
+                $eventOwnerList = $this->em->getRepository(Event::class)->findBy(["owner" => $userId]);
+                break;
             case "pub":
                 $type = false;
+                $eventOwnerList = $this->em->getRepository(Event::class)->findBy(["owner" => $userId, "type" => $type]);
                 break;
             case "priv":
                 $type = true;
+                $eventOwnerList = $this->em->getRepository(Event::class)->findBy(["owner" => $userId, "type" => $type]);
                 break;
         }
 
-        return $this->em->getRepository(Event::class)->findBy(["owner" => $userId, "type" => $type]);
+        return $eventOwnerList;
     }
 }

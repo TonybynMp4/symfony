@@ -20,7 +20,9 @@ class EventListComing
     public function __invoke(Request $request)
     {
         $userId = $request->attributes->get("userId");
+        $type = $request->attributes->get("type");
 
-        return $this->em->getRepository(UserHasEvent::class)->getEventsListsComingByUser($userId);
+        return $this->em->getRepository(UserHasEvent::class)->getEventsListsComingByUser($userId, $type);
+
     }
 }
