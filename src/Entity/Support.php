@@ -37,7 +37,8 @@ use ApiPlatform\Core\Annotation\ApiProperty;
  *          "searchSupportsByLetters"={
  *              "method"="GET",
  *              "path"="/supports/search/{letters}",
- *              "controller"=App\Controller\SearchSupport::class
+ *              "controller"=App\Controller\SearchSupport::class,
+ *              "normalization_context"={"groups"={"SearchSupport"}}
  *          },
  *     }
  * )
@@ -63,7 +64,7 @@ class Support
      *
      * @ORM\Column(type="string", length=100)
      * @Assert\NotBlank
-     * @Groups({"support:read", "support:write", "userHasFavoriteSupport:read"})
+     * @Groups({"support:read", "support:write", "userHasFavoriteSupport:read", SearchSupport})
      */
     private $title;
 
@@ -71,7 +72,7 @@ class Support
      *
      * @ORM\Column(type="string", length=100)
      * @Assert\NotBlank
-     * @Groups({"support:read", "support:write"})
+     * @Groups({"support:read", "support:write", SearchSupport})
      */
     private $subtitle;
 
@@ -79,13 +80,13 @@ class Support
      * @ORM\Column(type="smallint")
      * @Assert\NotBlank
      * @Assert\NotNull
-     * @Groups({"support:read", "support:write"})
+     * @Groups({"support:read", "support:write", SearchSupport})
      */
     private $type;
 
     /**
      * @ORM\Column(type="smallint", nullable=true)
-     * @Groups({"support:read", "support:write"})
+     * @Groups({"support:read", "support:write", SearchSupport})
      */
     private $type2;
 
@@ -161,7 +162,7 @@ class Support
 
     /**
      * @ORM\OneToMany(targetEntity="SupportHasMedia", mappedBy="support", cascade={"persist", "remove"})
-     * @Groups({"support:read", "support:write", "userHasFavoriteSupport:read"})
+     * @Groups({"support:read", "support:write", "userHasFavoriteSupport:read", SearchSupport})
      */
     private $medias;
 

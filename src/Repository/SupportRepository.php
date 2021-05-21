@@ -55,6 +55,7 @@ class SupportRepository extends ServiceEntityRepository
         return $this->createQueryBuilder("s")
             ->where("s.title LIKE :letters")
             ->setParameter('letters','%'. $letters .'%')
+            ->setMaxResults(6)
             ->getQuery()
             ->getResult();
     }

@@ -56,7 +56,7 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
  *              "path"="/users/getByEmail/{email}",
  *              "controller"=App\Controller\FindUser::class,
  *              "read"=false,
- *              "groups"={"userByEmail:read"}
+ *              "normalization_context"={"groups"={"FindUser"}}
  *          }
  *     },
  *     collectionOperations={
@@ -89,7 +89,7 @@ class User implements UserInterface
      *     message = "L'email donné : '{{ value }}' n'est pas un format valide pour un mail."
      * )
      * @ORM\Column(type="string", length=180, unique=true)
-     * @Groups({"user:read", "user:write"})
+     * @Groups({"user:read", "user:write", "FindUser"})
      */
     private $email;
 
@@ -98,12 +98,13 @@ class User implements UserInterface
      * @Assert\NotNull(
      *     message = "Le champs name ne peut être nul."
      * )
-     * @Groups({"user:read", "user:write", "support:read", "event:read", "userHasFavoriteSupport:read", "message:read", "FavoriteThemeUser", "EventListComing"})
+     * @Groups({"user:read", "user:write", "support:read", "event:read", "userHasFavoriteSupport:read", "message:read", "FavoriteThemeUser", "EventListComing", "FindUser"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="json")
+     * @Groups({"FindUser"})
      */
     private $roles = [];
 
@@ -134,7 +135,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="date")
-     * @Groups({"user:read", "user:write"})
+     * @Groups({"user:read", "user:write", "FindUser"})
      */
     private $birthdate;
 
