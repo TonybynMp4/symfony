@@ -36,13 +36,15 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->_em->flush();
     }
 
-    public function searchUsersByLetters($letters)
+    public function searchUsersByLetters($letters, $userId)
     {
         return $this->createQueryBuilder("u")
             ->select("u.name", "i.filePath")
             ->leftJoin('u.image', 'i')
             ->where("u.name LIKE :letters")
+            ->andWhere("u.id != :userId")
             ->setParameter('letters','%'. $letters .'%')
+            ->setParameter('userId',$userId)
             ->setMaxResults(10)
             ->getQuery()
             ->getResult();

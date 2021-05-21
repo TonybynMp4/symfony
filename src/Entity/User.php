@@ -23,6 +23,7 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
  *     denormalizationContext={"groups"={"user:write"}},
  *     itemOperations={
  *          "get"={},
+ *          "patch"={},
  *          "put"={
  *          "route_name"="api_users_put"
  *          },
@@ -65,7 +66,8 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
  *          },
  *          "searchUsersByLetters"={
  *              "method"="GET",
- *              "path"="/users/search/{letters}",
+ *              "path"="/users/search/{userId}/{letters}",
+ *              "requirements"={"userId"="\d+"},
  *              "controller"=App\Controller\SearchUser::class
  *          }
  *     }
@@ -96,7 +98,7 @@ class User implements UserInterface
      * @Assert\NotNull(
      *     message = "Le champs name ne peut être nul."
      * )
-     * @Groups({"user:read", "user:write", "support:read", "event:read", "userHasFavoriteSupport:read", "message:read", "FavoriteThemeUser"})
+     * @Groups({"user:read", "user:write", "support:read", "event:read", "userHasFavoriteSupport:read", "message:read", "FavoriteThemeUser", "EventListComing"})
      */
     private $name;
 

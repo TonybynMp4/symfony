@@ -19,6 +19,8 @@ class SearchUser
     {
         $letters = $request->attributes->get("letters");
 
-        return $this->em->getRepository(User::class)->searchUsersByLetters($letters);
+        $userId = $request->attributes->get("userId");
+
+        return $this->em->getRepository(User::class)->searchUsersByLetters($letters, $userId);
     }
 }

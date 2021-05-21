@@ -52,7 +52,7 @@ class Event
      *
      * @ORM\Column(type="string", length=100)
      * @Assert\NotBlank
-     * @Groups({"event:read", "event:write", "UserHasEvent:read"})
+     * @Groups({"event:read", "event:write", "UserHasEvent:read", "EventListComing"})
      */
     private $title;
 
@@ -68,7 +68,7 @@ class Event
      *
      * @ORM\Column(type="smallint")
      * @Assert\NotBlank
-     * @Groups({"event:read", "event:write", "UserHasEvent:read"})
+     * @Groups({"event:read", "event:write", "UserHasEvent:read", "EventListComing"})
      */
     private $duration;
 
@@ -82,7 +82,7 @@ class Event
 
     /**
      * @ORM\Column(type="smallint")
-     * @Groups({"event:read", "event:write", "UserHasEvent:read"})
+     * @Groups({"event:read", "event:write", "UserHasEvent:read", "EventListComing"})
      */
     private $supportType;
 
@@ -111,7 +111,7 @@ class Event
      * @ORM\ManyToOne(targetEntity=MediaObject::class, cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=true)
      * @ApiProperty(iri="http://schema.org/image")
-     * @Groups({"event:read", "event:write", "UserHasEvent:read"})
+     * @Groups({"event:read", "event:write", "UserHasEvent:read", "EventListComing"})
      */
     public $image;
 
@@ -119,7 +119,7 @@ class Event
      *
      * @ORM\Column(type="text", length=2500, nullable=true)
      * @Assert\NotBlank
-     * @Groups({"event:read", "event:write", "UserHasEvent:read"})
+     * @Groups({"event:read", "event:write", "UserHasEvent:read", "EventListComing"})
      */
     private $description;
 
@@ -132,13 +132,13 @@ class Event
     /**
      * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"event:read", "event:write", "UserHasEvent:read"})
+     * @Groups({"event:read", "event:write", "UserHasEvent:read", "EventListComing"})
      */
     private $owner;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
-     * @Groups({"event:read", "event:write", "UserHasEvent:read"})
+     * @Groups({"event:read", "event:write", "UserHasEvent:read", "EventListComing"})
      */
     private $nbMaxParticipants;
 
@@ -146,7 +146,7 @@ class Event
      *
      * @ORM\Column(type="datetime")
      * @Assert\NotBlank
-     * @Groups({"event:read", "event:write", "UserHasEvent:read"})
+     * @Groups({"event:read", "event:write", "UserHasEvent:read", "EventListComing"})
      */
     private $createdAt;
 
@@ -169,10 +169,10 @@ class Event
     private $endRepeat;
 
     /**
-     * @Groups({"event:read", "UserHasEvent:read"})
+     * @Groups({"event:read", "UserHasEvent:read", "EventListComing"})
      * @var integer
      */
-    private $nbParticipation;
+    private $nbParticipation = 0;
 
     public function __construct()
     {

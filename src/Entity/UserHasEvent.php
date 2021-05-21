@@ -19,7 +19,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *              "method"="GET",
  *              "path"="/user_has_events/coming/list/{userId}",
  *              "requirements"={"userId"="\d+"},
- *              "controller"=App\Controller\EventListComing::class
+ *              "controller"=App\Controller\EventListComing::class,
+ *              "normalization_context"={"groups"={"EventListComing"}}
  *          },
  *          "getEventsByUserId"={
  *              "method"="GET",
@@ -71,7 +72,7 @@ class UserHasEvent
     /**
      * @ORM\ManyToOne(targetEntity="Event", inversedBy="users", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"user:read", "user:write", "UserHasEvent:read"})
+     * @Groups({"user:read", "user:write", "UserHasEvent:read", "EventListComing"})
      */
     private $event;
 

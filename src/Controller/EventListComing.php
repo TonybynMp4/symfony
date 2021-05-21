@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Support;
 use App\Entity\UserHasEvent;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,8 +21,6 @@ class EventListComing
     {
         $userId = $request->attributes->get("userId");
 
-        $res = $this->em->getRepository(UserHasEvent::class)->getEventsListsComingByUser($userId);
-
-        return $res;
+        return $this->em->getRepository(UserHasEvent::class)->getEventsListsComingByUser($userId);
     }
 }
