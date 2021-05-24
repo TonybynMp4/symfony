@@ -166,12 +166,19 @@ class Support
      */
     private $medias;
 
+    /**
+     * @ORM\OneToMany(targetEntity="SupportHasTag", mappedBy="support", cascade={"persist"})
+     * @Groups({"support:read", "support:write", "userHasFavoriteSupport:read"})
+     */
+    private $tags;
+
     public function __construct()
     {
         $this->createdAt = new \DateTime();
         $this->lastUpdated = new \DateTime();
         $this->usersFavorites = new ArrayCollection();
         $this->medias = new ArrayCollection();
+        $this->tags = new ArrayCollection();
     }
 
     /**
@@ -488,6 +495,34 @@ class Support
             // set the owning side to null (unless already changed)
             if ($supportHasMedia->getSupport() === $this) {
                 $supportHasMedia->setSupport(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getTags()
+    {
+        return $this->tags;
+    }
+
+    public function addTag(SupportHasTag $supportHasTag): self
+    {
+        if (!$this->tags->contains($supportHasTag)) {
+            $this->tags[] = $supportHasTag;
+            $supportHasTag->setSupport($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTag(SupportHasTag $supportHasTag): self
+    {
+        if ($this->tags->contains($supportHasTag)) {
+            $this->tags->removeElement($supportHasTag);
+            // set the owning side to null (unless already changed)
+            if ($supportHasTag->getSupport() === $this) {
+                $supportHasTag->setSupport(null);
             }
         }
 

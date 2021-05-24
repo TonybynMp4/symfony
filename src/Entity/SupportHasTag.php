@@ -1,0 +1,91 @@
+<?php
+
+namespace App\Entity;
+
+use ApiPlatform\Core\Annotation\ApiResource;
+use App\Repository\SupportHasMediaRepository;
+use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
+use Symfony\Component\Serializer\Annotation\Groups;
+
+/**
+ * @ApiResource(
+ *     normalizationContext={"groups"={"supportHasTag:read", "supportHasTag:read"}},
+ *     denormalizationContext={"groups"={"supportHasTag:write", "supportHasTag:write"}},
+ * )
+ * @ORM\Entity(repositoryClass="App\Repository\SupportHasTagRepository")
+ * @ORM\Table(
+ *     uniqueConstraints={
+ *          @ORM\UniqueConstraint(
+ *              name="unique",
+ *              columns={"support_id", "tag_id"}
+ *          )
+ *    }
+ * )
+ */
+class SupportHasTag
+{
+    /**
+     * @ORM\Id()
+     * @ORM\GeneratedValue()
+     * @ORM\Column(type="integer")
+     */
+    private $id;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Support", inversedBy="tags", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=false)
+     * @Groups({"supportHasTag:read", "supportHasTag:write"})
+     *
+     * @Serializer\Expose
+     */
+    private $support;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Tag", inversedBy="supports", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=false)
+     * @Groups({"supportHasTag:read", "supportHasTag:write", "userHasFavoriteSupport:read", "support:read"})
+     */
+    private $tag;
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSupport()
+    {
+        return $this->support;
+    }
+
+    /**
+     * @param mixed $support
+     * @return SupportHasTag
+     */
+    public function setSupport($support)
+    {
+        $this->support = $support;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTag()
+    {
+        return $this->tag;
+    }
+
+    /**
+     * @param mixed $tag
+     * @return SupportHasTag
+     */
+    public function setTag($tag)
+    {
+        $this->tag = $tag;
+        return $this;
+    }
+}
