@@ -28,7 +28,7 @@ use ApiPlatform\Core\Annotation\ApiProperty;
  *              "controller"=App\Controller\TchatList::class,
  *              "normalization_context"={"groups"={"TchatList"}}
  *          },
- *          "getTchatList"={
+ *          "getTchatRead"={
  *              "method"="PATCH",
  *              "path"="/messages/tchat/read/{conversation}",
  *              "controller"=App\Controller\TchatBetweenUser::class,
