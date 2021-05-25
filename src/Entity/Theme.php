@@ -52,11 +52,12 @@ class Theme
     /**
      * @ORM\ManyToOne(targetEntity="Theme")
      * @Groups({"theme:read", "theme:write", "userHasFavoriteTheme:read", "FavoriteThemeUser"})
+     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", onDelete="SET NULL")
      */
     private $parent;
 
     /**
-     * @ORM\OneToMany(targetEntity="UserHasFavoriteTheme", mappedBy="theme")
+     * @ORM\OneToMany(targetEntity="UserHasFavoriteTheme", mappedBy="theme", cascade={"remove"})
      * @Groups({"theme:read", "theme:write"})
      */
     private $usersFavorites;
@@ -70,6 +71,11 @@ class Theme
      * @Groups({"theme:read", "theme:write", "FavoriteThemeUser"})
      */
     public $image;
+
+    /**
+     * @Groups({"FavoriteThemeUser"})
+     */
+    private $nbSupports;
 
     public function __construct()
     {
@@ -160,6 +166,24 @@ class Theme
     public function setImage(?MediaObject $image): Theme
     {
         $this->image = $image;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNbSupports()
+    {
+        return $this->nbSupports;
+    }
+
+    /**
+     * @param mixed $nbSupports
+     * @return Theme
+     */
+    public function setNbSupports($nbSupports)
+    {
+        $this->nbSupports = $nbSupports;
         return $this;
     }
 }

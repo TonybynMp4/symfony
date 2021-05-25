@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\Message;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Exception\MethodNotAllowedException;
 
 class TchatBetweenUser
 {
@@ -17,9 +19,14 @@ class TchatBetweenUser
 
     public function __invoke(Request $request)
     {
-        $ownerId = $request->attributes->get("ownerId");
-        $deliveryUserId = $request->attributes->get("deliveryUserId");
+        $conversation = $request->attributes->get("conversation");
 
-        return $this->em->getRepository(Message::class)->getTchatBetweenUsers($ownerId, $deliveryUserId);
+        if ($request->isMethod('get')) {
+            return $this->em->getRepository(Message::class)->getTchatBetweenUsers($conversation);
+        } elseif ($request->isMethod('patch')) {
+            return $this->em->getRepository(Message::class)->updateConversationRead($conversation);
+        } else {
+            throw new MethodNotAllowedException(array("post", "put", "delete"),"la méthode utilisée n'est pas accetpée");
+        }
     }
 }

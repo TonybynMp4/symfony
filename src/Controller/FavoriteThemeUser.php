@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Support;
 use App\Entity\UserHasFavoriteTheme;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,6 +20,13 @@ class FavoriteThemeUser
     {
         $userId = $request->attributes->get("userId");
 
-        return $this->em->getRepository(UserHasFavoriteTheme::class)->findBy(["user" => $userId]);
+        $userHasFavoritesTheme = $this->em->getRepository(UserHasFavoriteTheme::class)->findBy(["user" => $userId]);
+
+        foreach ($userHasFavoritesTheme as $userHasFavTheme) {
+            $nbSupportsByTheme = count($this->em->getRepository(Support::class)->findBy(["subTheme" => $userHasFavTheme->getTheme()->getId()]));
+            $userHasFavTheme->getTheme()->setNbSupports($nbSupportsByTheme);
+        }
+
+        return $userHasFavoritesTheme;
     }
 }

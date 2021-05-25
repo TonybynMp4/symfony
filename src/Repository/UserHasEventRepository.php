@@ -57,7 +57,7 @@ class UserHasEventRepository extends ServiceEntityRepository
                     ->leftJoin('uhe.event', 'e')
                     ->where("uhe.user = :userId")
                     ->andWhere("e.timeToStart >= :today")
-                    ->orderBy('e.createdAt', 'ASC')
+                    ->orderBy('e.timeToStart', 'ASC')
                     ->setParameter("today", $today)
                     ->setParameter("userId", $userId)
                     ->setMaxResults(30)

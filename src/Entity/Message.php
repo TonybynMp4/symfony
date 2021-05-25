@@ -18,15 +18,21 @@ use ApiPlatform\Core\Annotation\ApiProperty;
  *          "post"={},
  *          "getTchatBetweenUser"={
  *              "method"="GET",
- *              "path"="/messages/tchat/{ownerId}/{userDeliveryId}",
- *              "requirements"={"ownerId"="\d+", "userDeliveryId"="\d+"},
+ *              "path"="/messages/tchat/{conversation}",
  *              "controller"=App\Controller\TchatBetweenUser::class
  *          },
  *          "getTchatList"={
  *              "method"="GET",
  *              "path"="/messages/tchat/list/{ownerId}",
  *              "requirements"={"ownerId"="\d+"},
- *              "controller"=App\Controller\TchatList::class
+ *              "controller"=App\Controller\TchatList::class,
+ *              "normalization_context"={"groups"={"TchatList"}}
+ *          },
+ *          "getTchatList"={
+ *              "method"="PATCH",
+ *              "path"="/messages/tchat/read/{conversation}",
+ *              "controller"=App\Controller\TchatBetweenUser::class,
+ *              "validate"=false
  *          }
  *     }
  * )
@@ -45,19 +51,19 @@ class Message
      *
      * @ORM\Column(type="text", length=2500)
      * @Assert\NotBlank
-     * @Groups({"message:read", "message:write"})
+     * @Groups({"message:read", "message:write", "TchatList"})
      */
     private $content;
 
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="messages")
-     * @Groups({"message:read", "message:write"})
+     * @Groups({"message:read", "message:write", "TchatList"})
      */
     private $owner;
 
     /**
      * @ORM\ManyToOne(targetEntity="User")
-     * @Groups({"message:read", "message:write"})
+     * @Groups({"message:read", "message:write", "TchatList"})
      */
     private $userDelivery;
 
@@ -77,20 +83,20 @@ class Message
 
     /**
      * @ORM\Column(type="boolean")
-     * @Groups({"message:read", "message:write"})
+     * @Groups({"message:read", "message:write", "TchatList"})
      */
     private $view = false;
 
     /**
      *
-     * @ORM\Column(type="string", length=250)
-     * @Groups({"message:read"})
+     * @ORM\Column(type="string", length=250, nullable=true)
+     * @Groups({"message:read", "TchatList"})
      */
     private $conversation;
 
     /**
      * @var integer
-     * @Groups({"message:read"})
+     * @Groups({"message:read", "TchatList"})
      */
     private $nbUnread = 0;
 
