@@ -27,6 +27,7 @@ class EventRepository extends ServiceEntityRepository
             ->andWhere("e.theme IN(:themes)")
             ->andWhere("uhe.user != :userId")
             ->setParameter("public", false)
+            ->setParameter("userId", $userId)
             ->setParameter('themes', array_values($themes))
             ->orderBy('e.createdAt', 'ASC')
             ->setMaxResults(30)

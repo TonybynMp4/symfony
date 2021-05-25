@@ -8,6 +8,7 @@ use ApiPlatform\Core\DataProvider\RestrictedDataProviderInterface;
 use App\Entity\Event;
 use App\Entity\UserHasEvent;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 final class EventItemDataProvider implements ItemDataProviderInterface, RestrictedDataProviderInterface
 {
