@@ -3,6 +3,7 @@ import {User} from './User';
 import {UserHasFavoriteSupport} from './UserHasFavoriteSupport';
 import {Language} from './Language';
 import {SupportHasMedia} from './SupportHasMedia';
+import {SupportHasTag} from './SupportHasTag';
 
 export interface Support {
 	id: number;
@@ -22,4 +23,5 @@ export interface Support {
 	usersFavorites?: Array<UserHasFavoriteSupport>;
 	language?: Language;
 	medias?: Array<SupportHasMedia>;
+	tags?: Array<SupportHasTag>;
 }
