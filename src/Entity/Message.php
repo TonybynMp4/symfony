@@ -18,8 +18,10 @@ use ApiPlatform\Core\Annotation\ApiProperty;
  *          "post"={},
  *          "getTchatBetweenUser"={
  *              "method"="GET",
- *              "path"="/messages/tchat/{conversation}",
- *              "controller"=App\Controller\TchatBetweenUser::class
+ *              "path"="/messages/tchat/{conversation}/{ownerId}",
+ *              "requirements"={"ownerId"="\d+"},
+ *              "controller"=App\Controller\TchatBetweenUser::class,
+ *              "normalization_context"={"groups"={"TchatBetweenUser"}}
  *          },
  *          "getTchatList"={
  *              "method"="GET",
@@ -27,13 +29,6 @@ use ApiPlatform\Core\Annotation\ApiProperty;
  *              "requirements"={"ownerId"="\d+"},
  *              "controller"=App\Controller\TchatList::class,
  *              "normalization_context"={"groups"={"TchatList"}}
- *          },
- *          "updateTchatRead"={
- *              "method"="PATCH",
- *              "path"="/messages/tchat/read/{conversation}/{userId}",
- *              "requirements"={"userId"="\d+"},
- *              "controller"=App\Controller\TchatBetweenUser::class,
- *              "validate"=false
  *          }
  *     }
  * )
@@ -52,19 +47,19 @@ class Message
      *
      * @ORM\Column(type="text", length=2500)
      * @Assert\NotBlank
-     * @Groups({"message:read", "message:write", "TchatList"})
+     * @Groups({"message:read", "message:write", "TchatList", "TchatBetweenUser"})
      */
     private $content;
 
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="messages")
-     * @Groups({"message:read", "message:write", "TchatList"})
+     * @Groups({"message:read", "message:write", "TchatList", "TchatBetweenUser"})
      */
     private $owner;
 
     /**
      * @ORM\ManyToOne(targetEntity="User")
-     * @Groups({"message:read", "message:write", "TchatList"})
+     * @Groups({"message:read", "message:write", "TchatList", "TchatBetweenUser"})
      */
     private $userDelivery;
 
@@ -78,7 +73,7 @@ class Message
      *
      * @ORM\Column(type="datetime")
      * @Assert\NotBlank
-     * @Groups({"message:read", "message:write"})
+     * @Groups({"message:read", "message:write", "TchatBetweenUser"})
      */
     private $lastUpdated;
 

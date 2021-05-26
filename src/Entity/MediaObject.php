@@ -80,7 +80,7 @@ class MediaObject
      * @var string|null
      *
      * @ORM\Column(nullable=true)
-     * @Groups({"theme:read", "user:read", "support:read", "event:read", "media_object_read", "userHasFavoriteSupport:read", "FavoriteThemeUser", "message:read", "EventListComing", "SearchSupport", "TchatList"})
+     * @Groups({"theme:read", "user:read", "support:read", "event:read", "media_object_read", "userHasFavoriteSupport:read", "FavoriteThemeUser", "message:read", "EventListComing", "SearchSupport", "TchatList", "TchatBetweenUser"})
      */
     public $filePath;
 
