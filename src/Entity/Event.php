@@ -108,8 +108,8 @@ class Event
     /**
      * @var MediaObject|null
      *
-     * @ORM\ManyToOne(targetEntity=MediaObject::class, cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\OneToOne(targetEntity=MediaObject::class, cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      * @ApiProperty(iri="http://schema.org/image")
      * @Groups({"event:read", "event:write", "UserHasEvent:read", "EventListComing"})
      */

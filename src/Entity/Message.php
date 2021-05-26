@@ -18,7 +18,7 @@ use ApiPlatform\Core\Annotation\ApiProperty;
  *          "post"={},
  *          "getTchatBetweenUser"={
  *              "method"="GET",
- *              "path"="/messages/tchat/{conversation}/{ownerId}",
+ *              "path"="/messages/tchat/conversation/{conversation}/{ownerId}",
  *              "requirements"={"ownerId"="\d+"},
  *              "controller"=App\Controller\TchatBetweenUser::class,
  *              "normalization_context"={"groups"={"TchatBetweenUser"}}
@@ -79,13 +79,13 @@ class Message
 
     /**
      * @ORM\Column(type="boolean")
-     * @Groups({"message:read", "message:write", "TchatList"})
+     * @Groups({"message:read", "message:write"})
      */
     private $viewOwner = false;
 
     /**
      * @ORM\Column(type="boolean")
-     * @Groups({"message:read", "message:write", "TchatList"})
+     * @Groups({"message:read", "message:write"})
      */
     private $viewUserDelivery = false;
 
