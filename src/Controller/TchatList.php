@@ -22,7 +22,7 @@ class TchatList
         $conversation = $this->em->getRepository(Message::class)->getTchatList($ownerId);
 
         foreach ($conversation as $conv) {
-            $nbUnread = $this->em->getRepository(Message::class)->countNbUnreadByConversation($conv->getConversation());
+            $nbUnread = $this->em->getRepository(Message::class)->countNbUnreadByConversation($conv->getConversation(), $ownerId);
             $conv->setNbUnread($nbUnread);
         }
 

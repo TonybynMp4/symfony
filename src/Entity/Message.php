@@ -28,9 +28,10 @@ use ApiPlatform\Core\Annotation\ApiProperty;
  *              "controller"=App\Controller\TchatList::class,
  *              "normalization_context"={"groups"={"TchatList"}}
  *          },
- *          "getTchatRead"={
+ *          "updateTchatRead"={
  *              "method"="PATCH",
- *              "path"="/messages/tchat/read/{conversation}",
+ *              "path"="/messages/tchat/read/{conversation}/{userId}",
+ *              "requirements"={"userId"="\d+"},
  *              "controller"=App\Controller\TchatBetweenUser::class,
  *              "validate"=false
  *          }
@@ -85,7 +86,13 @@ class Message
      * @ORM\Column(type="boolean")
      * @Groups({"message:read", "message:write", "TchatList"})
      */
-    private $view = false;
+    private $viewOwner = false;
+
+    /**
+     * @ORM\Column(type="boolean")
+     * @Groups({"message:read", "message:write", "TchatList"})
+     */
+    private $viewUserDelivery = false;
 
     /**
      *
@@ -214,24 +221,6 @@ class Message
     }
 
     /**
-     * @return bool
-     */
-    public function isView(): bool
-    {
-        return $this->view;
-    }
-
-    /**
-     * @param bool $view
-     * @return Message
-     */
-    public function setView(bool $view): Message
-    {
-        $this->view = $view;
-        return $this;
-    }
-
-    /**
      * @return mixed
      */
     public function getConversation()
@@ -264,6 +253,42 @@ class Message
     public function setNbUnread(int $nbUnread): Message
     {
         $this->nbUnread = $nbUnread;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isViewOwner(): bool
+    {
+        return $this->viewOwner;
+    }
+
+    /**
+     * @param bool $viewOwner
+     * @return Message
+     */
+    public function setViewOwner(bool $viewOwner): Message
+    {
+        $this->viewOwner = $viewOwner;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isViewUserDelivery(): bool
+    {
+        return $this->viewUserDelivery;
+    }
+
+    /**
+     * @param bool $viewUserDelivery
+     * @return Message
+     */
+    public function setViewUserDelivery(bool $viewUserDelivery): Message
+    {
+        $this->viewUserDelivery = $viewUserDelivery;
         return $this;
     }
 }
