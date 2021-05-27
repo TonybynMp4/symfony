@@ -25,7 +25,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *          "getParentThemes"={
  *              "method"="GET",
  *              "path"="/themes/parent",
- *              "controller"=App\Controller\ParentThemes::class
+ *              "controller"=App\Controller\ParentThemes::class,
+ *              "normalization_context"={"groups"={"ParentThemes"}}
  *          }
  *     }
  * )
@@ -45,7 +46,7 @@ class Theme
      *
      * @ORM\Column(type="string", length=50)
      * @Assert\NotNull
-     * @Groups({"theme:read", "theme:write", "user:read", "support:read", "event:read", "userHasFavoriteTheme:read", "FavoriteThemeUser"})
+     * @Groups({"theme:read", "theme:write", "user:read", "support:read", "event:read", "userHasFavoriteTheme:read", "FavoriteThemeUser", "ParentThemes"})
      */
     public $name;
 
@@ -68,7 +69,7 @@ class Theme
      * @ORM\OneToOne(targetEntity=MediaObject::class, cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=true)
      * @ApiProperty(iri="http://schema.org/image")
-     * @Groups({"theme:read", "theme:write", "FavoriteThemeUser"})
+     * @Groups({"theme:read", "theme:write", "FavoriteThemeUser", "ParentThemes"})
      */
     public $image;
 
@@ -76,6 +77,11 @@ class Theme
      * @Groups({"FavoriteThemeUser"})
      */
     private $nbSupports;
+
+    /**
+     * @Groups({"ParentThemes"})
+     */
+    private $nbChildThemes = 0;
 
     public function __construct()
     {
@@ -184,6 +190,24 @@ class Theme
     public function setNbSupports($nbSupports)
     {
         $this->nbSupports = $nbSupports;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getNbChildThemes(): int
+    {
+        return $this->nbChildThemes;
+    }
+
+    /**
+     * @param int $nbChildThemes
+     * @return Theme
+     */
+    public function setNbChildThemes(int $nbChildThemes): Theme
+    {
+        $this->nbChildThemes = $nbChildThemes;
         return $this;
     }
 }

@@ -45,7 +45,7 @@ class Tag
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="SupportHasTag", mappedBy="tag")
+     * @ORM\OneToMany(targetEntity="SupportHasTag", mappedBy="tag", orphanRemoval=true)
      */
     private $supports;
 

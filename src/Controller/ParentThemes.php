@@ -20,11 +20,10 @@ class ParentThemes
         $themes = $this->em->getRepository(Theme::class)->getParentThemes();
 
         foreach ($themes as $theme) {
-            $nbChildThemes = $this->em->getRepository(Theme::class)->getNbChildThemes($theme["id"]);
-            $theme["nbChildThemes"] = count($nbChildThemes);
-            $themesInfos[] = $theme;
+            $res = $this->em->getRepository(Theme::class)->getNbChildThemes($theme->getId());
+            $theme->setNbChildThemes($res);
         }
 
-        return $themesInfos;
+        return $themes;
     }
 }

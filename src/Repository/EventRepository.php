@@ -45,6 +45,7 @@ class EventRepository extends ServiceEntityRepository
             ->orderBy('e.createdAt', 'ASC')
             ->setParameter("userId", $userId)
             ->setParameter("true", true)
+            ->setParameter("false", false)
             ->getQuery()
             ->getResult();
     }
