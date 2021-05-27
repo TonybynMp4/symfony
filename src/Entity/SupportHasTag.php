@@ -44,7 +44,7 @@ class SupportHasTag
     /**
      * @ORM\ManyToOne(targetEntity="Tag", inversedBy="supports", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"supportHasTag:read", "supportHasTag:write", "userHasFavoriteSupport:read", "support:read"})
+     * @Groups({"support:read", "support:write", "userHasFavoriteSupport:read"})
      */
     private $tag;
 
