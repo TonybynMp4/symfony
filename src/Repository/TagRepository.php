@@ -22,7 +22,7 @@ class TagRepository extends ServiceEntityRepository
     public function searchTagsByLetters($letters)
     {
         return $this->createQueryBuilder("t")
-            ->select("t.name")
+            ->select("t.id", "t.name")
             ->where("t.name LIKE :letters")
             ->setParameter('letters','%'. $letters .'%')
             ->setMaxResults(10)
