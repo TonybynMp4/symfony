@@ -4,6 +4,8 @@
 namespace App\DataPersister;
 
 use App\Entity\Support;
+use App\Entity\Tag;
+use App\Entity\SupportHasTag;
 use Doctrine\ORM\EntityManagerInterface;
 use ApiPlatform\Core\DataPersister\ContextAwareDataPersisterInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;

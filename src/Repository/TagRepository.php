@@ -18,15 +18,4 @@ class TagRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Tag::class);
     }
-
-    public function searchTagsByLetters($letters)
-    {
-        return $this->createQueryBuilder("t")
-            ->select("t.id", "t.name")
-            ->where("t.name LIKE :letters")
-            ->setParameter('letters','%'. $letters .'%')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult();
-    }
 }

@@ -2,11 +2,11 @@
 
 namespace App\Controller;
 
-use App\Entity\Tag;
+use App\Entity\SupportHasTag;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-class SearchTag
+class SupportTag
 {
     protected $em;
 
@@ -17,8 +17,8 @@ class SearchTag
 
     public function __invoke(Request $request)
     {
-        $letters = $request->attributes->get("letters");
+        $tagId = $request->attributes->get("tagId");
 
-        return $this->em->getRepository(Tag::class)->searchTagsByLetters($letters);
+        return $this->em->getRepository(SupportHasTag::class)->findBy(["tag" => $tagId]);
     }
 }

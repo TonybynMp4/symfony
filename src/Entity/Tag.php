@@ -18,10 +18,10 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *     collectionOperations={
  *          "get"={},
  *          "post"={},
- *          "searchTagsByLetters"={
+ *          "checkExistingTags"={
  *              "method"="GET",
- *              "path"="/tags/search/{letters}",
- *              "controller"=App\Controller\SearchTag::class
+ *              "path"="/tags/exist",
+ *              "controller"=App\Controller\TagsExist::class
  *          }
  *     }
  * )
@@ -40,7 +40,7 @@ class Tag
      *
      * @ORM\Column(type="string", length=20, unique=true)
      * @Assert\NotBlank
-     * @Groups({"tag:read", "tag:write", "userHasFavoriteSupport:read", "support:read"})
+     * @Groups({"support:write", "tag:read", "tag:write", "userHasFavoriteSupport:read", "support:read"})
      */
     private $name;
 

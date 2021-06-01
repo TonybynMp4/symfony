@@ -12,6 +12,17 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * @ApiResource(
  *     normalizationContext={"groups"={"supportHasTag:read", "supportHasTag:read"}},
  *     denormalizationContext={"groups"={"supportHasTag:write", "supportHasTag:write"}},
+ *     collectionOperations={
+ *          "get"={},
+ *          "post"={},
+ *          "getSupportsByTag"={
+ *              "method"="GET",
+ *              "path"="/support_has_tags/tag/{tagId}",
+ *              "requirements"={"tagId"="\d+"},
+ *              "controller"=App\Controller\SupportTag::class,
+ *              "normalization_context"={"groups"={"SupportTag"}}
+ *          }
+ *     }
  * )
  * @ORM\Entity(repositoryClass="App\Repository\SupportHasTagRepository")
  * @ORM\Table(
@@ -35,7 +46,7 @@ class SupportHasTag
     /**
      * @ORM\ManyToOne(targetEntity="Support", inversedBy="tags", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"supportHasTag:read", "supportHasTag:write"})
+     * @Groups({"supportHasTag:read", "supportHasTag:write", "SupportTag"})
      *
      * @Serializer\Expose
      */

@@ -39,7 +39,7 @@ use ApiPlatform\Core\Annotation\ApiProperty;
  *              "path"="/supports/search/{letters}",
  *              "controller"=App\Controller\SearchSupport::class,
  *              "normalization_context"={"groups"={"SearchSupport"}}
- *          },
+ *          }
  *     }
  * )
  * @ORM\Entity(repositoryClass="App\Repository\SupportRepository")
@@ -64,7 +64,7 @@ class Support
      *
      * @ORM\Column(type="string", length=100)
      * @Assert\NotBlank
-     * @Groups({"support:read", "support:write", "userHasFavoriteSupport:read", "SearchSupport"})
+     * @Groups({"support:read", "support:write", "userHasFavoriteSupport:read", "SearchSupport", "SupportTag"})
      */
     private $title;
 
@@ -72,7 +72,7 @@ class Support
      *
      * @ORM\Column(type="string", length=100)
      * @Assert\NotBlank
-     * @Groups({"support:read", "support:write", "SearchSupport"})
+     * @Groups({"support:read", "support:write", "SearchSupport", "SupportTag"})
      */
     private $subtitle;
 
@@ -80,13 +80,13 @@ class Support
      * @ORM\Column(type="smallint")
      * @Assert\NotBlank
      * @Assert\NotNull
-     * @Groups({"support:read", "support:write", "SearchSupport"})
+     * @Groups({"support:read", "support:write", "SearchSupport", "SupportTag"})
      */
     private $type;
 
     /**
      * @ORM\Column(type="smallint", nullable=true)
-     * @Groups({"support:read", "support:write", "SearchSupport"})
+     * @Groups({"support:read", "support:write", "SearchSupport", "SupportTag"})
      */
     private $type2;
 
