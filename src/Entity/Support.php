@@ -39,6 +39,13 @@ use ApiPlatform\Core\Annotation\ApiProperty;
  *              "path"="/supports/search/{letters}",
  *              "controller"=App\Controller\SearchSupport::class,
  *              "normalization_context"={"groups"={"SearchSupport"}}
+ *          },
+ *          "increaseReported"={
+ *              "method"="PATCH",
+ *              "path"="/supports/report/increase/{supportId}",
+ *              "requirements"={"supportId"="\d+"},
+ *              "controller"=App\Controller\ReportSupport::class,
+ *              "validate"=false
  *          }
  *     }
  * )
@@ -171,6 +178,11 @@ class Support
      * @Groups({"support:read", "support:write", "userHasFavoriteSupport:read"})
      */
     private $tags;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $reported = 0;
 
     public function __construct()
     {
@@ -526,6 +538,24 @@ class Support
             }
         }
 
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getReported(): int
+    {
+        return $this->reported;
+    }
+
+    /**
+     * @param int $reported
+     * @return Support
+     */
+    public function setReported(int $reported): Support
+    {
+        $this->reported = $reported;
         return $this;
     }
 }

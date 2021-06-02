@@ -34,9 +34,16 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *         "get"={},
  *         "updateParticipation"={
  *              "method"="PATCH",
- *              "path"="/user_has_events/participation/{userId}/{eventId}",
+ *              "path"="/user_has_events/participation/add/{userId}/{eventId}",
  *              "requirements"={"userId"="\d+", "eventId"="\d+"},
  *              "controller"=App\Controller\EventParticipation::class,
+ *              "read"=false
+ *          },
+ *          "removeParticipation"={
+ *              "method"="DELETE",
+ *              "path"="/user_has_events/participation/remove/{userId}/{eventId}",
+ *              "requirements"={"userId"="\d+", "eventId"="\d+"},
+ *              "controller"=App\Controller\EventParticipationRemove::class,
  *              "read"=false
  *          }
  *     }
