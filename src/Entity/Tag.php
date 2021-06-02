@@ -19,9 +19,10 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *          "get"={},
  *          "post"={},
  *          "checkExistingTags"={
- *              "method"="POST",
- *              "path"="/tags/exist",
- *              "controller"=App\Controller\TagsExist::class
+ *              "method"="GET",
+ *              "path"="/tags/exist/{tagNameList}",
+ *              "controller"=App\Controller\TagsExist::class,
+ *              "validate"=false
  *          }
  *     }
  * )

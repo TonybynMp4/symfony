@@ -18,4 +18,14 @@ class TagRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Tag::class);
     }
+
+    public function getAllTagsByName($tagsName)
+    {
+        return $this->createQueryBuilder("t")
+            ->select("t.id")
+            ->where("t.name IN (:tagsList)")
+            ->setParameter('tagsList', $tagsName)
+            ->getQuery()
+            ->getResult();
+    }
 }

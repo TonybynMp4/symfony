@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Tag;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class TagsExist
 {
@@ -17,17 +18,10 @@ class TagsExist
 
     public function __invoke(Request $request)
     {
-        $tagsList = json_decode($request->getContent(), true);
+        $tagsList = $request->attributes->get("tagNameList");
 
-        $arrayTags = [];
-        foreach ($tagsList as $tag) {
-            $tagRes = $this->em->getRepository(Tag::class)->findOneBy(["name" => $tag]);
+        $tagsList = explode(",", $tagsList);
 
-            if ($tagRes) {
-                $arrayTags[$tag] = $tagRes->getId();
-            }
-        }
-
-        return $arrayTags;
+        return $this->em->getRepository(Tag::class)->getAllTagsByName($tagsList);
     }
 }
