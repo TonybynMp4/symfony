@@ -28,7 +28,6 @@ class SupportDataPersister implements ContextAwareDataPersisterInterface
      */
     public function supports($data, array $context = []): bool
     {
-        //return $data instanceof Support;
         return true;
     }
 

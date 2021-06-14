@@ -10,8 +10,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ApiResource(
- *     normalizationContext={"groups"={"supportHasTag:read", "supportHasTag:read"}},
- *     denormalizationContext={"groups"={"supportHasTag:write", "supportHasTag:write"}},
+ *     normalizationContext={"groups"={"supportHasTag:read"}},
+ *     denormalizationContext={"groups"={"supportHasTag:write"}},
  *     collectionOperations={
  *          "get"={},
  *          "post"={},
@@ -44,7 +44,7 @@ class SupportHasTag
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Support", inversedBy="tags", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="Support", inversedBy="tags")
      * @ORM\JoinColumn(nullable=false)
      * @Groups({"supportHasTag:read", "supportHasTag:write", "SupportTag"})
      *

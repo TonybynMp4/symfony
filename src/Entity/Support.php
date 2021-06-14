@@ -174,7 +174,7 @@ class Support
     private $medias;
 
     /**
-     * @ORM\OneToMany(targetEntity="SupportHasTag", mappedBy="support", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="SupportHasTag", mappedBy="support", cascade={"persist", "remove"})
      * @Groups({"support:read", "support:write", "userHasFavoriteSupport:read"})
      */
     private $tags;

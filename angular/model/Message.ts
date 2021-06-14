@@ -6,7 +6,8 @@ export interface Message {
 	id: number;
 	content: string;
 	lastUpdated: Date;
-	view: boolean;
+	viewOwner: boolean;
+	viewUserDelivery: boolean;
 	conversation?: string;
 	owner?: User;
 	userDelivery?: User;

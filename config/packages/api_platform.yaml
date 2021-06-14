@@ -5,7 +5,7 @@ api_platform:
         paths: ['%kernel.project_dir%/src/Entity','%kernel.project_dir%/public/bundles/apiplatform']
     patch_formats:
         multipart: ['multipart/form-data']
-        json: ['application/json']
+        json: ['application/json', 'application/ld+json']
     swagger:
         api_keys:
             apiKey:

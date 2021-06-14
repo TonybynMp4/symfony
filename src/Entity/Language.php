@@ -32,13 +32,12 @@ class Language
      *
      * @ORM\Column(type="string", length=50)
      * @Assert\NotBlank
-     * @Groups({"event:read", "language:read", "language:write", "EventListComing", "support:read"})
+     * @Groups({"event:read", "language:read", "language:write", "EventListComing", "support:read", "personality:read", "personality:write", "user:read"})
      */
     public $name;
 
     /**
      * @ORM\OneToMany(targetEntity="UserHasLanguage", mappedBy="language")
-     * @Groups({"language:write"})
      */
     private $users;
 

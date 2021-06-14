@@ -18,4 +18,15 @@ class SupportHasTagRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, SupportHasTag::class);
     }
+
+    public function removeBySupportAndTagsList($supportid, $tagsList)
+    {
+        return $this->createQueryBuilder("sht")
+            ->delete()
+            ->leftJoin('sht.tag', 'tag')
+            ->where("sht.support = :supportId")
+            ->andWhere("tag.name IN(:tagsList)")
+            ->setParameter("supportId", $supportid)
+            ->setParameter("tagsList", $tagsList);
+    }
 }

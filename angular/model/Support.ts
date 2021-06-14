@@ -18,6 +18,7 @@ export interface Support {
 	createdAt: Date;
 	lastUpdated: Date;
 	level: any;
+	reported: number;
 	subTheme?: Theme;
 	user?: User;
 	usersFavorites?: Array<UserHasFavoriteSupport>;

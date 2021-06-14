@@ -28,4 +28,15 @@ class TagRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function findAllTagsBySupport($supportid)
+    {
+        return $this->createQueryBuilder("t")
+            ->select("t.name")
+            ->leftJoin('t.supports', 's')
+            ->where("s.support = :supportId")
+            ->setParameter("supportId", $supportid)
+            ->getQuery()
+            ->getResult();
+    }
 }

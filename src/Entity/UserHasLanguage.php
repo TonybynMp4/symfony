@@ -6,9 +6,13 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\UserHasLanguageRepository;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ApiResource
+ * @ApiResource(
+ *     normalizationContext={"groups"={"user:read", "language:read"}},
+ *     denormalizationContext={"groups"={"user:write", "language:write"}},
+ * )
  * @ORM\Entity(repositoryClass=UserHasLanguageRepository::class)
  * @ORM\Table(
  *     uniqueConstraints={
@@ -31,6 +35,7 @@ class UserHasLanguage
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="languages", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"language:read", "language:write"})
      *
      * @Serializer\Expose
      */
@@ -39,13 +44,14 @@ class UserHasLanguage
     /**
      * @ORM\ManyToOne(targetEntity="Language", inversedBy="users", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"user:read", "user:write"})
      */
     private $language;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="smallint")
      */
-    private $level;
+    private $priority = 0;
 
     public function getId(): ?int
     {
@@ -77,20 +83,20 @@ class UserHasLanguage
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getLevel()
+    public function getPriority(): int
     {
-        return $this->level;
+        return $this->priority;
     }
 
     /**
-     * @param mixed $level
+     * @param int $priority
      * @return UserHasLanguage
      */
-    public function setLevel($level)
+    public function setPriority(int $priority): UserHasLanguage
     {
-        $this->level = $level;
+        $this->priority = $priority;
         return $this;
     }
 }
