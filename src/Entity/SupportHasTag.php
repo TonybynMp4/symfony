@@ -22,6 +22,17 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *              "controller"=App\Controller\SupportTag::class,
  *              "normalization_context"={"groups"={"SupportTag"}}
  *          }
+ *     },
+ *     itemOperations={
+ *         "get"={},
+ *         "updateSupportTag"={
+ *              "method"="PATCH",
+ *              "path"="/support_has_tags/tag/update/{supportId}",
+ *              "requirements"={"supportId"="\d+"},
+ *              "controller"=App\Controller\SupportTagUpdate::class,
+ *              "read"=false,
+ *              "validate"=false
+ *          },
  *     }
  * )
  * @ORM\Entity(repositoryClass="App\Repository\SupportHasTagRepository")
