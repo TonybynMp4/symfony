@@ -92,7 +92,7 @@ class MediaObject
     public $description;
 
     /**
-     * @ORM\OneToMany(targetEntity="SupportHasMedia", mappedBy="media")
+     * @ORM\OneToMany(targetEntity="SupportHasMedia", mappedBy="media", orphanRemoval=true, cascade={"remove"})
      */
     private $supports;
 
