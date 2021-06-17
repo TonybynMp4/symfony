@@ -129,7 +129,7 @@ class Support
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="supports")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
-     * @Groups({"support:read", "support:write"})
+     * @Groups({"support:read", "support:write", "SupportTag"})
      */
     private $user;
 
@@ -149,7 +149,7 @@ class Support
      *
      * @ORM\Column(type="datetime")
      * @Assert\NotBlank
-     * @Groups({"support:read", "support:write", "userHasFavoriteSupport:read"})
+     * @Groups({"support:read", "support:write", "userHasFavoriteSupport:read", "SupportTag"})
      */
     private $createdAt;
 
@@ -163,13 +163,13 @@ class Support
 
     /**
      * @ORM\Column(type="smallint")
-     * @Groups({"support:read", "support:write", "userHasFavoriteSupport:read"})
+     * @Groups({"support:read", "support:write", "userHasFavoriteSupport:read", "SupportTag"})
      */
     private $level;
 
     /**
      * @ORM\OneToMany(targetEntity="SupportHasMedia", mappedBy="support", cascade={"persist", "remove"})
-     * @Groups({"support:read", "support:write", "userHasFavoriteSupport:read", "SearchSupport"})
+     * @Groups({"support:read", "support:write", "userHasFavoriteSupport:read", "SearchSupport", "SupportTag"})
      */
     private $medias;
 
