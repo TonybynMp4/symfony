@@ -8,13 +8,15 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Serializer\Annotation\Groups;
 use ApiPlatform\Core\Annotation\ApiProperty;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
 /**
  * @ApiResource(
  *     normalizationContext={"groups"={"support:read"}},
  *     denormalizationContext={"groups"={"support:write"}},
  *     collectionOperations={
- *          "get"={},
+ *          "get"={"maximum_items_per_page"=6},
  *          "post"={"security"="is_granted('ROLE_PRO')"},
  *          "getSupportsByUser"={
  *              "method"="GET",
@@ -49,6 +51,7 @@ use ApiPlatform\Core\Annotation\ApiProperty;
  *          }
  *     }
  * )
+ * @ApiFilter(SearchFilter::class, properties={"title" : "partial"})
  * @ORM\Entity(repositoryClass="App\Repository\SupportRepository")
  */
 class Support

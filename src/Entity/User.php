@@ -15,6 +15,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Serializer\Annotation\SerializedName;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
 /**
  * @UniqueEntity(fields={"email"})
@@ -59,7 +61,7 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
  *          }
  *     },
  *     collectionOperations={
- *          "get"={},
+ *          "get"={"maximum_items_per_page"=20},
  *          "post"={
  *          "route_name"="api_users_post"
  *          },
@@ -71,6 +73,7 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
  *          }
  *     }
  * )
+ * @ApiFilter(SearchFilter::class, properties={"name" : "partial"})
  * @ORM\Entity(repositoryClass=UserRepository::class)
  */
 class User implements UserInterface
