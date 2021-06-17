@@ -22,19 +22,20 @@ class EventList
         $userId = $request->attributes->get("userId");
         $type = $request->attributes->get("type");
 
-        if ($type == "pub") {
-            $themes = $this->em->getRepository(UserHasFavoriteTheme::class)->getIdThemesByUser($userId);
+        switch ($type) {
+            case "pub":
+                $themes = $this->em->getRepository(UserHasFavoriteTheme::class)->getIdThemesByUser($userId);
 
-            return $this->em->getRepository(Event::class)->getEventsList($themes, $userId);
-        } elseif ($type == "priv") {
-            $events = $this->em->getRepository(Event::class)->getPrivateEventListInvited($userId);
+                return $this->em->getRepository(Event::class)->getEventsList($themes, $userId);
+            case "priv":
+                $events = $this->em->getRepository(Event::class)->getPrivateEventListInvited($userId);
 
-            foreach ($events as $event) {
-                $countParticipation = $this->em->getRepository(UserHasEvent::class)->countEventsParticipation($event->getId());
-                $event->setNbParticipation($countParticipation);
-            }
+                foreach ($events as $event) {
+                    $countParticipation = $this->em->getRepository(UserHasEvent::class)->countEventsParticipation($event->getId());
+                    $event->setNbParticipation($countParticipation);
+                }
 
-            return $events;
+                return $events;
         }
     }
 }

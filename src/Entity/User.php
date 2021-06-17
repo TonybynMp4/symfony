@@ -23,7 +23,6 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
  *     denormalizationContext={"groups"={"user:write"}},
  *     itemOperations={
  *          "get"={},
- *          "patch"={},
  *          "put"={
  *              "route_name"="api_users_put"
  *          },
