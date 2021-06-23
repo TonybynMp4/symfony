@@ -11,7 +11,18 @@ use Symfony\Component\Serializer\Annotation\Groups;
 /**
  * @ApiResource(
  *     normalizationContext={"groups"={"supportHasMedia:read", "supportHasMedia:read"}},
- *     denormalizationContext={"groups"={"supportHasMedia:write", "supportHasMedia:write"}}
+ *     denormalizationContext={"groups"={"supportHasMedia:write", "supportHasMedia:write"}},
+ *     itemOperations={
+ *         "get"={},
+ *         "updateSupportTag"={
+ *              "method"="PATCH",
+ *              "path"="/support_has_medias/media/update/{supportId}",
+ *              "requirements"={"supportId"="\d+"},
+ *              "controller"=App\Controller\SupportMediaUpdate::class,
+ *              "read"=false,
+ *              "validate"=false
+ *          },
+ *     }
  * )
  * @ORM\Entity(repositoryClass="App\Repository\SupportHasMediaRepository")
  * @ORM\Table(
@@ -42,7 +53,7 @@ class SupportHasMedia
     private $support;
 
     /**
-     * @ORM\ManyToOne(targetEntity="MediaObject", inversedBy="supports", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="MediaObject", inversedBy="supports", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      * @Groups({"support:read", "support:write", "media_object:read", "media_object:write", "userHasFavoriteSupport:read", "SearchSupport", "SupportTag", "supportHasMedia:read", "supportHasMedia:write"})
      */
@@ -53,27 +64,39 @@ class SupportHasMedia
         return $this->id;
     }
 
-    public function getSupport(): ?Support
+    /**
+     * @return mixed
+     */
+    public function getSupport()
     {
         return $this->support;
     }
 
-    public function setSupport(?Support $support): self
+    /**
+     * @param mixed $support
+     * @return SupportHasMedia
+     */
+    public function setSupport($support)
     {
         $this->support = $support;
-
         return $this;
     }
 
-    public function getMedia(): ?MediaObject
+    /**
+     * @return mixed
+     */
+    public function getMedia()
     {
         return $this->media;
     }
 
-    public function setMedia(?MediaObject $media): self
+    /**
+     * @param mixed $media
+     * @return SupportHasMedia
+     */
+    public function setMedia($media)
     {
         $this->media = $media;
-
         return $this;
     }
 }

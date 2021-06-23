@@ -18,4 +18,16 @@ class SupportHasMediaRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, SupportHasMedia::class);
     }
+
+    public function findMediasById($supportid, $mediasList)
+    {
+        return $this->createQueryBuilder("shm")
+            ->leftJoin('shm.media', 'm')
+            ->where("shm.support = :supportId")
+            ->andWhere("m.id IN(:mediasList)")
+            ->setParameter("supportId", $supportid)
+            ->setParameter("mediasList", $mediasList)
+            ->getQuery()
+            ->getResult();
+    }
 }

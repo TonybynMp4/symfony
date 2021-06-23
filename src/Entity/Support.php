@@ -19,7 +19,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
  *          "pagination_items_per_page"=6
  *     },
  *     collectionOperations={
- *          "get"={"maximum_items_per_page"=6},
+ *          "get"={},
  *          "post"={"security"="is_granted('ROLE_PRO')"},
  *          "getSupportsByUser"={
  *              "method"="GET",

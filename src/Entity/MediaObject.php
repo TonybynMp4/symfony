@@ -14,7 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\MediaRepository")
  * @ApiResource(
  *     iri="http://schema.org/MediaObject",
  *     normalizationContext={"groups"={"media_object_read"}},
