@@ -65,12 +65,6 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
  *          "post"={
  *          "route_name"="api_users_post"
  *          },
- *          "searchUsersByLetters"={
- *              "method"="GET",
- *              "path"="/users/search/{userId}/{letters}",
- *              "requirements"={"userId"="\d+"},
- *              "controller"=App\Controller\SearchUser::class
- *          }
  *     }
  * )
  * @ApiFilter(SearchFilter::class, properties={"name" : "partial"})

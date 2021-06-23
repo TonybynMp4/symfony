@@ -10,8 +10,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ApiResource(
- *     normalizationContext={"groups"={"support:read", "media_object:read"}},
- *     denormalizationContext={"groups"={"support:write", "media_object:write"}},
+ *     normalizationContext={"groups"={"supportHasMedia:read", "supportHasMedia:read"}},
+ *     denormalizationContext={"groups"={"supportHasMedia:write", "supportHasMedia:write"}}
  * )
  * @ORM\Entity(repositoryClass="App\Repository\SupportHasMediaRepository")
  * @ORM\Table(
@@ -44,7 +44,7 @@ class SupportHasMedia
     /**
      * @ORM\ManyToOne(targetEntity="MediaObject", inversedBy="supports", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
-     * @Groups({"support:read", "support:write", "media_object:read", "media_object:write", "userHasFavoriteSupport:read", "SearchSupport", "SupportTag"})
+     * @Groups({"support:read", "support:write", "media_object:read", "media_object:write", "userHasFavoriteSupport:read", "SearchSupport", "SupportTag", "supportHasMedia:read", "supportHasMedia:write"})
      */
     private $media;
 

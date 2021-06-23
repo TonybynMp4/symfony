@@ -15,6 +15,9 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
  * @ApiResource(
  *     normalizationContext={"groups"={"support:read"}},
  *     denormalizationContext={"groups"={"support:write"}},
+ *     attributes={
+ *          "pagination_items_per_page"=6
+ *     },
  *     collectionOperations={
  *          "get"={"maximum_items_per_page"=6},
  *          "post"={"security"="is_granted('ROLE_PRO')"},
@@ -35,12 +38,6 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
  *              "path"="/supports/theme/{themeId}",
  *              "requirements"={"themeId"="\d+"},
  *              "controller"=App\Controller\SupportTheme::class
- *          },
- *          "searchSupportsByLetters"={
- *              "method"="GET",
- *              "path"="/supports/search/{letters}",
- *              "controller"=App\Controller\SearchSupport::class,
- *              "normalization_context"={"groups"={"SearchSupport"}}
  *          },
  *          "increaseReported"={
  *              "method"="PATCH",
