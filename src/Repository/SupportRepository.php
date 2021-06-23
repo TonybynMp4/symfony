@@ -27,6 +27,7 @@ class SupportRepository extends ServiceEntityRepository
             ->leftJoin('s.medias', 'shm')
             ->leftJoin("shm.media", 'm')
             ->where("s.subTheme = :themeId")
+            ->orderBy('s.createdAt', 'ASC')
             ->setParameter("themeId", $themeId)
             ->getQuery()
             ->getResult();
