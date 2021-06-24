@@ -28,7 +28,6 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *              "requirements"={"userId"="\d+"},
  *              "controller"=App\Controller\EventUser::class
  *          },
- *          
  *     },
  *     itemOperations={
  *         "get"={},
@@ -44,6 +43,13 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *              "path"="/user_has_events/participation/remove/{userId}/{eventId}",
  *              "requirements"={"userId"="\d+", "eventId"="\d+"},
  *              "controller"=App\Controller\EventParticipationRemove::class,
+ *              "read"=false
+ *          },
+ *          "updateParticipation"={
+ *              "method"="PATCH",
+ *              "path"="/user_has_events/view/{userId}/{eventId}",
+ *              "requirements"={"userId"="\d+", "eventId"="\d+"},
+ *              "controller"=App\Controller\EventView::class,
  *              "read"=false
  *          }
  *     }
@@ -89,32 +95,50 @@ class UserHasEvent
      */
     private $accepted = false;
 
+    /**
+     * @ORM\Column(type="boolean")
+     * @Groups({"event:write", "EventListComing"})
+     */
+    private $view = false;
+
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getUser(): ?User
+    /**
+     * @return mixed
+     */
+    public function getUser()
     {
         return $this->user;
     }
 
-    public function setUser(?User $user): self
+    /**
+     * @param mixed $user
+     * @return UserHasEvent
+     */
+    public function setUser($user)
     {
         $this->user = $user;
-
         return $this;
     }
 
-    public function getEvent(): ?Event
+    /**
+     * @return mixed
+     */
+    public function getEvent()
     {
         return $this->event;
     }
 
-    public function setEvent(?Event $event): self
+    /**
+     * @param mixed $event
+     * @return UserHasEvent
+     */
+    public function setEvent($event)
     {
         $this->event = $event;
-
         return $this;
     }
 
@@ -133,6 +157,24 @@ class UserHasEvent
     public function setAccepted(bool $accepted): UserHasEvent
     {
         $this->accepted = $accepted;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isView(): bool
+    {
+        return $this->view;
+    }
+
+    /**
+     * @param bool $view
+     * @return UserHasEvent
+     */
+    public function setView(bool $view): UserHasEvent
+    {
+        $this->view = $view;
         return $this;
     }
 }

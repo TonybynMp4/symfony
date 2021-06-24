@@ -22,7 +22,13 @@ class EventListComing
         $userId = $request->attributes->get("userId");
         $type = $request->attributes->get("type");
 
-        return $this->em->getRepository(UserHasEvent::class)->getEventsListsComingByUser($userId, $type);
+        $userHasEvents = $this->em->getRepository(UserHasEvent::class)->getEventsListsComingByUser($userId, $type);
 
+        foreach ($userHasEvents as $userHasEvent) {
+            $countParticipation = $this->em->getRepository(UserHasEvent::class)->countEventsParticipation($userHasEvent->getEvent()->getId());
+            $userHasEvent->getEvent()->setNbParticipation($countParticipation);
+        }
+
+        return $userHasEvents;
     }
 }
