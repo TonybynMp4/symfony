@@ -69,6 +69,7 @@ security:
         - { path: ^/api/themes, roles: IS_AUTHENTICATED_ANONYMOUSLY , methods: [GET] }
         - { path: ^/api/languages, roles: IS_AUTHENTICATED_ANONYMOUSLY , methods: [GET] }
         - { path: ^/api/media_objects, roles: IS_AUTHENTICATED_ANONYMOUSLY , methods: [POST] }
+        - { path: ^/api/users/exist/check/^, roles: IS_AUTHENTICATED_ANONYMOUSLY , methods: [GET] }
         - { path: ^/authentication_token, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/token/refresh, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
