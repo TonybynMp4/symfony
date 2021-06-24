@@ -19,7 +19,7 @@ use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
 /**
- * @UniqueEntity(fields={"email"})
+ * @UniqueEntity(fields={"email", "name"})
  * @ApiResource(
  *     normalizationContext={"groups"={"user:read"}},
  *     denormalizationContext={"groups"={"user:write"}},
@@ -58,6 +58,12 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
  *              "controller"=App\Controller\FindUser::class,
  *              "read"=false,
  *              "normalization_context"={"groups"={"FindUser"}}
+ *          },
+ *          "checkExistUserByEmailAndName"={
+ *              "method"="GET",
+ *              "path"="/users/exist/check/{email}/{name}",
+ *              "controller"=App\Controller\UserCheck::class,
+ *              "read"=false
  *          }
  *     },
  *     collectionOperations={
