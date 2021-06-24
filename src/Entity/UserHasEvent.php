@@ -45,7 +45,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *              "controller"=App\Controller\EventParticipationRemove::class,
  *              "read"=false
  *          },
- *          "updateParticipation"={
+ *          "updateView"={
  *              "method"="PATCH",
  *              "path"="/user_has_events/view/{userId}/{eventId}",
  *              "requirements"={"userId"="\d+", "eventId"="\d+"},
