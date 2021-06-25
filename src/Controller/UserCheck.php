@@ -18,9 +18,10 @@ class UserCheck
 
     public function __invoke(Request $request)
     {
-        $email = $request->attributes->get("email");
+        $content = json_decode($request->getContent());
+        $email = $content->email;
 
-        $name = $request->attributes->get("name");
+        $name = $content->name;
 
         if ($this->em->getRepository(User::class)->findOneBy(["email" => $email])) {
             return new Response("Cette adresse email existe déjà.", Response::HTTP_CONFLICT);

@@ -62,6 +62,7 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         - { path: ^/api/docs, roles: IS_AUTHENTICATED_ANONYMOUSLY } # Allows accessing the Swagger UI
+        - { path: ^/api/users/exist/check, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/reset/confirm/password/^, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/users/resetPassword, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/users, roles: IS_AUTHENTICATED_ANONYMOUSLY , methods: [POST] }
@@ -69,7 +70,6 @@ security:
         - { path: ^/api/themes, roles: IS_AUTHENTICATED_ANONYMOUSLY , methods: [GET] }
         - { path: ^/api/languages, roles: IS_AUTHENTICATED_ANONYMOUSLY , methods: [GET] }
         - { path: ^/api/media_objects, roles: IS_AUTHENTICATED_ANONYMOUSLY , methods: [POST] }
-        - { path: ^/api/users/exist/check/^, roles: IS_AUTHENTICATED_ANONYMOUSLY , methods: [GET] }
         - { path: ^/authentication_token, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/token/refresh, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }

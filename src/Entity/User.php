@@ -59,12 +59,13 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
  *              "read"=false,
  *              "normalization_context"={"groups"={"FindUser"}}
  *          },
- *          "checkExistUserByEmailAndName"={
- *              "method"="GET",
- *              "path"="/users/exist/check/{email}/{name}",
+ *          "checkUserByEmailAndName"={
+ *              "method"="PATCH",
+ *              "path"="/users/exist/check",
  *              "controller"=App\Controller\UserCheck::class,
+ *              "validate"=false,
  *              "read"=false
- *          }
+ *          },
  *     },
  *     collectionOperations={
  *          "get"={"maximum_items_per_page"=20},
