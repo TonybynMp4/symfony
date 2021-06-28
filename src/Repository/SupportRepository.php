@@ -22,7 +22,6 @@ class SupportRepository extends ServiceEntityRepository
     public function getSupportsByThemeIdUser($themeId)
     {
         return $this->createQueryBuilder("s")
-            ->select("s.id", "s.title", "s.subtitle", "s.type", "s.type2", "u.name", "s.createdAt", "s.lastUpdated", "s.level", "m.filePath", "m.description")
             ->leftJoin('s.user', 'u')
             ->leftJoin('s.medias', 'shm')
             ->leftJoin("shm.media", 'm')

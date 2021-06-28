@@ -37,7 +37,9 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
  *              "method"="GET",
  *              "path"="/supports/theme/{themeId}",
  *              "requirements"={"themeId"="\d+"},
- *              "controller"=App\Controller\SupportTheme::class
+ *              "controller"=App\Controller\SupportTheme::class,
+ *              "read"=false,
+ *              "normalization_context"={"groups"={"SupportByTheme"}}
  *          },
  *          "increaseReported"={
  *              "method"="PATCH",
@@ -57,6 +59,7 @@ class Support
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Groups({"SupportByTheme"})
      */
     private $id;
 
@@ -71,7 +74,7 @@ class Support
      *
      * @ORM\Column(type="string", length=100)
      * @Assert\NotBlank
-     * @Groups({"support:read", "support:write", "userHasFavoriteSupport:read", "SearchSupport", "SupportTag"})
+     * @Groups({"support:read", "support:write", "userHasFavoriteSupport:read", "SearchSupport", "SupportTag", "SupportByTheme"})
      */
     private $title;
 
@@ -79,7 +82,7 @@ class Support
      *
      * @ORM\Column(type="string", length=100)
      * @Assert\NotBlank
-     * @Groups({"support:read", "support:write", "SearchSupport", "SupportTag"})
+     * @Groups({"support:read", "support:write", "SearchSupport", "SupportTag", "SupportByTheme"})
      */
     private $subtitle;
 
@@ -87,13 +90,13 @@ class Support
      * @ORM\Column(type="smallint")
      * @Assert\NotBlank
      * @Assert\NotNull
-     * @Groups({"support:read", "support:write", "SearchSupport", "SupportTag"})
+     * @Groups({"support:read", "support:write", "SearchSupport", "SupportTag", "SupportByTheme"})
      */
     private $type;
 
     /**
      * @ORM\Column(type="smallint", nullable=true)
-     * @Groups({"support:read", "support:write", "SearchSupport", "SupportTag"})
+     * @Groups({"support:read", "support:write", "SearchSupport", "SupportTag", "SupportByTheme"})
      */
     private $type2;
 
@@ -129,7 +132,7 @@ class Support
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="supports")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
-     * @Groups({"support:read", "support:write", "SupportTag"})
+     * @Groups({"support:read", "support:write", "SupportTag", "SupportByTheme"})
      */
     private $user;
 
@@ -149,7 +152,7 @@ class Support
      *
      * @ORM\Column(type="datetime")
      * @Assert\NotBlank
-     * @Groups({"support:read", "support:write", "userHasFavoriteSupport:read", "SupportTag"})
+     * @Groups({"support:read", "support:write", "userHasFavoriteSupport:read", "SupportTag", "SupportByTheme"})
      */
     private $createdAt;
 
@@ -157,19 +160,19 @@ class Support
      *
      * @ORM\Column(type="datetime")
      * @Assert\NotBlank
-     * @Groups({"support:read", "support:write"})
+     * @Groups({"support:read", "support:write", "SupportByTheme"})
      */
     private $lastUpdated;
 
     /**
      * @ORM\Column(type="smallint")
-     * @Groups({"support:read", "support:write", "userHasFavoriteSupport:read", "SupportTag"})
+     * @Groups({"support:read", "support:write", "userHasFavoriteSupport:read", "SupportTag", "SupportByTheme"})
      */
     private $level;
 
     /**
      * @ORM\OneToMany(targetEntity="SupportHasMedia", mappedBy="support", cascade={"persist", "remove"})
-     * @Groups({"support:read", "support:write", "userHasFavoriteSupport:read", "SearchSupport", "SupportTag"})
+     * @Groups({"support:read", "support:write", "userHasFavoriteSupport:read", "SearchSupport", "SupportTag", "SupportByTheme"})
      */
     private $medias;
 

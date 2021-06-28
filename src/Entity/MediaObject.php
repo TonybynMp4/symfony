@@ -80,19 +80,19 @@ class MediaObject
      * @var string|null
      *
      * @ORM\Column(nullable=true)
-     * @Groups({"theme:read", "user:read", "support:read", "event:read", "media_object_read", "userHasFavoriteSupport:read", "FavoriteThemeUser", "message:read", "EventListComing", "SearchSupport", "TchatList", "TchatBetweenUser", "ParentThemes", "SupportTag"})
+     * @Groups({"theme:read", "user:read", "support:read", "event:read", "media_object_read", "userHasFavoriteSupport:read", "FavoriteThemeUser", "message:read", "EventListComing", "SearchSupport", "TchatList", "TchatBetweenUser", "ParentThemes", "SupportTag", "SupportByTheme"})
      */
     public $filePath;
 
     /**
      *
      * @ORM\Column(type="text", nullable=true)
-     * @Groups({"support:read", "media_object_read"})
+     * @Groups({"support:read", "media_object_read", "SupportByTheme"})
      */
     public $description;
 
     /**
-     * @ORM\OneToMany(targetEntity="SupportHasMedia", mappedBy="media", orphanRemoval=true, cascade={"remove"})
+     * @ORM\OneToMany(targetEntity="SupportHasMedia", mappedBy="media")
      */
     private $supports;
 
