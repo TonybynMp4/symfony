@@ -38,7 +38,7 @@ class EventDataPersister implements ContextAwareDataPersisterInterface
      */
     public function persist($data, array $context = [])
     {
-        $client = $this->googleService->getClient("alexandre.peneau@gmail.com");
+        /*$client = $this->googleService->getClient("alexandre.peneau@gmail.com");
         $service = new Google_Service_Calendar($client);
 
         // Print the next 10 events on the user's calendar.
@@ -52,7 +52,7 @@ class EventDataPersister implements ContextAwareDataPersisterInterface
         $results = $service->events->listEvents($calendarId, $optParams);
         $events = $results->getItems();
 
-        return new Response($events, Response::HTTP_OK);
+        return new Response($events, Response::HTTP_OK);*/
 
         $this->_entityManager->persist($data);
 
