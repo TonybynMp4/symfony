@@ -16,7 +16,7 @@ Class GoogleService
         $this->parameterBag = $parameterBag;
     }
 
-    function getClient()
+    function getClient($email)
     {
         define('STDIN',fopen("php://stdin","r"));
 
@@ -24,7 +24,7 @@ Class GoogleService
 
         $client = new Google_Client();
         $client->setApplicationName('Ndombi');
-        $client->setScopes(Google_Service_Calendar::CALENDAR_READONLY);
+        $client->setScopes([Google_Service_Calendar::CALENDAR_READONLY]);
         $client->setAuthConfig($rootDir . 'credentials.json');
         $client->setApprovalPrompt('force');
         $client->setAccessType('offline');
@@ -34,7 +34,7 @@ Class GoogleService
         // The file token.json stores the user's access and refresh tokens, and is
         // created automatically when the authorization flow completes for the first
         // time.
-        $tokenPath = 'token.json';
+        $tokenPath = $rootDir."/tokens/".$email.'token.json';
         if (file_exists($tokenPath)) {
             $accessToken = json_decode(file_get_contents($tokenPath), true);
             $client->setAccessToken($accessToken);
