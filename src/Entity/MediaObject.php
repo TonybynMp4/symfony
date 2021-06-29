@@ -96,8 +96,16 @@ class MediaObject
      */
     private $supports;
 
+    /**
+     * @ORM\Column(type="datetime")
+     *
+     * @var \DateTimeInterface|null
+     */
+    private $updatedAt;
+
     public function __construct()
     {
+        $this->updatedAt = new \DateTime("now");
         $this->supports = new ArrayCollection();
     }
 
@@ -139,6 +147,11 @@ class MediaObject
     public function setFile(?File $file): MediaObject
     {
         $this->file = $file;
+        if (null !== $file) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->updatedAt = new \DateTimeImmutable();
+        }
         return $this;
     }
 
@@ -203,6 +216,24 @@ class MediaObject
             }
         }
 
+        return $this;
+    }
+
+    /**
+     * @return \DateTimeInterface|null
+     */
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * @param \DateTimeInterface|null $updatedAt
+     * @return MediaObject
+     */
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt): MediaObject
+    {
+        $this->updatedAt = $updatedAt;
         return $this;
     }
 }
