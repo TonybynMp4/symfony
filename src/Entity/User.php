@@ -230,7 +230,7 @@ class User implements UserInterface
     /**
      * @ORM\ManyToOne(targetEntity="Language")
      * @ORM\JoinColumn(name="language_default_id", referencedColumnName="id")
-     * @Groups({"user:read", "user:write"})
+     * @Groups({"user:read", "user:write", "FindUser"})
      */
     private $languageDefault;
 
