@@ -38,6 +38,7 @@ class Event
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Groups({"event:read"})
      */
     private $id;
 
