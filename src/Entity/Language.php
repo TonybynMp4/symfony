@@ -32,7 +32,7 @@ class Language
      *
      * @ORM\Column(type="string", length=50)
      * @Assert\NotBlank
-     * @Groups({"event:read", "language:read", "language:write", "EventListComing", "support:read", "personality:read", "personality:write", "user:read", "FindUser"})
+     * @Groups({"event:read", "language:read", "language:write", "EventListComing", "support:read", "personality:read", "personality:write", "user:read", "FindUser", "EventList"})
      */
     public $name;
 

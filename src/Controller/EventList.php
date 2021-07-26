@@ -25,7 +25,6 @@ class EventList
         switch ($type) {
             case "pub":
                 $themes = $this->em->getRepository(UserHasFavoriteTheme::class)->getIdThemesByUser($userId);
-
                 return $this->em->getRepository(Event::class)->getEventsList($themes, $userId);
             case "priv":
                 $events = $this->em->getRepository(Event::class)->getPrivateEventListInvited($userId);
