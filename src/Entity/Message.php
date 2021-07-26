@@ -17,11 +17,13 @@ use ApiPlatform\Core\Annotation\ApiProperty;
  *          "get"={},
  *          "post"={},
  *          "getTchatBetweenUser"={
+ *              "attributes"={"pagination_client_items_per_page"=true},
  *              "method"="GET",
- *              "path"="/messages/tchat/conversation/{conversation}/{ownerId}",
- *              "requirements"={"ownerId"="\d+"},
+ *              "path"="/messages/tchat/conversation/{conversation}/{ownerId}/{page}",
+ *              "requirements"={"ownerId"="\d+", "page"="\d+"},
  *              "controller"=App\Controller\TchatBetweenUser::class,
- *              "normalization_context"={"groups"={"TchatBetweenUser"}}
+ *              "normalization_context"={"groups"={"TchatBetweenUser"}},
+ *              "maximum_items_per_page"=100
  *          },
  *          "getTchatList"={
  *              "method"="GET",
