@@ -28,6 +28,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
  *          "put"={
  *              "route_name"="api_users_put"
  *          },
+ *          "patch"={},
  *          "delete"={},
  *          "resetPassword"={
  *              "method"="PATCH",
@@ -238,6 +239,12 @@ class User implements UserInterface
      * @Groups({"support:read", "message:read", "FavoriteThemeUser", "message:read", "TchatList", "TchatBetweenUser"})
      */
     private $nbSupportsPublished;
+
+    /**
+     * @ORM\Column(type="boolean")
+     * @Groups({"user:read", "user:write"})
+     */
+    private $notificationEnabled = true;
 
     public function __construct() {
         $this->personalities = new ArrayCollection();
@@ -731,5 +738,23 @@ class User implements UserInterface
     public function getNbSupportsPublished()
     {
         return count($this->supports);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isNotificationEnabled(): bool
+    {
+        return $this->notificationEnabled;
+    }
+
+    /**
+     * @param bool $notificationEnabled
+     * @return User
+     */
+    public function setNotificationEnabled(bool $notificationEnabled): User
+    {
+        $this->notificationEnabled = $notificationEnabled;
+        return $this;
     }
 }

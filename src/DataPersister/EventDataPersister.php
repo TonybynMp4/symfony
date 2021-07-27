@@ -55,21 +55,28 @@ class EventDataPersister implements ContextAwareDataPersisterInterface
         return new Response($events, Response::HTTP_OK);*/
 
         $this->_entityManager->persist($data);
+        $this->_entityManager->flush();
 
         if (($context['collection_operation_name'] ?? null) === 'post') {
             if ($data->isRepeat() == true) {
                 $actualDate = $data->getTimeToStart();
+                //dump($actualDate);
                 $actualDate->add(new \DateInterval("P7D"));
-                while ($actualDate <= $data->getEndRepeat()) {;
+                //dump($actualDate);
+                //dump($data);
+                while ($actualDate <= $data->getEndRepeat()) {
                     $newEvent = clone $data;
                     $newEvent->setTimeToStart($actualDate);
+                    //dump($newEvent);
+                    //dump($newEvent->getTimeToStart());
                     $this->_entityManager->persist($newEvent);
+                    $this->_entityManager->flush();
                     $actualDate->add(new \DateInterval("P7D"));
                 }
             }
         }
 
-        $this->_entityManager->flush();
+        //$this->_entityManager->flush();
     }
 
     /**
