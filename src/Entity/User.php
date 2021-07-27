@@ -28,7 +28,6 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
  *          "put"={
  *              "route_name"="api_users_put"
  *          },
- *          "patch"={},
  *          "delete"={},
  *          "resetPassword"={
  *              "method"="PATCH",
