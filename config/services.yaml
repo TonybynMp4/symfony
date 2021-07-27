@@ -32,5 +32,8 @@ services:
         arguments: [ '@App\Swagger\SwaggerDecorator.inner' ]
         autoconfigure: false
 
+    App\Service\DirectoryNamer:
+        alias: app_service.directory_namer
+
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
