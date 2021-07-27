@@ -127,7 +127,7 @@ class Event
 
     /**
      * @ORM\OneToMany(targetEntity="UserHasEvent", mappedBy="event", cascade={"persist", "remove"})
-     * @Groups({"event:read", "event:write"})
+     * @Groups({"event:read", "event:write", "EventList"})
      */
     private $users;
 
@@ -551,5 +551,15 @@ class Event
     public function getNbParticipation()
     {
         return count($this->users);
+    }
+
+    /**
+     * @param int $nbParticipation
+     * @return Event
+     */
+    public function setNbParticipation(int $nbParticipation): Event
+    {
+        $this->nbParticipation = $nbParticipation;
+        return $this;
     }
 }

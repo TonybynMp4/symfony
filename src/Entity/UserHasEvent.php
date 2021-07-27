@@ -76,7 +76,7 @@ class UserHasEvent
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="events", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"event:read", "event:write"})
+     * @Groups({"event:read", "event:write", "EventList"})
      *
      * @Serializer\Expose
      */
@@ -97,7 +97,7 @@ class UserHasEvent
 
     /**
      * @ORM\Column(type="boolean")
-     * @Groups({"event:write", "EventListComing"})
+     * @Groups({"event:write", "EventListComing", "EventList"})
      */
     private $view = false;
 
