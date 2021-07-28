@@ -41,11 +41,11 @@ class EventRepository extends ServiceEntityRepository
             ->leftJoin('e.users', 'uhe')
             ->where("uhe.user = :userId")
             ->andWhere("e.type = :true")
-            ->andWhere("uhe.accepted = :false")
+            //->andWhere("uhe.accepted = :false")
             ->orderBy('e.createdAt', 'ASC')
             ->setParameter("userId", $userId)
             ->setParameter("true", true)
-            ->setParameter("false", false)
+            //->setParameter("false", false)
             ->getQuery()
             ->getResult();
     }

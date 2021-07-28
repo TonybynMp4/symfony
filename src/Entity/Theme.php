@@ -46,7 +46,7 @@ class Theme
      *
      * @ORM\Column(type="string", length=50)
      * @Assert\NotNull
-     * @Groups({"theme:read", "theme:write", "user:read", "support:read", "event:read", "userHasFavoriteTheme:read", "FavoriteThemeUser", "ParentThemes"})
+     * @Groups({"theme:read", "theme:write", "user:read", "support:read", "event:read", "userHasFavoriteTheme:read", "FavoriteThemeUser", "ParentThemes", "EventList"})
      */
     public $name;
 

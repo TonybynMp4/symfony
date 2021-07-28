@@ -31,7 +31,9 @@ class EventList
 
                 foreach ($events as $event) {
                     $countParticipation = $this->em->getRepository(UserHasEvent::class)->countEventsParticipation($event->getId());
+                    $viewEvent = $this->em->getRepository(UserHasEvent::class)->getView($event->getId(), $userId);
                     $event->setNbParticipation($countParticipation);
+                    $event->setViewPrivateEvent($viewEvent["view"]);
                 }
 
                 return $events;

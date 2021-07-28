@@ -127,7 +127,7 @@ class Event
 
     /**
      * @ORM\OneToMany(targetEntity="UserHasEvent", mappedBy="event", cascade={"persist", "remove"})
-     * @Groups({"event:read", "event:write", "EventList"})
+     * @Groups({"event:read", "event:write"})
      */
     private $users;
 
@@ -175,6 +175,12 @@ class Event
      * @var integer
      */
     private $nbParticipation = 0;
+
+    /**
+     * @Groups({"EventList"})
+     * @var boolean
+     */
+    private $viewPrivateEvent = false;
 
     public function __construct()
     {
@@ -550,7 +556,7 @@ class Event
      */
     public function getNbParticipation()
     {
-        return count($this->users);
+        return $this->nbParticipation;
     }
 
     /**
@@ -560,6 +566,24 @@ class Event
     public function setNbParticipation(int $nbParticipation): Event
     {
         $this->nbParticipation = $nbParticipation;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isViewPrivateEvent(): bool
+    {
+        return $this->viewPrivateEvent;
+    }
+
+    /**
+     * @param bool $viewPrivateEvent
+     * @return Event
+     */
+    public function setViewPrivateEvent(bool $viewPrivateEvent): Event
+    {
+        $this->viewPrivateEvent = $viewPrivateEvent;
         return $this;
     }
 }

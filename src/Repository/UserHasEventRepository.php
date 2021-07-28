@@ -19,6 +19,18 @@ class UserHasEventRepository extends ServiceEntityRepository
         parent::__construct($registry, UserHasEvent::class);
     }
 
+    public function getView($eventId, $userId)
+    {
+        return $this->createQueryBuilder("uhe")
+            ->select('uhe.view')
+            ->where("uhe.event = :eventId")
+            ->andWhere("uhe.user = :userId")
+            ->setParameter("eventId", $eventId)
+            ->setParameter("userId", $userId)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
     public function countEventsParticipation($eventId)
     {
         return $this->createQueryBuilder("uhe")

@@ -24,10 +24,10 @@ class EventListComing
 
         $userHasEvents = $this->em->getRepository(UserHasEvent::class)->getEventsListsComingByUser($userId, $type);
 
-        /*foreach ($userHasEvents as $userHasEvent) {
+        foreach ($userHasEvents as $userHasEvent) {
             $countParticipation = $this->em->getRepository(UserHasEvent::class)->countEventsParticipation($userHasEvent->getEvent()->getId());
             $userHasEvent->getEvent()->setNbParticipation($countParticipation);
-        }*/
+        }
 
         return $userHasEvents;
     }
