@@ -28,7 +28,7 @@ class EventParticipation
 
         $event = $this->em->getRepository(Event::class)->findOneBy(["id" => $eventId]);
 
-        if ($nbUserHasEvent < $event->getNbMaxParticipants()) {
+        if ($nbUserHasEvent < $event->getNbMaxParticipants() || $event->getType()) {
             $userHasEvent = $this->em->getRepository(UserHasEvent::class)->findOneBy(["user" => $userId, "event" => $eventId]);
             if (!$userHasEvent) {
                 $user = $this->em->getRepository(User::class)->findOneBy(["id" => $userId]);

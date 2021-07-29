@@ -215,7 +215,7 @@ class User implements UserInterface
 
     /**
      * @ORM\OneToMany(targetEntity="UserHasLanguage", mappedBy="user", cascade={"persist", "remove"})
-     * @Groups({"user:read", "user:write"})
+     * @Groups({"user:read", "user:write", "FindUser"})
      */
     private $languages;
 
@@ -241,7 +241,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="boolean")
-     * @Groups({"user:read", "user:write"})
+     * @Groups({"user:read", "user:write", "FindUser"})
      */
     private $notificationEnabled = true;
 
