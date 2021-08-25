@@ -27,6 +27,13 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *              "path"="/themes/parent",
  *              "controller"=App\Controller\ParentThemes::class,
  *              "normalization_context"={"groups"={"ParentThemes"}}
+ *          },
+ *          "themesStats"={
+ *              "method"="GET",
+ *              "path"="/themes/stats",
+ *              "controller"=App\Controller\StatThemes::class,
+ *              "validate"=false,
+ *              "read"=false
  *          }
  *     }
  * )

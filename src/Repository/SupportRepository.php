@@ -71,4 +71,14 @@ class SupportRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function getLastSupportsCreated($lastMonth)
+    {
+        return $this->createQueryBuilder("s")
+            ->select('COUNT(s)')
+            ->where('s.createdAt >= :lastMonth')
+            ->setParameter('lastMonth', $lastMonth)
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
 }

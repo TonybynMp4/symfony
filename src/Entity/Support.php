@@ -47,6 +47,14 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
  *              "requirements"={"supportId"="\d+"},
  *              "controller"=App\Controller\ReportSupport::class,
  *              "validate"=false
+ *          },
+ *          "supportsStats"={
+ *              "method"="GET",
+ *              "path"="/supports/stats",
+ *              "controller"=App\Controller\StatSupports::class,
+ *              "validate"=false,
+ *              "read"=false,
+ *              "normalization_context"={"groups"={"StatSupports"}}
  *          }
  *     }
  * )
@@ -74,7 +82,7 @@ class Support
      *
      * @ORM\Column(type="string", length=100)
      * @Assert\NotBlank
-     * @Groups({"support:read", "support:write", "userHasFavoriteSupport:read", "SearchSupport", "SupportTag", "SupportByTheme"})
+     * @Groups({"support:read", "support:write", "userHasFavoriteSupport:read", "SearchSupport", "SupportTag", "SupportByTheme", "StatSupports"})
      */
     private $title;
 
@@ -172,7 +180,7 @@ class Support
 
     /**
      * @ORM\OneToMany(targetEntity="SupportHasMedia", mappedBy="support", cascade={"persist", "remove"})
-     * @Groups({"support:read", "support:write", "userHasFavoriteSupport:read", "SearchSupport", "SupportTag", "SupportByTheme"})
+     * @Groups({"support:read", "support:write", "userHasFavoriteSupport:read", "SearchSupport", "SupportTag", "SupportByTheme", "StatSupports"})
      */
     private $medias;
 
@@ -184,8 +192,15 @@ class Support
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"StatSupports"})
      */
     private $reported = 0;
+
+    /**
+     * @ORM\Column(type="integer")
+     * @Groups({"StatSupports"})
+     */
+    private $consulted = 0;
 
     public function __construct()
     {
@@ -559,6 +574,24 @@ class Support
     public function setReported(int $reported): Support
     {
         $this->reported = $reported;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getConsulted(): int
+    {
+        return $this->consulted;
+    }
+
+    /**
+     * @param int $consulted
+     * @return Support
+     */
+    public function setConsulted(int $consulted): Support
+    {
+        $this->consulted = $consulted;
         return $this;
     }
 }

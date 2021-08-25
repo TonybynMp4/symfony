@@ -72,6 +72,20 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
  *          "post"={
  *          "route_name"="api_users_post"
  *          },
+ *          "dashboardStats"={
+ *              "method"="GET",
+ *              "path"="/users/stats/dashboard",
+ *              "controller"=App\Controller\Dashboard::class,
+ *              "validate"=false,
+ *              "read"=false
+ *          },
+ *          "usersStats"={
+ *              "method"="GET",
+ *              "path"="/users/stats/users",
+ *              "controller"=App\Controller\StatUsers::class,
+ *              "validate"=false,
+ *              "read"=false
+ *          }
  *     }
  * )
  * @ApiFilter(SearchFilter::class, properties={"name" : "partial"})

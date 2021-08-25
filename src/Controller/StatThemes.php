@@ -6,8 +6,10 @@ use App\Entity\Support;
 use App\Entity\Theme;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
-class SubThemes
+class StatThemes
 {
     protected $em;
 
@@ -18,13 +20,16 @@ class SubThemes
 
     public function __invoke(Request $request)
     {
-        $parentId = $request->attributes->get("parentId");
+        $themes = $this->em->getRepository(Theme::class)->getAllSubthemes();
 
-        $themes = $this->em->getRepository(Theme::class)->getSubthemes($parentId);
-
+        $totalConsulted = 0;
         foreach ($themes as $theme) {
             $nbSupports = $this->em->getRepository(Support::class)->getSupportsByThemeId($theme["id"]);
+            foreach ($nbSupports as $support) {
+                $totalConsulted += $support["consulted"];
+            }
             $theme["nbSupports"] = count($nbSupports);
+            $theme["nbConsultations"] = $totalConsulted;
             $themesInfos[] = $theme;
         }
 

@@ -49,4 +49,14 @@ class EventRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function getLastEventsCreated($lastMonth)
+    {
+        return $this->createQueryBuilder("e")
+            ->select('COUNT(e)')
+            ->where('e.createdAt >= :lastMonth')
+            ->setParameter('lastMonth', $lastMonth)
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
 }

@@ -19,6 +19,16 @@ class ThemeRepository extends ServiceEntityRepository
         parent::__construct($registry, Theme::class);
     }
 
+    public function getAllSubthemes()
+    {
+        return $this->createQueryBuilder("t")
+            ->select("t.id", "t.name", "i.filePath")
+            ->leftJoin('t.image', 'i')
+            ->where("t.parent IS NOT NULL")
+            ->getQuery()
+            ->getArrayResult();
+    }
+
     public function getSubthemes($parentId)
     {
         return $this->createQueryBuilder("t")
