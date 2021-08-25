@@ -14,7 +14,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *     normalizationContext={"groups"={"theme:read"}},
  *     denormalizationContext={"groups"={"theme:write"}},
  *     collectionOperations={
- *          "get"={},
+ *          "get"={"normalization_context"={"groups"={"AllThemes"}}},
  *          "post"={},
  *          "getSubThemes"={
  *              "method"="GET",
@@ -53,13 +53,13 @@ class Theme
      *
      * @ORM\Column(type="string", length=50)
      * @Assert\NotNull
-     * @Groups({"theme:read", "theme:write", "user:read", "support:read", "event:read", "userHasFavoriteTheme:read", "FavoriteThemeUser", "ParentThemes", "EventList"})
+     * @Groups({"theme:read", "theme:write", "user:read", "support:read", "event:read", "userHasFavoriteTheme:read", "FavoriteThemeUser", "ParentThemes", "EventList", "AllThemes"})
      */
     public $name;
 
     /**
      * @ORM\ManyToOne(targetEntity="Theme")
-     * @Groups({"theme:read", "theme:write", "userHasFavoriteTheme:read", "FavoriteThemeUser"})
+     * @Groups({"theme:read", "theme:write", "userHasFavoriteTheme:read", "FavoriteThemeUser", "AllThemes"})
      * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", onDelete="SET NULL")
      */
     private $parent;
@@ -76,7 +76,7 @@ class Theme
      * @ORM\OneToOne(targetEntity=MediaObject::class, cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=true)
      * @ApiProperty(iri="http://schema.org/image")
-     * @Groups({"theme:read", "theme:write", "FavoriteThemeUser", "ParentThemes"})
+     * @Groups({"theme:read", "theme:write", "FavoriteThemeUser", "ParentThemes", "AllThemes"})
      */
     public $image;
 

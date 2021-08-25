@@ -81,13 +81,13 @@ class Message
 
     /**
      * @ORM\Column(type="boolean")
-     * @Groups({"message:read", "message:write"})
+     * @Groups({"message:read", "message:write", "TchatList"})
      */
     private $viewOwner = false;
 
     /**
      * @ORM\Column(type="boolean")
-     * @Groups({"message:read", "message:write"})
+     * @Groups({"message:read", "message:write", "TchatList"})
      */
     private $viewUserDelivery = false;
 
