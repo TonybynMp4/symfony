@@ -71,4 +71,4 @@ build/
 
 # Composer PHAR
 composer.lock
-symfony.lock
+symfony.lock.env
