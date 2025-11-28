@@ -224,6 +224,20 @@
     "phpstan/phpdoc-parser": {
         "version": "0.4.10"
     },
+    "phpunit/phpunit": {
+        "version": "9.5",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "9.3",
+            "ref": "4eb12de6eef0f6f1bc7af2c51f6316e2f686e09b"
+        },
+        "files": [
+            "./.env.test",
+            "./phpunit.xml.dist",
+            "./tests/bootstrap.php"
+        ]
+    },
     "psr/cache": {
         "version": "1.0.1"
     },

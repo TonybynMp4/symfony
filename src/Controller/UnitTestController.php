@@ -45,7 +45,8 @@ class UnitTestController extends Controller
             [
                 'headers' => [
                     'Authorization' => 'Bearer ' . $token,
-                    'Accept' => 'application/ld+json', // Pour API Platform
+                    'Accept' => 'application/ld+json', // Pour API Platform,
+                    'verify_peer' => false
                 ]
             ]
         );
